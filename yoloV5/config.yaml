@@ -1,0 +1,10 @@
+weights: weights/weights/best.pt
+source: ../image
+results: runs/detect
+img_size: 640
+conf_thres: 0.60
+iou_thres: 0.45
+save_txt: True
+line_thickness: 1
+hide_labels: True
+device: "cpu"
