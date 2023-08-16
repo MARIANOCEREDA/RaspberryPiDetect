@@ -252,12 +252,12 @@ def parse_opt():
     return opt
 
 
-def main(opt):
+def main():
     check_requirements(ROOT / 'requirements.txt', exclude=('tensorboard', 'thop'))
-    run(**vars(opt))
+    run()
 
 
 if __name__ == '__main__':
     opt = parse_opt()
-    main(opt)
+    main()
 

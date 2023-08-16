@@ -7,6 +7,11 @@ import contextlib
 import platform
 import threading
 
+import sys
+import os
+
+current_directory = os.getcwd()
+sys.path.append(current_directory)
 
 def emojis(str=''):
     # Return platform-dependent emoji-safe version of string
