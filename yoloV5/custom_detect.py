@@ -226,12 +226,12 @@ def draw_package_and_sticks(image_path, main_package, sticks_within_package, img
     
     # Dibujar el recuadro del paquete principal en verde
     _, x, y, w, h = main_package*img_size
-    cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
-    
+    #cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
+    cv2.circle(image1, (int(x), int(y)), int(((w+h)/4)), (0, 255, 0), 2)
     # Dibujar los sticks dentro del paquete en azul
     for stick in sticks_within_package:
         _, x_s, y_s, w_s, h_s = stick*img_size
-        cv2.rectangle(image1, (int(x_s - w_s / 2), int(y_s + h_s / 2)), (int(x_s + w_s / 2), int(y_s - h_s / 2)), (0, 0, 255), -1)
+        cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 0, 255), 2)
     
     # Guardar la imagen con los recuadros
     output_path = os.path.join(os.path.dirname(image_path), "image_main_with_boxes.jpeg")
