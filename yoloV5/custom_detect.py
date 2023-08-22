@@ -64,6 +64,11 @@ def run_inference(
     dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
     vid_path, vid_writer = [None] * bs, [None] * bs
 
+    # limpia image.txt
+    txt_path = str(save_dir / 'labels' / 'image')  # Ruta al archivo image.txt
+    with open(txt_path + '.txt', 'w'):  # Borra el contenido existente
+        pass
+
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
@@ -83,13 +88,13 @@ def run_inference(
         # NMS
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
-
+        
         # Process predictions
         for i, det in enumerate(pred):  # per image
             seen += 1
             p, im0, frame = path, im0s.copy(), getattr(dataset, 'frame', 0)
-
             p = Path(p)  # to Path
+        
             save_path = str(save_dir / p.name)  # im.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
             s += '%gx%g ' % im.shape[2:]  # print string
@@ -133,6 +138,7 @@ def run_inference(
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
+                    cv2.imwrite(str(save_dir / 'image_main.jpeg'), im0s)
                     cv2.imwrite(save_path, im0)
                 else:  # 'video' or 'stream'
                     if vid_path[i] != save_path:  # new video
@@ -182,7 +188,6 @@ def read_results_from_txt(file_path):
 def get_main_package(packages:np.array) -> np.array:
 
     main_package = np.empty((1, 4))
-
     if len(packages) > 1:
 
         areas = np.array([ p[3] * p[4] for p in packages])
@@ -204,20 +209,37 @@ def filter_sticks_within_package(sticks:np.array, package:np.array) -> np.array:
     y_max = y + h / 2
     y_min = y - h / 2
 
-    filtered_data = []
+    filtered_sticks = []
 
     for stick in sticks:
+        _, x_s, y_s, w_s, h_s = stick
 
-        _, x_s, y_s, w_s, h_s = sticks
+        # Verifica si el centro del stick está dentro del área del paquete
+        if x_min < x_s < x_max and y_min < y_s < y_max:
+            filtered_sticks.append(stick)
 
+    return np.array(filtered_sticks)
 
-    pass
-
-
+def draw_package_and_sticks(image_path, main_package, sticks_within_package, img_size):
+    # Cargar la imagen
+    image1 = cv2.imread(image_path)
+    
+    # Dibujar el recuadro del paquete principal en verde
+    _, x, y, w, h = main_package*img_size
+    cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
+    
+    # Dibujar los sticks dentro del paquete en azul
+    for stick in sticks_within_package:
+        _, x_s, y_s, w_s, h_s = stick*img_size
+        cv2.rectangle(image1, (int(x_s - w_s / 2), int(y_s + h_s / 2)), (int(x_s + w_s / 2), int(y_s - h_s / 2)), (0, 0, 255), -1)
+    
+    # Guardar la imagen con los recuadros
+    output_path = os.path.join(os.path.dirname(image_path), "image_main_with_boxes.jpeg")
+    cv2.imwrite(output_path, image1)
 
 def main():
 
-    CONFIG_FILE = os.path.dirname(__file__) + "/config.yaml"
+    CONFIG_FILE = os.path.dirname(__file__) + "config.yaml"
     with open(CONFIG_FILE) as f:
         config_data = yaml.safe_load(f)
 
@@ -264,16 +286,14 @@ def main():
                 vid_stride=1,  # video frame-rate stride
             )
 
-    sticks_results_path = os.path.dirname(__file__) + "/" + config_data["sticks"]["results"] + "/labels/image.txt"
-    packages_results_path = os.path.dirname(__file__) + "/" + config_data["packages"]["results"] + "/labels/image.txt"
-
+    sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"], "labels", "image.txt")
+    packages_results_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "labels", "image.txt")
+    image_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "image_main.jpeg")
     sticks = read_results_from_txt(sticks_results_path)
     packages = read_results_from_txt(packages_results_path)
-
     main_package = get_main_package(packages)
-
-    print(main_package)
-
+    sticks_within_package = filter_sticks_within_package(sticks, main_package)
+    draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data["img_size"])
 
 
 if __name__ == '__main__':
