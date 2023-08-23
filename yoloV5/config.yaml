@@ -6,6 +6,9 @@ device: "cpu"
 source: ../image
 img_size: 640
 
+images:
+  results: runs/detect/images
+
 sticks:
   weights: weights/sticks/best.pt
   results: runs/detect/sticks
