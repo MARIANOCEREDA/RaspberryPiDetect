@@ -272,7 +272,7 @@ def calculate_diameter(img_size, main_package, sticks_within_package,config_data
 
 def main():
 
-    CONFIG_FILE = os.path.dirname(__file__) + "config.yaml"
+    CONFIG_FILE = os.path.dirname(__file__) + "\config.yaml"
     with open(CONFIG_FILE) as f:
         config_data = yaml.safe_load(f)
 
@@ -328,7 +328,6 @@ def main():
     draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
     #cut_image(image_path,config_data)
     diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
-    print(diameters_sticks)
     prom_diameters=sum(diameters_sticks)/len(diameters_sticks)
     print(prom_diameters)
 if __name__ == '__main__':
