@@ -64,6 +64,11 @@ def run_inference(
     dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
     vid_path, vid_writer = [None] * bs, [None] * bs
 
+    # limpia image.txt
+    txt_path = str(save_dir / 'labels' / 'image')  # Ruta al archivo image.txt
+    with open(txt_path + '.txt', 'w'):  # Borra el contenido existente
+        pass
+
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
@@ -83,13 +88,17 @@ def run_inference(
         # NMS
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 9dc61231228332cdd0d165e5d21bc740c781f4ab
         # Process predictions
         for i, det in enumerate(pred):  # per image
             seen += 1
             p, im0, frame = path, im0s.copy(), getattr(dataset, 'frame', 0)
-
             p = Path(p)  # to Path
+        
             save_path = str(save_dir / p.name)  # im.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
             s += '%gx%g ' % im.shape[2:]  # print string
@@ -162,6 +171,7 @@ def run_inference(
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
 
 
+<<<<<<< HEAD
 
 def read_results_from_txt(file_path):
 
@@ -213,9 +223,113 @@ def filter_sticks_within_package(sticks:np.array, package:np.array) -> np.array:
 
     pass
 
+=======
+>>>>>>> 9dc61231228332cdd0d165e5d21bc740c781f4ab
 
+def read_results_from_txt(file_path):
+
+    data_list = []
+
+    # Open the file in read mode
+
+    if os.path.exists(file_path):
+        with open(file_path, "r") as file:
+            for line in file:
+                # Split the line into a list of strings using spaces as separators
+                line_data = line.strip().split()
+                data_list.append(line_data)
+
+    # Convert the list of lists to a NumPy array
+    return np.array(data_list).astype(float)
+
+def get_main_package(packages:np.array) -> np.array:
+
+    main_package = np.empty((1, 4))
+    if len(packages) > 1:
+
+        areas = np.array([ p[3] * p[4] for p in packages])
+        max_area_index = np.argmax(areas)
+        main_package = packages[max_area_index]
+    
+    else:
+        main_package = packages[0]
+    return main_package
+
+            
+def filter_sticks_within_package(sticks:np.array, package:np.array) -> np.array:
+
+    _, x, y, w, h = package
+    x_max = x + w / 2
+    x_min = x - w / 2
+    y_max = y + h / 2
+    y_min = y - h / 2
+
+    filtered_sticks = []
+
+    for stick in sticks:
+        _, x_s, y_s, w_s, h_s = stick
+
+        # Verifica si el centro del stick está dentro del área del paquete
+        if x_min < x_s < x_max and y_min < y_s < y_max:
+            filtered_sticks.append(stick)
+
+    return np.array(filtered_sticks)
+
+def draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data):
+    # Cargar la imagen
+    image1 = cv2.imread(image_path)
+    img_size,_,_=image1.shape
+    # Dibujar el recuadro del paquete principal en verde
+    _, x, y, w, h = main_package*img_size
+    #cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
+    cv2.circle(image1, (int(x), int(y)), int(((w+h)/4)), (0, 255, 0), 2)
+    # Dibujar los sticks dentro del paquete en azul
+    for stick in sticks_within_package:
+        _, x_s, y_s, w_s, h_s = stick*img_size
+        cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 0, 255), 2)
+    
+    # Guardar la imagen con los recuadros
+    output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"],"image_main_with_boxes.jpeg")
+    cv2.imwrite(output_path, image1)
+
+def cut_image(image_path,config_data):
+    image_cut = cv2.imread(image_path)
+    output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"])
+    # Obtener las dimensiones de la imagen y centro
+    hc, wc, _ = image_cut.shape 
+    x_c = wc//2
+    y_c = hc//2
+    # Cortar la imagen en cuatro partes
+    top_left = image_cut[0:y_c, 0:x_c]
+    top_right = image_cut[0:y_c, x_c:wc]
+    bottom_left = image_cut[y_c:hc, 0:x_c]
+    bottom_right = image_cut[y_c:hc, x_c:wc]
+    #Agrandamos las imagenes a 640
+    top_left = cv2.resize(top_left, (wc, hc))
+    top_right = cv2.resize(top_right, (wc, hc))
+    bottom_left = cv2.resize(bottom_left, (wc, hc))
+    bottom_right = cv2.resize(bottom_right, (wc, hc))
+    # Guardar las imágenes cortadas
+    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'top_left.jpeg'), top_left)
+    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'top_right.jpeg'), top_right)
+    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'bottom_left.jpeg'), bottom_left)
+    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'bottom_right.jpeg'), bottom_right)
+
+def calculate_diameter(img_size, main_package, sticks_within_package,config_data):
+    diam_fardo=130 #diametro del fardo en cm
+    _, x_d, y_d, w_d, h_d = main_package*img_size
+    diam_mainpackage_pixel= (w_d+h_d)/2 #tomamos el diametro en pixeles como el promedio entra la altura y ancho
+    rel_pixeles_cm=diam_mainpackage_pixel/diam_fardo
+    diam_sticks=[]
+    for stick in sticks_within_package:
+        _, x_s, y_s, w_s, h_s=stick*img_size
+        diam_stick_pixel=(w_s+h_s)/2
+        diam_stick_cm=diam_stick_pixel/rel_pixeles_cm
+        diam_sticks.append(diam_stick_cm)
+    return(diam_sticks)
 
 def main():
+<<<<<<< HEAD
 
     CONFIG_FILE = os.path.dirname(__file__) + "/config.yaml"
     with open(CONFIG_FILE) as f:
@@ -274,8 +388,67 @@ def main():
 
     print(main_package)
 
+=======
+>>>>>>> 9dc61231228332cdd0d165e5d21bc740c781f4ab
 
+    CONFIG_FILE = os.path.dirname(__file__) + "\config.yaml"
+    with open(CONFIG_FILE) as f:
+        config_data = yaml.safe_load(f)
 
+    FILE = Path(__file__).resolve()
+    print(FILE)
+    ROOT = FILE.parents[0]  #  root directory
+    if str(ROOT) not in sys.path:
+        sys.path.append(str(ROOT))  # add ROOT to PATH
+    ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+
+    # Run for sticks 
+
+    print(config_data)
+
+    for key, value in config_data.items():
+        if key == "sticks" or key == "packages":
+
+            run_inference(weights=config_data[key]["weights"],  # model path or triton URL
+                source=config_data["source"],  # file/dir/URL/glob/screen/0(webcam)
+                data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
+                imgsz=(config_data["img_size"], config_data["img_size"]),  # inference size (height, width)
+                conf_thres=config_data[key]["conf_thres"],  # confidence threshold
+                iou_thres=config_data[key]["iou_thres"],  # NMS IOU threshold
+                max_det=1000,  # maximum detections per image
+                device=config_data["device"],  # cuda device, i.e. 0 or 0,1,2,3 or cpu
+                view_img=False,  # show results
+                save_txt=config_data["save_txt"],  # save results to *.txt
+                save_conf=False,  # save confidences in --save-txt labels
+                save_crop=False,  # save cropped prediction boxes
+                nosave=False,  # do not save images/videos
+                classes=None,  # filter by class: --class 0, or --class 0 2 3
+                agnostic_nms=False,  # class-agnostic NMS
+                augment=False,  # augmented inference
+                visualize=False,  # visualize features
+                update=False,  # update all models
+                project=config_data[key]["results"],  # save results to project/name
+                exist_ok=False,  # existing project/name ok, do not increment
+                line_thickness=config_data["line_thickness"],  # bounding box thickness (pixels)
+                hide_labels=config_data["hide_labels"],  # hide labels
+                hide_conf=False,  # hide confidences
+                half=False,  # use FP16 half-precision inferenc2e
+                dnn=False,  # use OpenCV DNN for ONNX inference
+                vid_stride=1,  # video frame-rate stride
+            )
+
+    sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"], "labels", "image.txt")
+    packages_results_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "labels", "image.txt")
+    image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpeg")
+    sticks = read_results_from_txt(sticks_results_path)
+    packages = read_results_from_txt(packages_results_path)
+    main_package = get_main_package(packages)
+    sticks_within_package = filter_sticks_within_package(sticks, main_package)
+    draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
+    #cut_image(image_path,config_data)
+    diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
+    prom_diameters=sum(diameters_sticks)/len(diameters_sticks)
+    print(prom_diameters)
 if __name__ == '__main__':
     main()
 
