@@ -1,7 +1,7 @@
 import typing
-from PyQt6 import QtCore
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget
-from PyQt6.uic import load_ui
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from PyQt5.uic import load_ui
 
 class MainWindow(QMainWindow):
 
