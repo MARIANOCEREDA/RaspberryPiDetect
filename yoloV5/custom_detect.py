@@ -330,6 +330,8 @@ def main():
     diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
     prom_diameters=sum(diameters_sticks)/len(diameters_sticks)
     print(prom_diameters)
+
 if __name__ == '__main__':
+    
     main()
 
