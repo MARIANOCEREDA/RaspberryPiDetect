@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from yoloV5.custom_detect import main
 
 def on_button_click():
-    main()
+    diameter,sticks=main()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
