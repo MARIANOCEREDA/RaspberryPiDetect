@@ -60,7 +60,7 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     img_size,_,_=image1.shape
 
     white_image = np.zeros((img_size, img_size, 3), dtype=np.uint8)
-    alpha = 128
+    alpha = 50
 
     # Dibujar el recuadro del paquete principal en verde
     _, x, y, w, h = main_package_dims * img_size
@@ -71,14 +71,15 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     # Draw rectangles 
     for stick in sticks_within_package:
         _, x_s, y_s, w_s, h_s = stick * img_size
-        cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), -1)
+        cv2.circle(white_image, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), -1)
+        cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), 2)
     
-    # result = cv2.addWeighted(image1, 1 - (alpha / 255.0), white_image, (alpha / 255.0), 0)
+    result = cv2.addWeighted(image1, 1 - (alpha / 255.0), white_image, (alpha / 255.0), 0)
     
     # Store image 
     output_path = os.path.join(os.path.dirname(__file__) + "/../", config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME)
 
-    cv2.imwrite(output_path, image1)
+    cv2.imwrite(output_path, result)
 
     return output_path
 
