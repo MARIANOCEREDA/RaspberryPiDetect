@@ -232,6 +232,7 @@ def draw_package_and_sticks(image_path, main_package, sticks_within_package,conf
     # Guardar la imagen con los recuadros
     output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"],"image_main_with_boxes.jpeg")
     cv2.imwrite(output_path, image1)
+    return output_path
 
 def cut_image(image_path,config_data):
     image_cut = cv2.imread(image_path)
@@ -277,9 +278,10 @@ def main():
 
     FILE = Path(__file__).resolve()
     print(FILE)
-    ROOT = FILE.parents[0]  #  root directory
+    ROOT = FILE.parents[0] 
     if str(ROOT) not in sys.path:
-        sys.path.append(str(ROOT))  # add ROOT to PATH
+        sys.path.append(str(ROOT))
+    
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
     # Run for sticks 
@@ -289,9 +291,9 @@ def main():
     for key, value in config_data.items():
         if key == "sticks" or key == "packages":
 
-            run_inference(weights=config_data[key]["weights"],  # model path or triton URL
-                source=config_data["source"],  # file/dir/URL/glob/screen/0(webcam)
-                data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
+            run_inference(weights=ROOT / Path(config_data[key]["weights"]),  # model path or triton URL
+                source=ROOT / Path(config_data["source"]),  # file/dir/URL/glob/screen/0(webcam)
+                data=ROOT / 'data_sticks.yaml',  # dataset.yaml path
                 imgsz=(config_data["img_size"], config_data["img_size"]),  # inference size (height, width)
                 conf_thres=config_data[key]["conf_thres"],  # confidence threshold
                 iou_thres=config_data[key]["iou_thres"],  # NMS IOU threshold
@@ -307,7 +309,7 @@ def main():
                 augment=False,  # augmented inference
                 visualize=False,  # visualize features
                 update=False,  # update all models
-                project=config_data[key]["results"],  # save results to project/name
+                project=ROOT / Path(config_data[key]["results"]),  # save results to project/name
                 exist_ok=False,  # existing project/name ok, do not increment
                 line_thickness=config_data["line_thickness"],  # bounding box thickness (pixels)
                 hide_labels=config_data["hide_labels"],  # hide labels
@@ -324,13 +326,14 @@ def main():
     packages = read_results_from_txt(packages_results_path)
     main_package = get_main_package(packages)
     sticks_within_package = filter_sticks_within_package(sticks, main_package)
-    draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
+    image_main_with_boxes_path=draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
     #cut_image(image_path,config_data)
     diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
-    prom_diameters=sum(diameters_sticks)/len(diameters_sticks)
-    print(prom_diameters)
+    prom_diameters=sum(diameters_sticks)/len(diameters_sticks,)
+    return prom_diameters,len(sticks_within_package),image_main_with_boxes_path,image_path
+
 
 if __name__ == '__main__':
 
-    main()
+    _,_=main()
 

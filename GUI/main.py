@@ -1,23 +1,27 @@
 import sys
-import os
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
+from yoloV5.custom_detect import main
 
-UI_FILE_PATH = os.path.dirname(__file__) + "/ui/detect_sticks.ui"
-
-class SimpleWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle("Simple PyQt Window")
-        self.setGeometry(100, 100, 400, 300)  # (x, y, width, height)
-
-        label = QLabel("Hello, PyQt!", self)
-        label.setGeometry(150, 150, 100, 30)
+def on_button_click():
+    diameter,sticks=main()
 
 if __name__ == "__main__":
-
     app = QApplication(sys.argv)
-    window = SimpleWindow()
-    window.show()
+    
+    # Create a main window
+    window = QWidget()
+    window.setWindowTitle("Simple Button Example")
+    window.setGeometry(100, 100, 300, 200)  # Set window position (x, y) and size (width, height)
 
+    # Create a button
+    button = QPushButton("Click Me!", window)
+    button.setGeometry(100, 50, 100, 30)  # Set button position (x, y) and size (width, height)
+    
+    # Connect button's clicked signal to the callback function
+    button.clicked.connect(on_button_click)
+    
+    # Show the window
+    window.show()
+    
+    # Start the event loop
     sys.exit(app.exec_())
