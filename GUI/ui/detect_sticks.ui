@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 0, 0);</string>
@@ -35,6 +38,11 @@
     </property>
     <item>
      <widget class="QFrame" name="frame">
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+color:rgb(255, 255,255);
+}</string>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -72,14 +80,17 @@ background-color: rgb(0, 0, 0);
 
 QPushButton{
 border:0px;
-background-color: rgb(20, 200,230);
+background-color:#93C6FF;
 }
 
 QPushButton:hover{
-border:5px solid #aa00ff;
-background-color: rgb(20, 200,230);
+border:5px;
+border-color:rgb(170, 4, 7);
+background-color: rgb(170, 4, 7);
 }
-
+QLabel{
+font: 16pt &quot;Consolas&quot;;
+}
 </string>
          </property>
          <property name="frameShape">
@@ -93,7 +104,7 @@ background-color: rgb(20, 200,230);
            <number>5</number>
           </property>
           <property name="leftMargin">
-           <number>2</number>
+           <number>15</number>
           </property>
           <property name="topMargin">
            <number>5</number>
@@ -106,10 +117,18 @@ background-color: rgb(20, 200,230);
           </property>
           <item>
            <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>16</pointsize>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="styleSheet">
              <string notr="true">
-font: 900 16pt &quot;Arial Black&quot;;
-color: rgb(20, 200, 230);</string>
+
+</string>
             </property>
             <property name="text">
              <string>Detección de Palos </string>
@@ -238,113 +257,10 @@ color: rgb(20, 200, 230);</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QFrame" name="frame_imagen">
-            <property name="minimumSize">
-             <size>
-              <width>700</width>
-              <height>552</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QFrame{
-background-color: rgb(69, 74, 88);
-}
-</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>90</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QStackedWidget" name="stackedWidget">
-               <property name="maximumSize">
-                <size>
-                 <width>510</width>
-                 <height>510</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(131, 131, 131);</string>
-               </property>
-               <property name="currentIndex">
-                <number>1</number>
-               </property>
-               <widget class="QWidget" name="camara">
-                <widget class="QLabel" name="out_camara">
-                 <property name="geometry">
-                  <rect>
-                   <x>5</x>
-                   <y>5</y>
-                   <width>500</width>
-                   <height>500</height>
-                  </rect>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>500</width>
-                   <height>500</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </widget>
-               <widget class="QWidget" name="detection">
-                <widget class="QLabel" name="out_processing">
-                 <property name="geometry">
-                  <rect>
-                   <x>5</x>
-                   <y>5</y>
-                   <width>500</width>
-                   <height>500</height>
-                  </rect>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>500</width>
-                   <height>500</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </widget>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="frame_datos">
             <property name="minimumSize">
              <size>
-              <width>320</width>
+              <width>350</width>
               <height>0</height>
              </size>
             </property>
@@ -352,25 +268,6 @@ background-color: rgb(69, 74, 88);
              <string notr="true">QFrame{
 background-color: rgb(69, 74, 88);
 }
-
-QPushButton{
-font: 900 13pt &quot;Arial Black&quot;;
-color: rgb(20, 200,230);
-border:1px solid white;
-background-color: rgb(69, 74, 88);
-
-}
-QLabel{
-font: 900 13pt &quot;Arial Black&quot;;
-color: rgb(20, 200,230);
-
-}
-
-
-QPushButton:hover{
-background-color: rgb(0, 0, 0);
-}
-
 </string>
             </property>
             <property name="frameShape">
@@ -379,38 +276,40 @@ background-color: rgb(0, 0, 0);
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,3">
+            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,5">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>15</number>
              </property>
              <property name="topMargin">
-              <number>10</number>
+              <number>0</number>
              </property>
              <property name="rightMargin">
               <number>10</number>
              </property>
              <property name="bottomMargin">
-              <number>10</number>
+              <number>0</number>
              </property>
              <item>
               <widget class="QFrame" name="frame_botones">
                <property name="styleSheet">
-                <string notr="true">Qframe:{
+                <string notr="true">QFrame{
 background-color: rgb(69, 74, 88);
 }
+
 QPushButton{
-font: 900 13pt &quot;Arial Black&quot;;
-color: rgb(20, 200,230);
-border:1px solid white;
+font: 16pt &quot;Consolas&quot;;
+color:rgb(255, 255,255);
+border:1px solid #93C6FF;
+background-color: rgb(70, 70, 70);
+border-radius:5px;
 
 }
-
 QPushButton:hover{
-	background-color: rgb(0, 0, 0);
-
+background-color: rgb(0, 0, 0);
+border:1px solid #93C6FF;
 }
 </string>
                </property>
@@ -444,13 +343,20 @@ QPushButton:hover{
                     <height>38</height>
                    </size>
                   </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
                   <property name="text">
-                   <string>Detectar</string>
+                   <string>Detectar  </string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>images/inteligencia-artificial.png</normaloff>images/inteligencia-artificial.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>30</width>
-                    <height>30</height>
+                    <width>35</width>
+                    <height>35</height>
                    </size>
                   </property>
                  </widget>
@@ -463,13 +369,20 @@ QPushButton:hover{
                     <height>38</height>
                    </size>
                   </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
                   <property name="text">
-                   <string>Confirmar</string>
+                   <string>Confirmar </string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>images/confirmar.png</normaloff>images/confirmar.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>30</width>
-                    <height>3</height>
+                    <width>35</width>
+                    <height>35</height>
                    </size>
                   </property>
                  </widget>
@@ -482,8 +395,15 @@ QPushButton:hover{
                     <height>38</height>
                    </size>
                   </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
                   <property name="text">
-                   <string>Enviar</string>
+                   <string>Enviar    </string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>images/enviar.png</normaloff>images/enviar.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -498,6 +418,38 @@ QPushButton:hover{
              </item>
              <item>
               <widget class="QFrame" name="frame_datos2">
+               <property name="styleSheet">
+                <string notr="true">QFrame{
+background-color: rgb(69, 74, 88);
+}
+QPushButton{
+background-color: rgb(69, 74, 88);
+border-radius:30px;
+}
+QPushButton:hover{
+background-color: rgb(0, 0, 0);
+}
+QLabel{
+font: 14pt &quot;Consolas&quot;;
+color: rgb(255, 255,255);
+}
+
+QLineEdit{
+border:1px solid #93C6FF;
+border-radius:5px;
+background-color: rgb(70, 70, 70);
+font: 13pt &quot;Consolas&quot;;
+color: rgb(255, 255,255);
+}
+
+QTextBrowser{
+border-radius:5px;
+border:1px solid #93C6FF;
+background-color: rgb(70, 70, 70);
+font: 13pt &quot;Consolas&quot;;
+color: rgb(255, 255,255);
+}</string>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -508,7 +460,7 @@ QPushButton:hover{
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>80</y>
+                  <y>60</y>
                   <width>181</width>
                   <height>31</height>
                  </rect>
@@ -521,7 +473,7 @@ QPushButton:hover{
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>140</y>
+                  <y>110</y>
                   <width>191</width>
                   <height>31</height>
                  </rect>
@@ -534,7 +486,7 @@ QPushButton:hover{
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>340</y>
+                  <y>350</y>
                   <width>181</width>
                   <height>31</height>
                  </rect>
@@ -547,9 +499,9 @@ QPushButton:hover{
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>30</y>
+                  <y>10</y>
                   <width>221</width>
-                  <height>31</height>
+                  <height>30</height>
                  </rect>
                 </property>
                 <property name="text">
@@ -559,36 +511,54 @@ QPushButton:hover{
                <widget class="QPushButton" name="button_plas">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>200</y>
-                  <width>100</width>
-                  <height>41</height>
+                  <x>235</x>
+                  <y>162</y>
+                  <width>60</width>
+                  <height>60</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">font: 900 24pt &quot;Arial Black&quot;;
-border:0px solid white;</string>
+                 <string notr="true">
+</string>
                 </property>
                 <property name="text">
-                 <string>+</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/mas (2).png</normaloff>images/mas (2).png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
                 </property>
                </widget>
                <widget class="QTextBrowser" name="out_sticks">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>80</y>
-                  <width>100</width>
+                  <x>212</x>
+                  <y>60</y>
+                  <width>111</width>
                   <height>31</height>
                  </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Consolas</family>
+                  <pointsize>13</pointsize>
+                  <italic>false</italic>
+                  <bold>false</bold>
+                 </font>
                 </property>
                </widget>
                <widget class="QTextBrowser" name="out_diameter">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>140</y>
-                  <width>100</width>
+                  <x>212</x>
+                  <y>110</y>
+                  <width>111</width>
                   <height>31</height>
                  </rect>
                 </property>
@@ -596,9 +566,9 @@ border:0px solid white;</string>
                <widget class="QTextBrowser" name="out_correction">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>250</y>
-                  <width>100</width>
+                  <x>212</x>
+                  <y>230</y>
+                  <width>111</width>
                   <height>31</height>
                  </rect>
                 </property>
@@ -606,9 +576,9 @@ border:0px solid white;</string>
                <widget class="QTextBrowser" name="out_total">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>340</y>
-                  <width>100</width>
+                  <x>212</x>
+                  <y>350</y>
+                  <width>111</width>
                   <height>31</height>
                  </rect>
                 </property>
@@ -616,23 +586,29 @@ border:0px solid white;</string>
                <widget class="QLineEdit" name="in_npackge">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>30</y>
-                  <width>100</width>
+                  <x>212</x>
+                  <y>10</y>
+                  <width>111</width>
                   <height>31</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(131, 131, 131);</string>
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>Escribe N°</string>
                 </property>
                </widget>
                <widget class="QPushButton" name="button_less">
                 <property name="geometry">
                  <rect>
-                  <x>205</x>
-                  <y>290</y>
-                  <width>100</width>
-                  <height>41</height>
+                  <x>235</x>
+                  <y>270</y>
+                  <width>60</width>
+                  <height>60</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -645,25 +621,152 @@ border:0px solid white;</string>
                  <enum>Qt::LeftToRight</enum>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">font: 900 35pt &quot;Arial Black&quot;;
-border:0px solid white;</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
-                 <string>-</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/menos (1).png</normaloff>images/menos (1).png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
                 </property>
                </widget>
                <widget class="QLabel" name="label_7">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>250</y>
-                  <width>201</width>
+                  <y>230</y>
+                  <width>211</width>
                   <height>31</height>
                  </rect>
                 </property>
                 <property name="text">
                  <string>Correción Detección:</string>
                 </property>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_imagen">
+            <property name="minimumSize">
+             <size>
+              <width>650</width>
+              <height>552</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QFrame{
+background-color: rgb(69, 74, 88);
+}
+</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>80</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QStackedWidget" name="stackedWidget">
+               <property name="maximumSize">
+                <size>
+                 <width>510</width>
+                 <height>510</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #93C6FF;
+
+QLabel:{
+background-color: rgb(0, 0, 0);
+
+}</string>
+               </property>
+               <property name="currentIndex">
+                <number>1</number>
+               </property>
+               <widget class="QWidget" name="camara">
+                <widget class="QLabel" name="out_camara">
+                 <property name="geometry">
+                  <rect>
+                   <x>5</x>
+                   <y>5</y>
+                   <width>500</width>
+                   <height>500</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>500</width>
+                   <height>500</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{
+background-color: rgb(0, 0, 0);
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </widget>
+               <widget class="QWidget" name="detection">
+                <widget class="QLabel" name="out_processing">
+                 <property name="geometry">
+                  <rect>
+                   <x>5</x>
+                   <y>5</y>
+                   <width>500</width>
+                   <height>500</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>500</width>
+                   <height>500</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{
+background-color: rgb(0, 0, 0);
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
                </widget>
               </widget>
              </item>

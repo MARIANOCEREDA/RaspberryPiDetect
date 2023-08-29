@@ -2,9 +2,10 @@ import sys
 import cv2
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QMessageBox, QLineEdit
-from yoloV5.custom_detect import main
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from yoloV5.custom_detect import main as run_detect
 from detect_sticks import Ui_MainWindow
+
 #variables globales
 sticks=0
 total_sticks=0
@@ -14,6 +15,7 @@ n_package=""
 diameter=0
 
 from PyQt5.QtWidgets import QApplication, QMessageBox
+
 #Adventencia de enviar y confirmar, crea una ventana emergente con messagebox
 def error_send(n):
     global sticks, diameter, total_sticks, n_package
@@ -34,7 +36,6 @@ def error_confirm():
     error_message = "No puede modificar el programa luego de confirmar"
     QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
 
-#funciondesacarfoto()
 
 #cuando se clickea detectar saca la foto, corre el programa detect_custom, detecta los palos y nos muestra el resultado
 def on_detect_click():
@@ -45,13 +46,17 @@ def on_detect_click():
     ui.out_diameter.setPlainText(str(round(diameter, 3))+" cm")
  
     if conf==0 :
-        #funciondesacarfoto() tener en cuenta que deberia guardarse en image_path con el nombre "image.jpeg" borrando las imaagenes anteriores y quizas guardandolas en otra carpeta
-        diameter,sticks,image_detect_path,image_path=main()
+        
+        diameter, sticks, image_detect_path, image_path = run_detect()
+
         ui.out_sticks.setPlainText(str(sticks))
-        ui.out_diameter.setPlainText(str(round(diameter, 3))+" cm")
+        ui.out_diameter.setPlainText(str(round(diameter, 3)) + " cm")
+
         img_stick = QPixmap(image_path)
         img_stick_500 = img_stick.scaled(500, 500)
+
         ui.out_img.setPixmap(img_stick_500)    
+
         img_detecction = QPixmap(image_detect_path)
         img_detecction_500 = img_detecction.scaled(500, 500)
         ui.out_detect.setPixmap(img_detecction_500)
@@ -63,7 +68,7 @@ def on_detect_click():
         error_confirm()
 
 # cuando se cliequea el boton + agrega 1 stick a la correción y a los palos totales
-def on_plas_click():
+def on_plus_click():
     global sitck_correct, total_sticks, sticks, conf
     if conf==0 :
         sitck_correct=sitck_correct+1
@@ -75,9 +80,11 @@ def on_plas_click():
 
 # cuando se cliequea el boton - quita 1 stick a la correción y a los palos totales
 def on_less_click():
+
     global sitck_correct, total_sticks, sticks, conf
+
     if conf==0 :
-        sitck_correct=sitck_correct-1
+        sitck_correct= sitck_correct-1
         ui.out_correction.setPlainText(str(sitck_correct))
         total_sticks=sticks+sitck_correct
         ui.out_total.setPlainText(str(total_sticks))
@@ -142,8 +149,8 @@ def on_send_click():
 
        
 if __name__ == "__main__":
+
     #creamos la ventana principal
-    import sys
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()
@@ -151,11 +158,11 @@ if __name__ == "__main__":
 
     # Click botones
     ui.button_detect.clicked.connect(on_detect_click)
-    ui.button_plas.clicked.connect(on_plas_click)
+    ui.button_plas.clicked.connect(on_plus_click)
     ui.button_less.clicked.connect(on_less_click)
     ui.button_send.clicked.connect(on_send_click)
     ui.button_conf.clicked.connect(on_conf_click)
-    
 
     MainWindow.show()
+
     sys.exit(app.exec_())
