@@ -330,10 +330,10 @@ def main():
     #cut_image(image_path,config_data)
     diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
     prom_diameters=sum(diameters_sticks)/len(diameters_sticks,)
-    return prom_diameters,len(sticks_within_package),image_main_with_boxes_path,image_path
+    return prom_diameters, len(sticks_within_package), image_main_with_boxes_path, image_path
 
 
 if __name__ == '__main__':
 
-    _,_=main()
+    _,_,_,_=main()
 
