@@ -1,10 +1,10 @@
 import sys
-import cv2
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QMessageBox, QLineEdit
 from yoloV5.custom_detect import main
 from detect_sticks import Ui_MainWindow
+
 #variables globales
 sticks=0
 total_sticks=0

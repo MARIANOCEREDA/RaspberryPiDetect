@@ -1,7 +1,6 @@
 import sys
 import os
 
-
 print("Adding to the path ...")
 current_folder = os.path.dirname(__file__)
 
