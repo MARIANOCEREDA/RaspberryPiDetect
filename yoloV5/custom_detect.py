@@ -232,6 +232,7 @@ def draw_package_and_sticks(image_path, main_package, sticks_within_package,conf
     # Guardar la imagen con los recuadros
     output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"],"image_main_with_boxes.jpeg")
     cv2.imwrite(output_path, image1)
+    return output_path
 
 def cut_image(image_path,config_data):
     image_cut = cv2.imread(image_path)
@@ -325,13 +326,14 @@ def main():
     packages = read_results_from_txt(packages_results_path)
     main_package = get_main_package(packages)
     sticks_within_package = filter_sticks_within_package(sticks, main_package)
-    draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
+    image_main_with_boxes_path=draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
     #cut_image(image_path,config_data)
     diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
-    prom_diameters=sum(diameters_sticks)/len(diameters_sticks)
-    print(prom_diameters)
+    prom_diameters=sum(diameters_sticks)/len(diameters_sticks,)
+    return prom_diameters,len(sticks_within_package),image_main_with_boxes_path,image_path
+
 
 if __name__ == '__main__':
 
-    main()
+    _,_=main()
 
