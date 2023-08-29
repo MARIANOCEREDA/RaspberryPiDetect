@@ -22,14 +22,17 @@ def error_send(n):
     if n==1:
         error_message = "Confirmar antes de enviar"
         QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
+        
     if n==2:
         error_message = "Tienes que detectar antes de enviar"
         QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
+
     if n==3:
         error_message = "Tienes que ingresar el número del paquete antes de enviar"
-        QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)    
+        QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
+
     if n==4:
-        error_message = "Palos detectados: "+str(sticks)+"\n" + "Palos totales: "+str(total_sticks)+"\n" + "Diametro Promedio: "+str(round(diameter, 3))+"\n"+"Número de paquete: "+str(n_package)
+        error_message = "Palos detectados: "+ str(sticks)+"\n" + "Palos totales: "+str(total_sticks)+"\n" + "Diametro Promedio: "+str(round(diameter, 3))+"\n"+"Número de paquete: "+str(n_package)
         QMessageBox.information(None, 'Resultado', error_message, QMessageBox.Ok)
 
 def error_confirm():

@@ -8,7 +8,6 @@ img_size: 640
 
 images:
   results: runs/detect/images
-  filtered_image_name: image_main_with-boxes.jpeg
 
 sticks:
   weights: weights/sticks/best.pt
@@ -21,6 +20,9 @@ packages:
   results: runs/detect/packages
   conf_thres: 0.50
   iou_thres: 0.45
+
+post-process:
+  avg_package_diameter: 130
 
 
   
