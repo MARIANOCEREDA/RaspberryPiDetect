@@ -230,33 +230,41 @@ def draw_package_and_sticks(image_path, main_package, sticks_within_package,conf
         cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 0, 255), 2)
     
     # Guardar la imagen con los recuadros
-    output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"],"image_main_with_boxes.jpeg")
+    print(os.path.join(os.path.dirname(__file__), config_data["images"]["results"]))
+    output_path = os.path.join(os.path.dirname(__file__), config_data["images"]["results"] + config_data["images"]["filtered_image_name"])
     cv2.imwrite(output_path, image1)
 
-def cut_image(image_path,config_data):
+
+
+def cut_image(image_path, config_data):
     image_cut = cv2.imread(image_path)
     output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"])
+
     # Obtener las dimensiones de la imagen y centro
-    hc, wc, _ = image_cut.shape 
-    x_c = wc//2
-    y_c = hc//2
+    h, w, _ = image_cut.shape 
+    x_c = w//2
+    y_c = h//2
+    pixels_overlap = 50
+
     # Cortar la imagen en cuatro partes
-    top_left = image_cut[0:y_c, 0:x_c]
-    top_right = image_cut[0:y_c, x_c:wc]
-    bottom_left = image_cut[y_c:hc, 0:x_c]
-    bottom_right = image_cut[y_c:hc, x_c:wc]
+    top_left = image_cut[0:x_c + pixels_overlap, 0:y_c + pixels_overlap]
+    top_right = image_cut[x_c - pixels_overlap:w, y_c - pixels_overlap:h]
+    bottom_left = image_cut[y_c:h, 0:x_c]
+    bottom_right = image_cut[y_c:h, x_c:w]
+
     #Agrandamos las imagenes a 640
-    top_left = cv2.resize(top_left, (wc, hc))
-    top_right = cv2.resize(top_right, (wc, hc))
-    bottom_left = cv2.resize(bottom_left, (wc, hc))
-    bottom_right = cv2.resize(bottom_right, (wc, hc))
+    top_left = cv2.resize(top_left, (w, h))
+    top_right = cv2.resize(top_right, (w, h))
+    bottom_left = cv2.resize(bottom_left, (w, h))
+    bottom_right = cv2.resize(bottom_right, (w, h))
+
     # Guardar las imágenes cortadas
     cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'top_left.jpeg'), top_left)
     cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'top_right.jpeg'), top_right)
     cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'bottom_left.jpeg'), bottom_left)
     cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'bottom_right.jpeg'), bottom_right)
 
-def calculate_diameter(img_size, main_package, sticks_within_package,config_data):
+def calculate_diameter(img_size, main_package, sticks_within_package ):
     diam_fardo=130 #diametro del fardo en cm
     _, x_d, y_d, w_d, h_d = main_package*img_size
     diam_mainpackage_pixel= (w_d+h_d)/2 #tomamos el diametro en pixeles como el promedio entra la altura y ancho
@@ -282,10 +290,6 @@ def main():
         sys.path.append(str(ROOT))
     
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
-
-    # Run for sticks 
-
-    print(config_data)
 
     for key, value in config_data.items():
         if key == "sticks" or key == "packages":
@@ -320,16 +324,21 @@ def main():
 
     sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"], "labels", "image.txt")
     packages_results_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "labels", "image.txt")
-    image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpeg")
+    image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpg")
     sticks = read_results_from_txt(sticks_results_path)
     packages = read_results_from_txt(packages_results_path)
     main_package = get_main_package(packages)
     sticks_within_package = filter_sticks_within_package(sticks, main_package)
+
     draw_package_and_sticks(image_path, main_package, sticks_within_package,config_data)
-    #cut_image(image_path,config_data)
-    diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package,config_data)
-    prom_diameters=sum(diameters_sticks)/len(diameters_sticks)
-    print(prom_diameters)
+
+    diameters_sticks=calculate_diameter(config_data["img_size"], main_package, sticks_within_package)
+    prom_diameters = sum(diameters_sticks)/len(diameters_sticks)
+
+    image_detection_path = config_data["images"]["results"] + config_data["images"]["filtered_image_name"]
+
+    return prom_diameters, sticks, image_detection_path ,image_path
+
 
 if __name__ == '__main__':
 

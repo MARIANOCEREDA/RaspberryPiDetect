@@ -8,6 +8,7 @@ img_size: 640
 
 images:
   results: runs/detect/images
+  filtered_image_name: image_main_with-boxes.jpeg
 
 sticks:
   weights: weights/sticks/best.pt
