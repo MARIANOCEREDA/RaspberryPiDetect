@@ -71,7 +71,7 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
         cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 0, 255), 2)
     
     # Store image 
-    output_path = os.path.join(os.path.dirname(__file__), config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME)
+    output_path = os.path.join(os.path.dirname(__file__) + "/../", config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME)
 
     cv2.imwrite(output_path, image1)
 
