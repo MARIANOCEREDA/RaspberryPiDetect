@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>600</height>
+    <width>756</width>
+    <height>416</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -70,7 +76,7 @@ color:rgb(255, 255,255);
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>40</height>
+           <height>30</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -147,84 +153,6 @@ font: 16pt &quot;Consolas&quot;;
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QPushButton" name="button_minimize">
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>images/minimizar.png</normaloff>images/minimizar.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="button_maximize">
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>images/maximizar.png</normaloff>images/maximizar.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="button_close">
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>images/cerrar.png</normaloff>images/cerrar.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
@@ -259,8 +187,14 @@ font: 16pt &quot;Consolas&quot;;
            <widget class="QFrame" name="frame_datos">
             <property name="minimumSize">
              <size>
-              <width>350</width>
+              <width>400</width>
               <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -275,7 +209,7 @@ background-color: rgb(69, 74, 88);
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,5">
+            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,6">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -286,20 +220,26 @@ background-color: rgb(69, 74, 88);
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>10</number>
+              <number>5</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>5</number>
              </property>
              <item>
               <widget class="QFrame" name="frame_botones">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>150</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QFrame{
 background-color: rgb(69, 74, 88);
 }
 
 QPushButton{
-font: 16pt &quot;Consolas&quot;;
+font: 14pt &quot;Consolas&quot;;
 color:rgb(255, 255,255);
 border:1px solid #93C6FF;
 background-color: rgb(70, 70, 70);
@@ -339,7 +279,7 @@ border:1px solid #93C6FF;
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>38</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="layoutDirection">
@@ -365,7 +305,7 @@ border:1px solid #93C6FF;
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>38</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="layoutDirection">
@@ -391,7 +331,7 @@ border:1px solid #93C6FF;
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>38</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="layoutDirection">
@@ -416,20 +356,20 @@ border:1px solid #93C6FF;
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="frame_datos2">
+              <widget class="QFrame" name="frame_2">
                <property name="styleSheet">
                 <string notr="true">QFrame{
 background-color: rgb(69, 74, 88);
 }
 QPushButton{
 background-color: rgb(69, 74, 88);
-border-radius:30px;
+border-radius:20px;
 }
 QPushButton:hover{
 background-color: rgb(0, 0, 0);
 }
 QLabel{
-font: 14pt &quot;Consolas&quot;;
+font: 13pt &quot;Consolas&quot;;
 color: rgb(255, 255,255);
 }
 
@@ -437,7 +377,7 @@ QLineEdit{
 border:1px solid #93C6FF;
 border-radius:5px;
 background-color: rgb(70, 70, 70);
-font: 13pt &quot;Consolas&quot;;
+font: 12pt &quot;Consolas&quot;;
 color: rgb(255, 255,255);
 }
 
@@ -445,7 +385,7 @@ QTextBrowser{
 border-radius:5px;
 border:1px solid #93C6FF;
 background-color: rgb(70, 70, 70);
-font: 13pt &quot;Consolas&quot;;
+font: 12pt &quot;Consolas&quot;;
 color: rgb(255, 255,255);
 }</string>
                </property>
@@ -455,200 +395,371 @@ color: rgb(255, 255,255);
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <widget class="QLabel" name="label_3">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>60</y>
-                  <width>231</width>
-                  <height>30</height>
-                 </rect>
+               <layout class="QVBoxLayout" name="verticalLayout_8">
+                <property name="spacing">
+                 <number>0</number>
                 </property>
-                <property name="text">
-                 <string>Palos Detectados:</string>
+                <property name="leftMargin">
+                 <number>0</number>
                 </property>
-               </widget>
-               <widget class="QLabel" name="label_4">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>110</y>
-                  <width>221</width>
-                  <height>30</height>
-                 </rect>
+                <property name="topMargin">
+                 <number>5</number>
                 </property>
-                <property name="text">
-                 <string>Diametro Promedio:</string>
+                <property name="rightMargin">
+                 <number>0</number>
                 </property>
-               </widget>
-               <widget class="QLabel" name="label_5">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>350</y>
-                  <width>181</width>
-                  <height>30</height>
-                 </rect>
+                <property name="bottomMargin">
+                 <number>0</number>
                 </property>
-                <property name="text">
-                 <string>Palos Totales:</string>
-                </property>
-               </widget>
-               <widget class="QLabel" name="label_6">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>10</y>
-                  <width>221</width>
-                  <height>30</height>
-                 </rect>
-                </property>
-                <property name="text">
-                 <string>N° de Paquete:</string>
-                </property>
-               </widget>
-               <widget class="QPushButton" name="button_plas">
-                <property name="geometry">
-                 <rect>
-                  <x>296</x>
-                  <y>162</y>
-                  <width>60</width>
-                  <height>60</height>
-                 </rect>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/mas (2).png</normaloff>images/mas (2).png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-               </widget>
-               <widget class="QTextBrowser" name="out_sticks">
-                <property name="geometry">
-                 <rect>
-                  <x>261</x>
-                  <y>56</y>
-                  <width>130</width>
-                  <height>38</height>
-                 </rect>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Consolas</family>
-                  <pointsize>13</pointsize>
-                  <weight>50</weight>
-                  <italic>false</italic>
-                  <bold>false</bold>
-                 </font>
-                </property>
-               </widget>
-               <widget class="QTextBrowser" name="out_diameter">
-                <property name="geometry">
-                 <rect>
-                  <x>261</x>
-                  <y>106</y>
-                  <width>130</width>
-                  <height>38</height>
-                 </rect>
-                </property>
-               </widget>
-               <widget class="QTextBrowser" name="out_correction">
-                <property name="geometry">
-                 <rect>
-                  <x>261</x>
-                  <y>226</y>
-                  <width>130</width>
-                  <height>38</height>
-                 </rect>
-                </property>
-               </widget>
-               <widget class="QTextBrowser" name="out_total">
-                <property name="geometry">
-                 <rect>
-                  <x>261</x>
-                  <y>346</y>
-                  <width>130</width>
-                  <height>38</height>
-                 </rect>
-                </property>
-               </widget>
-               <widget class="QLineEdit" name="in_npackge">
-                <property name="geometry">
-                 <rect>
-                  <x>261</x>
-                  <y>6</y>
-                  <width>130</width>
-                  <height>38</height>
-                 </rect>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>Escribe N°</string>
-                </property>
-               </widget>
-               <widget class="QPushButton" name="button_less">
-                <property name="geometry">
-                 <rect>
-                  <x>296</x>
-                  <y>270</y>
-                  <width>60</width>
-                  <height>60</height>
-                 </rect>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/menos (1).png</normaloff>images/menos (1).png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-               </widget>
-               <widget class="QLabel" name="label_7">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>230</y>
-                  <width>261</width>
-                  <height>30</height>
-                 </rect>
-                </property>
-                <property name="text">
-                 <string>Correción Detección:</string>
-                </property>
-               </widget>
+                <item>
+                 <widget class="QFrame" name="frame_11">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QLabel" name="label_8">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>168</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>N° de Paquete:</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                  <widget class="QLineEdit" name="in_npackage">
+                   <property name="geometry">
+                    <rect>
+                     <x>242</x>
+                     <y>0</y>
+                     <width>131</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_12">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QLabel" name="label_9">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>231</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Palos Detectados:</string>
+                   </property>
+                  </widget>
+                  <widget class="QTextBrowser" name="out_sticks">
+                   <property name="geometry">
+                    <rect>
+                     <x>242</x>
+                     <y>0</y>
+                     <width>131</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Consolas</family>
+                     <pointsize>12</pointsize>
+                     <weight>50</weight>
+                     <italic>false</italic>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_13">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QLabel" name="label_10">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>221</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Diametro Promedio:</string>
+                   </property>
+                  </widget>
+                  <widget class="QTextBrowser" name="out_diameter">
+                   <property name="geometry">
+                    <rect>
+                     <x>242</x>
+                     <y>0</y>
+                     <width>131</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_14">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>44</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QPushButton" name="button_plas">
+                   <property name="geometry">
+                    <rect>
+                     <x>280</x>
+                     <y>0</y>
+                     <width>43</width>
+                     <height>43</height>
+                    </rect>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/mas (2).png</normaloff>images/mas (2).png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>55</width>
+                     <height>55</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_15">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QLabel" name="label_12">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>261</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>Correción Detección:</string>
+                   </property>
+                  </widget>
+                  <widget class="QTextBrowser" name="out_correction">
+                   <property name="geometry">
+                    <rect>
+                     <x>242</x>
+                     <y>0</y>
+                     <width>131</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_16">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>44</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QPushButton" name="button_less">
+                   <property name="geometry">
+                    <rect>
+                     <x>280</x>
+                     <y>0</y>
+                     <width>43</width>
+                     <height>43</height>
+                    </rect>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::LeftToRight</enum>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/menos (1).png</normaloff>images/menos (1).png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>55</width>
+                     <height>55</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_17">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <widget class="QLabel" name="label_11">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>181</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>Palos Totales:</string>
+                   </property>
+                  </widget>
+                  <widget class="QTextBrowser" name="out_total">
+                   <property name="geometry">
+                    <rect>
+                     <x>242</x>
+                     <y>0</y>
+                     <width>131</width>
+                     <height>33</height>
+                    </rect>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>33</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -658,13 +769,13 @@ color: rgb(255, 255,255);
            <widget class="QFrame" name="frame_imagen">
             <property name="minimumSize">
              <size>
-              <width>600</width>
-              <height>552</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>600</width>
+              <width>100000</width>
               <height>16777215</height>
              </size>
             </property>
@@ -680,48 +791,39 @@ background-color: rgb(69, 74, 88);
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>40</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>40</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
               <widget class="QTabWidget" name="tabWidget">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>505</width>
-                 <height>530</height>
+                 <width>640</width>
+                 <height>600</height>
                 </size>
                </property>
                <property name="styleSheet">
                 <string notr="true"> QTabBar::tab {
-font: 14pt &quot;Consolas&quot;;
+font: 13pt &quot;Consolas&quot;;
 color:rgb(255, 255,255);
 border:2px solid #93C6FF;
-background-color: rgb(70, 70, 70);         
+background-color: rgb(70, 70, 70);
                 min-width:130px; /* Cambia el ancho mínimo de los botones */
-                padding: 8px; /* Cambia el espacio interno de los botones */
+                padding: 5px; /* Cambia el espacio interno de los botones */         
+
             }
 
-            QTabBar::tab:selected {
-font: 14pt &quot;Consolas&quot;;
+QTabBar::tab:selected {
+font: 13pt &quot;Consolas&quot;;
 color:rgb(255, 255,255);
-border:3px solid #93C6FF;
 background-color: rgb(0, 0, 0);    
             }
 QTabWidget::pane {
-     border:3px solid #93C6FF;
+ border:3px solid #93C6FF;    
 background-color: rgb(70, 70, 70);    
             }</string>
                </property>
@@ -732,40 +834,68 @@ background-color: rgb(70, 70, 70);
                 <attribute name="title">
                  <string>Fotografia</string>
                 </attribute>
-                <widget class="QLabel" name="out_img">
-                 <property name="geometry">
-                  <rect>
-                   <x>0</x>
-                   <y>0</y>
-                   <width>500</width>
-                   <height>500</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <item>
+                  <widget class="QLabel" name="out_img">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>300</width>
+                     <height>300</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
                <widget class="QWidget" name="tab_2">
                 <attribute name="title">
                  <string>Detección</string>
                 </attribute>
-                <widget class="QLabel" name="out_detect">
-                 <property name="geometry">
-                  <rect>
-                   <x>0</x>
-                   <y>0</y>
-                   <width>500</width>
-                   <height>500</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="out_detect">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>269</width>
+                     <height>269</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>640</width>
+                     <height>640</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </widget>
              </item>
