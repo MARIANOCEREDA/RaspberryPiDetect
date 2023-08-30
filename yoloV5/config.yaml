@@ -21,5 +21,8 @@ packages:
   conf_thres: 0.50
   iou_thres: 0.45
 
+post-process:
+  avg_package_diameter: 130
+
 
   
