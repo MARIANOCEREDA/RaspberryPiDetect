@@ -47,3 +47,5 @@ More info: https://forums.raspberrypi.com/viewtopic.php?t=330943
 
 4. PyQt and Opencv have problems when running together. Then, remove the file __libqxcb__ from 
 "(virtual-env)/lib/python3.9/site-packages/cv2/qt/plugins/platforms"
+
+More info: https://github.com/NVlabs/instant-ngp/discussions/300 
