@@ -1,5 +1,4 @@
 import sys
-import cv2
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
