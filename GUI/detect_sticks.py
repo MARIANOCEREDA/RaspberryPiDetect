@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1024, 500)
+        MainWindow.resize(1024, 600)
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("background-color: rgb(0, 0, 0);")
@@ -35,7 +35,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.frame_superior = QtWidgets.QFrame(self.frame)
-        self.frame_superior.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.frame_superior.setMaximumSize(QtCore.QSize(16777215, 30))
         self.frame_superior.setStyleSheet("QFrame{\n"
 "background-color: rgb(0, 0, 0);\n"
 "}\n"
@@ -74,36 +74,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.label)
         spacerItem = QtWidgets.QSpacerItem(477, 17, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.button_minimize = QtWidgets.QPushButton(self.frame_superior)
-        self.button_minimize.setMaximumSize(QtCore.QSize(30, 30))
-        self.button_minimize.setStyleSheet("")
-        self.button_minimize.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/minimizar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_minimize.setIcon(icon)
-        self.button_minimize.setIconSize(QtCore.QSize(25, 25))
-        self.button_minimize.setObjectName("button_minimize")
-        self.horizontalLayout.addWidget(self.button_minimize)
-        self.button_maximize = QtWidgets.QPushButton(self.frame_superior)
-        self.button_maximize.setMaximumSize(QtCore.QSize(30, 30))
-        self.button_maximize.setStyleSheet("")
-        self.button_maximize.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("images/maximizar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_maximize.setIcon(icon1)
-        self.button_maximize.setIconSize(QtCore.QSize(25, 25))
-        self.button_maximize.setObjectName("button_maximize")
-        self.horizontalLayout.addWidget(self.button_maximize)
-        self.button_close = QtWidgets.QPushButton(self.frame_superior)
-        self.button_close.setMaximumSize(QtCore.QSize(30, 30))
-        self.button_close.setStyleSheet("")
-        self.button_close.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("images/cerrar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_close.setIcon(icon2)
-        self.button_close.setIconSize(QtCore.QSize(25, 25))
-        self.button_close.setObjectName("button_close")
-        self.horizontalLayout.addWidget(self.button_close)
         self.verticalLayout_2.addWidget(self.frame_superior)
         self.frame_inferior = QtWidgets.QFrame(self.frame)
         self.frame_inferior.setStyleSheet("")
@@ -115,7 +85,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.frame_datos = QtWidgets.QFrame(self.frame_inferior)
-        self.frame_datos.setMinimumSize(QtCore.QSize(350, 0))
+        self.frame_datos.setMinimumSize(QtCore.QSize(400, 0))
+        self.frame_datos.setMaximumSize(QtCore.QSize(400, 16777215))
         self.frame_datos.setStyleSheet("QFrame{\n"
 "background-color: rgb(69, 74, 88);\n"
 "}\n"
@@ -124,16 +95,17 @@ class Ui_MainWindow(object):
         self.frame_datos.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_datos.setObjectName("frame_datos")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frame_datos)
-        self.verticalLayout_4.setContentsMargins(15, 0, 10, 0)
+        self.verticalLayout_4.setContentsMargins(15, 0, 5, 5)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.frame_botones = QtWidgets.QFrame(self.frame_datos)
+        self.frame_botones.setMaximumSize(QtCore.QSize(16777215, 150))
         self.frame_botones.setStyleSheet("QFrame{\n"
 "background-color: rgb(69, 74, 88);\n"
 "}\n"
 "\n"
 "QPushButton{\n"
-"font: 16pt \"Consolas\";\n"
+"font: 14pt \"Consolas\";\n"
 "color:rgb(255, 255,255);\n"
 "border:1px solid #93C6FF;\n"
 "background-color: rgb(70, 70, 70);\n"
@@ -153,46 +125,46 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.button_detect = QtWidgets.QPushButton(self.frame_botones)
-        self.button_detect.setMinimumSize(QtCore.QSize(0, 38))
+        self.button_detect.setMinimumSize(QtCore.QSize(0, 20))
         self.button_detect.setLayoutDirection(QtCore.Qt.RightToLeft)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("images/inteligencia-artificial.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_detect.setIcon(icon3)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/inteligencia-artificial.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_detect.setIcon(icon)
         self.button_detect.setIconSize(QtCore.QSize(35, 35))
         self.button_detect.setObjectName("button_detect")
         self.verticalLayout_5.addWidget(self.button_detect)
         self.button_conf = QtWidgets.QPushButton(self.frame_botones)
-        self.button_conf.setMinimumSize(QtCore.QSize(0, 38))
+        self.button_conf.setMinimumSize(QtCore.QSize(0, 20))
         self.button_conf.setLayoutDirection(QtCore.Qt.RightToLeft)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("images/confirmar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_conf.setIcon(icon4)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("images/confirmar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_conf.setIcon(icon1)
         self.button_conf.setIconSize(QtCore.QSize(35, 35))
         self.button_conf.setObjectName("button_conf")
         self.verticalLayout_5.addWidget(self.button_conf)
         self.button_send = QtWidgets.QPushButton(self.frame_botones)
-        self.button_send.setMinimumSize(QtCore.QSize(0, 38))
+        self.button_send.setMinimumSize(QtCore.QSize(0, 20))
         self.button_send.setLayoutDirection(QtCore.Qt.RightToLeft)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("images/enviar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_send.setIcon(icon5)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("images/enviar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_send.setIcon(icon2)
         self.button_send.setIconSize(QtCore.QSize(30, 30))
         self.button_send.setObjectName("button_send")
         self.verticalLayout_5.addWidget(self.button_send)
         self.verticalLayout_4.addWidget(self.frame_botones)
-        self.frame_datos2 = QtWidgets.QFrame(self.frame_datos)
-        self.frame_datos2.setStyleSheet("QFrame{\n"
+        self.frame_2 = QtWidgets.QFrame(self.frame_datos)
+        self.frame_2.setStyleSheet("QFrame{\n"
 "background-color: rgb(69, 74, 88);\n"
 "}\n"
 "QPushButton{\n"
 "background-color: rgb(69, 74, 88);\n"
-"border-radius:30px;\n"
+"border-radius:20px;\n"
 "}\n"
 "QPushButton:hover{\n"
 "background-color: rgb(0, 0, 0);\n"
 "}\n"
 "QLabel{\n"
-"font: 14pt \"Consolas\";\n"
+"font: 13pt \"Consolas\";\n"
 "color: rgb(255, 255,255);\n"
 "}\n"
 "\n"
@@ -200,7 +172,7 @@ class Ui_MainWindow(object):
 "border:1px solid #93C6FF;\n"
 "border-radius:5px;\n"
 "background-color: rgb(70, 70, 70);\n"
-"font: 13pt \"Consolas\";\n"
+"font: 12pt \"Consolas\";\n"
 "color: rgb(255, 255,255);\n"
 "}\n"
 "\n"
@@ -208,59 +180,105 @@ class Ui_MainWindow(object):
 "border-radius:5px;\n"
 "border:1px solid #93C6FF;\n"
 "background-color: rgb(70, 70, 70);\n"
-"font: 13pt \"Consolas\";\n"
+"font: 12pt \"Consolas\";\n"
 "color: rgb(255, 255,255);\n"
 "}")
-        self.frame_datos2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_datos2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_datos2.setObjectName("frame_datos2")
-        self.label_3 = QtWidgets.QLabel(self.frame_datos2)
-        self.label_3.setGeometry(QtCore.QRect(0, 60, 231, 30))
-        self.label_3.setObjectName("label_3")
-        self.label_4 = QtWidgets.QLabel(self.frame_datos2)
-        self.label_4.setGeometry(QtCore.QRect(0, 110, 221, 30))
-        self.label_4.setObjectName("label_4")
-        self.label_5 = QtWidgets.QLabel(self.frame_datos2)
-        self.label_5.setGeometry(QtCore.QRect(0, 350, 181, 30))
-        self.label_5.setObjectName("label_5")
-        self.label_6 = QtWidgets.QLabel(self.frame_datos2)
-        self.label_6.setGeometry(QtCore.QRect(0, 10, 221, 30))
-        self.label_6.setObjectName("label_6")
-        self.button_plas = QtWidgets.QPushButton(self.frame_datos2)
-        self.button_plas.setGeometry(QtCore.QRect(296, 162, 60, 60))
-        self.button_plas.setStyleSheet("")
-        self.button_plas.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("images/mas (2).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_plas.setIcon(icon6)
-        self.button_plas.setIconSize(QtCore.QSize(70, 70))
-        self.button_plas.setObjectName("button_plas")
-        self.out_sticks = QtWidgets.QTextBrowser(self.frame_datos2)
-        self.out_sticks.setGeometry(QtCore.QRect(261, 56, 130, 38))
+        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_2.setObjectName("frame_2")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.frame_2)
+        self.verticalLayout_8.setContentsMargins(0, 5, 0, 0)
+        self.verticalLayout_8.setSpacing(0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.frame_11 = QtWidgets.QFrame(self.frame_2)
+        self.frame_11.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_11.setObjectName("frame_11")
+        self.label_8 = QtWidgets.QLabel(self.frame_11)
+        self.label_8.setGeometry(QtCore.QRect(0, 0, 168, 33))
+        self.label_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_8.setObjectName("label_8")
+        self.in_npackage = QtWidgets.QLineEdit(self.frame_11)
+        self.in_npackage.setGeometry(QtCore.QRect(242, 0, 131, 33))
+        self.in_npackage.setMinimumSize(QtCore.QSize(0, 33))
+        self.in_npackage.setObjectName("in_npackage")
+        self.verticalLayout_8.addWidget(self.frame_11)
+        self.frame_12 = QtWidgets.QFrame(self.frame_2)
+        self.frame_12.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_12.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_12.setObjectName("frame_12")
+        self.label_9 = QtWidgets.QLabel(self.frame_12)
+        self.label_9.setGeometry(QtCore.QRect(0, 0, 231, 33))
+        self.label_9.setMinimumSize(QtCore.QSize(0, 33))
+        self.label_9.setObjectName("label_9")
+        self.out_sticks = QtWidgets.QTextBrowser(self.frame_12)
+        self.out_sticks.setGeometry(QtCore.QRect(242, 0, 131, 33))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.out_sticks.sizePolicy().hasHeightForWidth())
+        self.out_sticks.setSizePolicy(sizePolicy)
+        self.out_sticks.setMinimumSize(QtCore.QSize(0, 33))
         font = QtGui.QFont()
         font.setFamily("Consolas")
-        font.setPointSize(13)
+        font.setPointSize(12)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         self.out_sticks.setFont(font)
         self.out_sticks.setObjectName("out_sticks")
-        self.out_diameter = QtWidgets.QTextBrowser(self.frame_datos2)
-        self.out_diameter.setGeometry(QtCore.QRect(261, 106, 130, 38))
+        self.verticalLayout_8.addWidget(self.frame_12)
+        self.frame_13 = QtWidgets.QFrame(self.frame_2)
+        self.frame_13.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_13.setObjectName("frame_13")
+        self.label_10 = QtWidgets.QLabel(self.frame_13)
+        self.label_10.setGeometry(QtCore.QRect(0, 0, 221, 33))
+        self.label_10.setMinimumSize(QtCore.QSize(0, 33))
+        self.label_10.setObjectName("label_10")
+        self.out_diameter = QtWidgets.QTextBrowser(self.frame_13)
+        self.out_diameter.setGeometry(QtCore.QRect(242, 0, 131, 33))
+        self.out_diameter.setMinimumSize(QtCore.QSize(0, 33))
         self.out_diameter.setObjectName("out_diameter")
-        self.out_correction = QtWidgets.QTextBrowser(self.frame_datos2)
-        self.out_correction.setGeometry(QtCore.QRect(261, 226, 130, 38))
+        self.verticalLayout_8.addWidget(self.frame_13)
+        self.frame_14 = QtWidgets.QFrame(self.frame_2)
+        self.frame_14.setMinimumSize(QtCore.QSize(0, 44))
+        self.frame_14.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_14.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_14.setObjectName("frame_14")
+        self.button_plas = QtWidgets.QPushButton(self.frame_14)
+        self.button_plas.setGeometry(QtCore.QRect(280, 0, 43, 43))
+        self.button_plas.setStyleSheet("")
+        self.button_plas.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("images/mas (2).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_plas.setIcon(icon3)
+        self.button_plas.setIconSize(QtCore.QSize(55, 55))
+        self.button_plas.setObjectName("button_plas")
+        self.verticalLayout_8.addWidget(self.frame_14)
+        self.frame_15 = QtWidgets.QFrame(self.frame_2)
+        self.frame_15.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_15.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_15.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_15.setObjectName("frame_15")
+        self.label_12 = QtWidgets.QLabel(self.frame_15)
+        self.label_12.setGeometry(QtCore.QRect(0, 0, 261, 33))
+        self.label_12.setObjectName("label_12")
+        self.out_correction = QtWidgets.QTextBrowser(self.frame_15)
+        self.out_correction.setGeometry(QtCore.QRect(242, 0, 131, 33))
+        self.out_correction.setMinimumSize(QtCore.QSize(0, 33))
         self.out_correction.setObjectName("out_correction")
-        self.out_total = QtWidgets.QTextBrowser(self.frame_datos2)
-        self.out_total.setGeometry(QtCore.QRect(261, 346, 130, 38))
-        self.out_total.setObjectName("out_total")
-        self.in_npackge = QtWidgets.QLineEdit(self.frame_datos2)
-        self.in_npackge.setGeometry(QtCore.QRect(261, 6, 130, 38))
-        self.in_npackge.setStyleSheet("")
-        self.in_npackge.setText("")
-        self.in_npackge.setObjectName("in_npackge")
-        self.button_less = QtWidgets.QPushButton(self.frame_datos2)
-        self.button_less.setGeometry(QtCore.QRect(296, 270, 60, 60))
+        self.verticalLayout_8.addWidget(self.frame_15)
+        self.frame_16 = QtWidgets.QFrame(self.frame_2)
+        self.frame_16.setMinimumSize(QtCore.QSize(0, 44))
+        self.frame_16.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_16.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_16.setObjectName("frame_16")
+        self.button_less = QtWidgets.QPushButton(self.frame_16)
+        self.button_less.setGeometry(QtCore.QRect(280, 0, 43, 43))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -269,21 +287,32 @@ class Ui_MainWindow(object):
         self.button_less.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.button_less.setStyleSheet("")
         self.button_less.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("images/menos (1).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_less.setIcon(icon7)
-        self.button_less.setIconSize(QtCore.QSize(70, 70))
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("images/menos (1).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_less.setIcon(icon4)
+        self.button_less.setIconSize(QtCore.QSize(55, 55))
         self.button_less.setObjectName("button_less")
-        self.label_7 = QtWidgets.QLabel(self.frame_datos2)
-        self.label_7.setGeometry(QtCore.QRect(0, 230, 261, 30))
-        self.label_7.setObjectName("label_7")
-        self.verticalLayout_4.addWidget(self.frame_datos2)
+        self.verticalLayout_8.addWidget(self.frame_16)
+        self.frame_17 = QtWidgets.QFrame(self.frame_2)
+        self.frame_17.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_17.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_17.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_17.setObjectName("frame_17")
+        self.label_11 = QtWidgets.QLabel(self.frame_17)
+        self.label_11.setGeometry(QtCore.QRect(0, 0, 181, 33))
+        self.label_11.setObjectName("label_11")
+        self.out_total = QtWidgets.QTextBrowser(self.frame_17)
+        self.out_total.setGeometry(QtCore.QRect(242, 0, 131, 33))
+        self.out_total.setMinimumSize(QtCore.QSize(0, 33))
+        self.out_total.setObjectName("out_total")
+        self.verticalLayout_8.addWidget(self.frame_17)
+        self.verticalLayout_4.addWidget(self.frame_2)
         self.verticalLayout_4.setStretch(0, 2)
-        self.verticalLayout_4.setStretch(1, 5)
+        self.verticalLayout_4.setStretch(1, 6)
         self.horizontalLayout_2.addWidget(self.frame_datos)
         self.frame_imagen = QtWidgets.QFrame(self.frame_inferior)
-        self.frame_imagen.setMinimumSize(QtCore.QSize(600, 552))
-        self.frame_imagen.setMaximumSize(QtCore.QSize(600, 16777215))
+        self.frame_imagen.setMinimumSize(QtCore.QSize(0, 0))
+        self.frame_imagen.setMaximumSize(QtCore.QSize(100000, 16777215))
         self.frame_imagen.setStyleSheet("QFrame{\n"
 "background-color: rgb(69, 74, 88);\n"
 "}\n"
@@ -291,48 +320,68 @@ class Ui_MainWindow(object):
         self.frame_imagen.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_imagen.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_imagen.setObjectName("frame_imagen")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_imagen)
-        self.verticalLayout_3.setContentsMargins(40, 0, 40, 0)
-        self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame_imagen)
+        self.gridLayout_2.setObjectName("gridLayout_2")
         self.tabWidget = QtWidgets.QTabWidget(self.frame_imagen)
-        self.tabWidget.setMaximumSize(QtCore.QSize(505, 530))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
+        self.tabWidget.setSizePolicy(sizePolicy)
+        self.tabWidget.setMaximumSize(QtCore.QSize(640, 600))
         self.tabWidget.setStyleSheet(" QTabBar::tab {\n"
-"font: 14pt \"Consolas\";\n"
+"font: 13pt \"Consolas\";\n"
 "color:rgb(255, 255,255);\n"
 "border:2px solid #93C6FF;\n"
-"background-color: rgb(70, 70, 70);         \n"
+"background-color: rgb(70, 70, 70);\n"
 "                min-width:130px; /* Cambia el ancho mínimo de los botones */\n"
-"                padding: 8px; /* Cambia el espacio interno de los botones */\n"
+"                padding: 5px; /* Cambia el espacio interno de los botones */         \n"
+"\n"
 "            }\n"
 "\n"
-"            QTabBar::tab:selected {\n"
-"font: 14pt \"Consolas\";\n"
+"QTabBar::tab:selected {\n"
+"font: 13pt \"Consolas\";\n"
 "color:rgb(255, 255,255);\n"
-"border:3px solid #93C6FF;\n"
 "background-color: rgb(0, 0, 0);    \n"
 "            }\n"
 "QTabWidget::pane {\n"
-"     border:3px solid #93C6FF;\n"
+" border:3px solid #93C6FF;    \n"
 "background-color: rgb(70, 70, 70);    \n"
 "            }")
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.tab)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.out_img = QtWidgets.QLabel(self.tab)
-        self.out_img.setGeometry(QtCore.QRect(0, 0, 500, 500))
-        self.out_img.setText("")
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.out_img.sizePolicy().hasHeightForWidth())
+        self.out_img.setSizePolicy(sizePolicy)
+        self.out_img.setMinimumSize(QtCore.QSize(300, 300))
+        self.out_img.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.out_img.setAlignment(QtCore.Qt.AlignCenter)
         self.out_img.setObjectName("out_img")
+        self.verticalLayout_3.addWidget(self.out_img)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.tab_2)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.out_detect = QtWidgets.QLabel(self.tab_2)
-        self.out_detect.setGeometry(QtCore.QRect(0, 0, 500, 500))
-        self.out_detect.setText("")
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.out_detect.sizePolicy().hasHeightForWidth())
+        self.out_detect.setSizePolicy(sizePolicy)
+        self.out_detect.setMinimumSize(QtCore.QSize(269, 269))
+        self.out_detect.setMaximumSize(QtCore.QSize(640, 640))
+        self.out_detect.setAlignment(QtCore.Qt.AlignCenter)
         self.out_detect.setObjectName("out_detect")
+        self.verticalLayout_7.addWidget(self.out_detect)
         self.tabWidget.addTab(self.tab_2, "")
-        self.verticalLayout_3.addWidget(self.tabWidget)
+        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1)
         self.horizontalLayout_2.addWidget(self.frame_imagen)
         self.verticalLayout_2.addWidget(self.frame_inferior)
         self.verticalLayout_2.setStretch(0, 1)
@@ -350,13 +399,14 @@ class Ui_MainWindow(object):
         self.button_detect.setText(_translate("MainWindow", "Detectar  "))
         self.button_conf.setText(_translate("MainWindow", "Confirmar "))
         self.button_send.setText(_translate("MainWindow", "Enviar    "))
-        self.label_3.setText(_translate("MainWindow", "Palos Detectados:"))
-        self.label_4.setText(_translate("MainWindow", "Diametro Promedio:"))
-        self.label_5.setText(_translate("MainWindow", "Palos Totales:"))
-        self.label_6.setText(_translate("MainWindow", "N° de Paquete:"))
-        self.in_npackge.setPlaceholderText(_translate("MainWindow", "Escribe N°"))
-        self.label_7.setText(_translate("MainWindow", "Correción Detección:"))
+        self.label_8.setText(_translate("MainWindow", "N° de Paquete:"))
+        self.label_9.setText(_translate("MainWindow", "Palos Detectados:"))
+        self.label_10.setText(_translate("MainWindow", "Diametro Promedio:"))
+        self.label_12.setText(_translate("MainWindow", "Correción Detección:"))
+        self.label_11.setText(_translate("MainWindow", "Palos Totales:"))
+        self.out_img.setText(_translate("MainWindow", "TextLabel"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Fotografia"))
+        self.out_detect.setText(_translate("MainWindow", "TextLabel"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Detección"))
 
 

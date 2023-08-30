@@ -41,6 +41,9 @@ def error_confirm():
 
 #cuando se clickea detectar saca la foto, corre el programa detect_custom, detecta los palos y nos muestra el resultado
 def on_detect_click():
+    ui.tabWidget.setFixedSize(MainWindow.size().height()-58-30,MainWindow.size().height()-58)
+    ui.out_img.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
+    ui.out_detect.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
     global sitck_correct, total_sticks, sticks,conf, diameter,n_package
     sticks=0
     diameter=0
@@ -55,12 +58,13 @@ def on_detect_click():
         ui.out_diameter.setPlainText(str(round(diameter, 3)) + " cm")
 
         img_stick = QPixmap(image_path)
-        img_stick_500 = img_stick.scaled(500, 500)
+
+        img_stick_500 = img_stick.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
 
         ui.out_img.setPixmap(img_stick_500)    
 
         img_detecction = QPixmap(image_detect_path)
-        img_detecction_500 = img_detecction.scaled(500, 500)
+        img_detecction_500 = img_detecction.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
         ui.out_detect.setPixmap(img_detecction_500)
         sitck_correct=0
         ui.out_correction.setPlainText(str(sitck_correct))
@@ -82,7 +86,6 @@ def on_plus_click():
 
 # cuando se cliequea el boton - quita 1 stick a la correción y a los palos totales
 def on_less_click():
-
     global sitck_correct, total_sticks, sticks, conf
 
     if conf==0 :
@@ -96,7 +99,7 @@ def on_less_click():
 def style_conf(conf):
     if conf==0:
         ui.button_conf.setStyleSheet("QPushButton{\n"
-        "font: 16pt \"Consolas\";\n"
+        "font: 14pt \"Consolas\";\n"
         "color:rgb(255, 255,255);\n"
         "border:1px solid #93C6FF;\n"
         "background-color: rgb(0, 0, 0);\n"
@@ -110,7 +113,7 @@ def style_conf(conf):
         "")
     else: 
         ui.button_conf.setStyleSheet("QPushButton{\n"
-        "font: 16pt \"Consolas\";\n"
+        "font: 14pt \"Consolas\";\n"
         "color:rgb(255, 255,255);\n"
         "border:1px solid #93C6FF;\n"
         "background-color: rgb(70, 70, 70);\n"
@@ -127,13 +130,12 @@ def style_conf(conf):
 def on_conf_click():
     global conf,n_package
     if conf==0 :
-        ui.in_npackge.setEnabled(False)
-
-        n_package=ui.in_npackge.text()
+        ui.in_npackage.setEnabled(False)
+        n_package=ui.in_npackage.text()
         style_conf(conf)
         conf=1
     else:
-        ui.in_npackge.setEnabled(True)
+        ui.in_npackage.setEnabled(True)
         style_conf(conf)
         conf=0
         
@@ -149,7 +151,6 @@ def on_send_click():
     else:
         error_send(4)
 
-       
 if __name__ == "__main__":
 
     #creamos la ventana principal
@@ -157,7 +158,6 @@ if __name__ == "__main__":
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-
     # Click botones
     ui.button_detect.clicked.connect(on_detect_click)
     ui.button_plas.clicked.connect(on_plus_click)
@@ -165,6 +165,6 @@ if __name__ == "__main__":
     ui.button_send.clicked.connect(on_send_click)
     ui.button_conf.clicked.connect(on_conf_click)
 
-    MainWindow.show()
 
+    MainWindow.show()
     sys.exit(app.exec_())
