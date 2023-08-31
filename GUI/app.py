@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from yoloV5.custom_detect import main as run_detect
 from detect_sticks import Ui_MainWindow
+from PyQt5.QtWidgets import QApplication, QMessageBox
 
 #variables globales
 sticks=0
@@ -13,7 +14,7 @@ conf=0
 n_package=""
 diameter=0
 
-from PyQt5.QtWidgets import QApplication, QMessageBox
+
 
 #Adventencia de enviar y confirmar, crea una ventana emergente con messagebox
 def error_send(n):
@@ -42,6 +43,7 @@ def error_confirm():
 #cuando se clickea detectar saca la foto, corre el programa detect_custom, detecta los palos y nos muestra el resultado
 def on_detect_click():
     ui.tabWidget.setFixedSize(MainWindow.size().height()-58-30,MainWindow.size().height()-58)
+
     ui.out_img.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
     ui.out_detect.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
     global sitck_correct, total_sticks, sticks,conf, diameter,n_package
