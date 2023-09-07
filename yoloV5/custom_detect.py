@@ -226,20 +226,21 @@ def main():
     # Get the number of sticks within the main package
     sticks_within_package = filter_sticks_within_package(sticks, main_package)
 
-    # Draw the the main package and the sticks
-    image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
 
-    # Get the diameter of the sticks
+    # Get the diameter of the sticks and filter diameters much smaller than the average
     avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
-    diameters_sticks = calculate_sticks_diameter(avg_real_package_diameter, 
+    diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
                                           config_data["img_size"],
                                           main_package,
                                           sticks_within_package)
 
-    # Calculate average diameter
-    prom_diameters = sum(diameters_sticks)/len(diameters_sticks,)
+    # Draw the the main package and the sticks
+    image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
 
-    print(image_main_with_boxes_path)
+    # Calculate average diameter
+    prom_diameters = sum(diameters_sticks)/len(diameters_sticks)
+
+    print(prom_diameters)
     return prom_diameters, len(sticks_within_package), image_main_with_boxes_path, image_path
 
 

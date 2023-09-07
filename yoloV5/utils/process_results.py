@@ -51,7 +51,7 @@ def filter_sticks_within_package(sticks:np.array, package:np.array) -> np.array:
         if x_min < x_s < x_max and y_min < y_s < y_max:
             filtered_sticks.append(stick)
 
-    return np.array(filtered_sticks)
+    return (filtered_sticks)
 def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_package:int, config_data:dict) -> str:
 
     # Load image
@@ -63,9 +63,10 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
 
     # Dibujar el recuadro del paquete principal en verde
     _, x, y, w, h = main_package_dims * img_size
+    r=max(int(w)/2,int(h)/2)
 
     #cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
-    cv2.circle(image1, (int(x), int(y)), int(((w+h)/4)), (0, 255, 0), 2)
+    cv2.circle(image1, (int(x), int(y)), int(r), (0, 255, 0), 2)
 
     # Draw rectangles 
     for stick in sticks_within_package:
@@ -125,7 +126,6 @@ def calculate_sticks_diameter(package_diameter:float, img_size:int, main_package
     diam_sticks=[]
 
     for stick in sticks_within_package:
-
         _, x_s, y_s, w_s, h_s=stick*img_size
 
         diam_stick_pixel=(w_s+h_s)/2
@@ -134,5 +134,18 @@ def calculate_sticks_diameter(package_diameter:float, img_size:int, main_package
 
         diam_sticks.append(diam_stick_cm)
 
-    return(diam_sticks)
+    prom_diameters = sum(diam_sticks)/len(diam_sticks)
+    print(prom_diameters)
+    index_delete=[]
+
+    for i in range(len(diam_sticks)):
+        if diam_sticks[i]<prom_diameters*0.6:
+            index_delete.append(i)
+
+    for index in reversed(index_delete):
+        del diam_sticks[index]
+        del sticks_within_package[index]
+
+
+    return (diam_sticks,sticks_within_package)
 

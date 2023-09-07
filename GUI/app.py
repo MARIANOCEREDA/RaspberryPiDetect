@@ -1,6 +1,8 @@
 import sys
-from PyQt5 import uic
-from PyQt5.QtGui import QPixmap
+import cv2
+import threading
+from PyQt5 import uic, QtGui, QtCore
+from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from yoloV5.custom_detect import main as run_detect
 from detect_sticks import Ui_MainWindow
@@ -13,8 +15,8 @@ sitck_correct=0
 conf=0
 n_package=""
 diameter=0
-
-
+capture_video = True
+current_frame = None
 
 #Adventencia de enviar y confirmar, crea una ventana emergente con messagebox
 def error_send(n):
@@ -46,14 +48,18 @@ def on_detect_click():
 
     ui.out_img.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
     ui.out_detect.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
-    global sitck_correct, total_sticks, sticks,conf, diameter,n_package
+
+    global sitck_correct, total_sticks, sticks,conf, diameter,n_package, current_frame
     sticks=0
     diameter=0
     ui.out_sticks.setPlainText(str(sticks))
     ui.out_diameter.setPlainText(str(round(diameter, 3))+" cm")
  
     if conf==0 :
-        
+        if current_frame is not None:
+            image_filename = "captura_.png"
+            cv2.imwrite(image_path, current_frame)
+
         diameter, sticks, image_detect_path, image_path = run_detect()
 
         ui.out_sticks.setPlainText(str(sticks))
@@ -153,6 +159,28 @@ def on_send_click():
     else:
         error_send(4)
 
+def VideoCam():
+    global capture_video, current_frame
+    cap = cv2.VideoCapture(0)
+    while capture_video:
+        ret, frame = cap.read()
+        if ret:
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            h, w, ch = frame_rgb.shape
+            bytes_per_line = ch * w
+            img = QImage(frame_rgb.data, w, h, bytes_per_line, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(img)
+
+            current_frame = pixmap #image actual
+            ui.out_cam.setPixmap(pixmap)
+            QApplication.processEvents()  # Actualiza la interfaz de usuario
+
+def on_app_quit():
+    global capture_video
+    capture_video = False
+    video_thread.join()  # Esperamos a que el hilo termine antes de salir por completo
+    sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
+
 if __name__ == "__main__":
 
     #creamos la ventana principal
@@ -166,7 +194,13 @@ if __name__ == "__main__":
     ui.button_less.clicked.connect(on_less_click)
     ui.button_send.clicked.connect(on_send_click)
     ui.button_conf.clicked.connect(on_conf_click)
-
-
     MainWindow.show()
+
+    # Iniciar el hilo de captura de webcam
+    video_thread = threading.Thread(target=VideoCam)
+    video_thread.start()
+
+     # Capturar el evento de cierre de la aplicación
+    app.aboutToQuit.connect(on_app_quit)
+
     sys.exit(app.exec_())
