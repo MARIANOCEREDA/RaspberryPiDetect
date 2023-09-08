@@ -1,6 +1,8 @@
 import sys
 import cv2
 import threading
+import os
+import numpy as np
 from PyQt5 import uic, QtGui, QtCore
 from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
@@ -41,6 +43,53 @@ def error_confirm():
     error_message = "No puede modificar el programa luego de confirmar"
     QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
 
+def error_detect(message):
+    error_message = message
+    QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
+
+
+def linea_img():
+    
+    # Resolución de la imagen de la cámara Sony IMX219
+    resolucion_horizontal = 3280  # Ancho de la imagen en píxeles
+
+    # Escala en píxeles por metro
+    escala_pixeles_por_metro = resolucion_horizontal / 1.0  # 1 metro en la imagen
+
+    # Longitud real de la línea en metros
+    longitud_real = 1.3
+
+    # Profundidad deseada en metros
+    profundidad_deseada = 1.0
+
+    # Longitud en píxeles de la línea
+    longitud_en_pixeles = int(longitud_real * escala_pixeles_por_metro)
+
+    # Profundidad en píxeles desde el centro de la imagen
+    profundidad_en_pixeles = int(profundidad_deseada * escala_pixeles_por_metro)
+
+    # Crea una imagen en blanco con la resolución de la cámara
+    imagen = np.zeros((2464, 3280, 3), dtype=np.uint8)
+
+    # Coordenadas para dibujar la línea
+    y = 1232  # Altura (vertical) del centro de la imagen
+    start_x = (resolucion_horizontal // 2) - profundidad_en_pixeles
+    end_x = start_x - longitud_en_pixeles
+    print
+    # Color de la línea (por ejemplo, verde en formato BGR)
+    color = (0, 255, 0)
+
+    # Grosor de la línea
+    thickness = 2
+
+    # Dibuja la línea en la imagen
+    cv2.line(imagen, (start_x, y), (end_x, y), color, thickness)
+    imagen_redimensionada = cv2.resize(imagen, (1000, 600))
+    # Muestra la imagen resultante
+    cv2.imshow('Imagen con línea', imagen_redimensionada)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
 
 #cuando se clickea detectar saca la foto, corre el programa detect_custom, detecta los palos y nos muestra el resultado
 def on_detect_click():
@@ -58,26 +107,30 @@ def on_detect_click():
     if conf==0 :
         if current_frame is not None:
             image_filename = "captura_.png"
-            cv2.imwrite(image_path, current_frame)
+            cam_path=os.path.join(os.path.dirname(__file__),"capturs", "captura_.png")
+            current_frame.save(cam_path)
 
-        diameter, sticks, image_detect_path, image_path = run_detect()
+        diameter, sticks, image_detect_path, image_path, message = run_detect()
 
-        ui.out_sticks.setPlainText(str(sticks))
-        ui.out_diameter.setPlainText(str(round(diameter, 3)) + " cm")
+        if sticks==0:
+            error_detect(message)
+        else:
+            ui.out_sticks.setPlainText(str(sticks))
+            ui.out_diameter.setPlainText(str(round(diameter, 3)) + " cm")
 
-        img_stick = QPixmap(image_path)
+            img_stick = QPixmap(image_path)
 
-        img_stick_500 = img_stick.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
+            img_stick_500 = img_stick.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
 
-        ui.out_img.setPixmap(img_stick_500)    
+            ui.out_img.setPixmap(img_stick_500)    
 
-        img_detecction = QPixmap(image_detect_path)
-        img_detecction_500 = img_detecction.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
-        ui.out_detect.setPixmap(img_detecction_500)
-        sitck_correct=0
-        ui.out_correction.setPlainText(str(sitck_correct))
-        total_sticks=sticks+sitck_correct
-        ui.out_total.setPlainText(str(total_sticks))
+            img_detecction = QPixmap(image_detect_path)
+            img_detecction_500 = img_detecction.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
+            ui.out_detect.setPixmap(img_detecction_500)
+            sitck_correct=0
+            ui.out_correction.setPlainText(str(sitck_correct))
+            total_sticks=sticks+sitck_correct
+            ui.out_total.setPlainText(str(total_sticks))
     else :
         error_confirm()
 
@@ -182,7 +235,7 @@ def on_app_quit():
     sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
 
 if __name__ == "__main__":
-
+    #linea_img()
     #creamos la ventana principal
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()

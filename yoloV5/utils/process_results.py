@@ -135,7 +135,6 @@ def calculate_sticks_diameter(package_diameter:float, img_size:int, main_package
         diam_sticks.append(diam_stick_cm)
 
     prom_diameters = sum(diam_sticks)/len(diam_sticks)
-    print(prom_diameters)
     index_delete=[]
 
     for i in range(len(diam_sticks)):
