@@ -271,8 +271,10 @@ def on_send_click():
 
 
 def VideoCam():
+    
     global capture_video, current_frame
     cap = cv2.VideoCapture(0)
+
     while capture_video:
         ret, frame = cap.read()
         if ret:
