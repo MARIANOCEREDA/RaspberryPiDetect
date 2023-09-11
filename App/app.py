@@ -97,11 +97,7 @@ def linea_img():
 
 #cuando se clickea detectar saca la foto, corre el programa detect_custom, detecta los palos y nos muestra el resultado
 def on_detect_click():
-    ui.tabWidget.setFixedSize(MainWindow.size().height()-58-30,MainWindow.size().height()-58)
-
-    ui.out_img.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
-    ui.out_detect.setFixedSize(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
-
+ 
     global sitck_correct, total_sticks, sticks,conf, diameter,n_package, current_frame
     sticks=0
     diameter=0
@@ -288,6 +284,10 @@ if __name__ == "__main__":
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+
+    # Configurar la ventana principal en pantalla completa
+    MainWindow.setWindowState(QtCore.Qt.WindowFullScreen)
+    
     # Click botones
     ui.button_detect.clicked.connect(on_detect_click)
     ui.button_plas.clicked.connect(on_plus_click)

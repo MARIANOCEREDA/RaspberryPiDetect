@@ -5,6 +5,7 @@ from pathlib import Path
 import torch
 import yaml
 import numpy as np
+import datetime
 
 from models.common import DetectMultiBackend
 from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages
@@ -14,6 +15,8 @@ from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 from utils.process_results import *
 
+date_=datetime.datetime.now()
+date= str(date_.strftime("%Y-%m-%d %H_%M_%S"))
 
 @smart_inference_mode()
 def run_inference(
@@ -65,7 +68,7 @@ def run_inference(
     vid_path, vid_writer = [None] * bs, [None] * bs
 
     # limpia image.txt
-    txt_path = str(save_dir / 'labels' / 'image')  # Ruta al archivo image.txt
+    txt_path = str(save_dir / 'labels' / 'image')  # Ruta al archivo name.txt
     with open(txt_path + '.txt', 'w'):  # Borra el contenido existente
         pass
 
@@ -168,7 +171,7 @@ def run_inference(
 
 
 def main():
-
+    global date
     CONFIG_FILE = os.path.dirname(__file__) + "/config.yaml"
     with open(CONFIG_FILE) as f:
         config_data = yaml.safe_load(f)
@@ -211,16 +214,14 @@ def main():
                 dnn=False,  # use OpenCV DNN for ONNX inference
                 vid_stride=1,  # video frame-rate stride
             )
-
     sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"], "labels", "image.txt")
     packages_results_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "labels", "image.txt")
-    image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpg")
+    image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpeg")
+    # Read the results from the .txt files and save the content in the new path
+    sticks = read_results_from_txt(sticks_results_path, date, "sticks ")
+    packages = read_results_from_txt(packages_results_path,date, "packages ")
 
-    # Read the results from the .txt files
-    sticks = read_results_from_txt(sticks_results_path)
-    packages = read_results_from_txt(packages_results_path)
-
-    if not sticks:
+    if not sticks.any():
         message="No se detecto ningun palo en la imagen"
         print(message)
         return 0, 0, image_path, image_path, message
@@ -240,8 +241,12 @@ def main():
                                             main_package,
                                             sticks_within_package)
 
+        #Save the image in the new path
+        save_img(os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"],'image.jpeg'),date, "sticks ")
+        save_img(os.path.join(os.path.dirname(__file__), config_data["packages"]["results"],'image.jpeg'),date, "packages ")
+
         # Draw the the main package and the sticks
-        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
+        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data, date)
 
         # Calculate average diameter
         prom_diameters = sum(diameters_sticks)/len(diameters_sticks)
@@ -252,5 +257,5 @@ def main():
 
 if __name__ == '__main__':
 
-    _,_,_,_=main()
+    _,_,_,_,_=main()
 
