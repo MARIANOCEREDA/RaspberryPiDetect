@@ -76,7 +76,7 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     result = cv2.addWeighted(image1, 1 - (alpha / 255.0), white_image, (alpha / 255.0), 0)
     
     # Store image 
-    output_path = os.path.join(os.path.dirname(_file_) + "/../", config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME)
+    output_path = os.path.join(os.path.dirname(__file__) + "/../", config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME)
 
     cv2.imwrite(output_path, result)
 
