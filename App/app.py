@@ -266,12 +266,12 @@ def on_send_click():
             QMessageBox.warning(None, 'Advertencia', error_message, QMessageBox.Ok)
 
         else:
-            success_message = "La información enviada correctamente."
+            success_message = "La información fue enviada correctamente."
             QMessageBox.information(None, 'Información', success_message, QMessageBox.Ok)
 
 
 def VideoCam():
-    
+
     global capture_video, current_frame
     cap = cv2.VideoCapture(0)
 
@@ -295,6 +295,7 @@ def on_app_quit():
 
     video_thread.join()  # Esperamos a que el hilo termine antes de salir por completo
     sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
+
 
 if __name__ == "__main__":
 
