@@ -8,17 +8,17 @@ img_size: 640
 #img_size: [3964,2464]
 
 images:
-  results: ../images\main_packages
+  results: ../images/main_packages
 
 sticks:
   weights: weights/sticks/best.pt
-  results: ../images\sticks
+  results: ../images/sticks
   conf_thres: 0.60
   iou_thres: 0.45
 
 packages:
   weights: weights/packages/best.pt
-  results: ../images\packages
+  results: ../images/packages
   conf_thres: 0.50
   iou_thres: 0.45
 

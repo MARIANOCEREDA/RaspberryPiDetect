@@ -1,5 +1,8 @@
 import requests
 import json
+from App.config.logger_config import get_logger
+
+logger = get_logger("PackageDetectAPIRequests")
 
 class PackageDetectAPIRequests:
 
@@ -14,15 +17,14 @@ class PackageDetectAPIRequests:
             # Verificamos si la solicitud fue exitosa (código de estado 200)
             if response.status_code == 200:
 
-                print(response.json())
-
-                print("Solicitud GET exitosa")
+                logger.info(response.json())
+                logger.info("Solicitud GET exitosa")
 
                 return { "success":True }
             
             else:
                 
-                print(f"Error en la solicitud GET. Código de estado: {response.status_code}")
+                logger.error(f"Error en la solicitud GET. Código de estado: {response.status_code}")
 
                 return { "success":False }
 
@@ -30,7 +32,6 @@ class PackageDetectAPIRequests:
             print(f"Error en la solicitud GET: {str(e)}")
 
     def post_package(self):
-
 
         # Convierte los datos a formato JSON
         json_data = json.dumps(self.package_data)
@@ -42,20 +43,22 @@ class PackageDetectAPIRequests:
 
         try:
             # Realiza la solicitud POST con los datos en el cuerpo
-            response = requests.post(self.url, data=json_data, headers=headers)
+            response = requests.post(self.url, data=json_data, headers=headers, timeout=10)
             
             # Verifica si la solicitud fue exitosa (código de estado 200 o 201, dependiendo de la API)
             if response.status_code in [200, 201]:
 
-                print("Solicitud POST exitosa")
-                print("Mensaje de respuesta:")
+                logger.info("Solicitud POST exitosa")
 
                 return { "success":True, "response":response.text}
             else:
 
-                print(f"Error en la solicitud POST. Código de estado: {response.status_code}")
+                logger.error(f"Error en la solicitud POST. Código de estado: {response.status_code}")
 
                 return { "success":False, "code":response.status_code }
 
         except requests.exceptions.RequestException as e:
-            print(f"Error en la solicitud POST: {str(e)}")
+
+            logger.error(f"Error en la solicitud POST: {str(e)}")
+
+            return { "success":False, "code":"Bad Request"}

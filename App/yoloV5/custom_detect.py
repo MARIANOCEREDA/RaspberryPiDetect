@@ -222,6 +222,7 @@ def main():
     packages = read_results_from_txt(packages_results_path,date, "packages ")
 
     if not sticks.any():
+        
         message="No se detecto ningun palo en la imagen"
         print(message)
         return 0, 0, image_path, image_path, message

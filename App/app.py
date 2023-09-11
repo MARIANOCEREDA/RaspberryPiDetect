@@ -3,12 +3,12 @@ import cv2
 import threading
 import os
 import numpy as np
-from PyQt5 import uic, QtGui, QtCore
-from PyQt5.QtGui import QPixmap, QImage, QIcon
+from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
-from yoloV5.custom_detect import main as run_detect
+from App.yoloV5.custom_detect import main as run_detect
 from Gui_.detect_sticks_app import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMessageBox
+import yaml
 
 from managers.api_requests import PackageDetectAPIRequests
 from managers.local_storage_manager import LocalStorageManager
@@ -22,6 +22,15 @@ n_package=""
 diameter=0
 capture_video = True
 current_frame = None
+
+# config data
+global config_data
+
+def setup_config_file(env):
+    CONFIG_FILE = os.path.dirname(__file__) + f"/config/config.{env}.yaml"
+    with open(CONFIG_FILE) as f:
+        config = yaml.safe_load(f)
+    return config
 
 #Adventencia de enviar y confirmar, crea una ventana emergente con messagebox
 def error_send(n):
@@ -105,15 +114,17 @@ def on_detect_click():
     ui.out_diameter.setPlainText(str(round(diameter, 3))+" cm")
  
     if conf==0 :
+
         if current_frame is not None:
             image_filename = "captura_.png"
-            cam_path=os.path.join(os.path.dirname(__file__),"capturs", "captura_.png")
+            cam_path = os.path.join(os.path.dirname(__file__), "capturs", "captura_.png")
             current_frame.save(cam_path)
 
         diameter, sticks, image_detect_path, image_path, message = run_detect()
 
         if sticks==0:
             error_detect(message)
+
         else:
             ui.out_sticks.setPlainText(str(sticks))
             ui.out_diameter.setPlainText(str(round(diameter, 3)) + " cm")
@@ -131,6 +142,7 @@ def on_detect_click():
             ui.out_correction.setPlainText(str(sitck_correct))
             total_sticks=sticks+sitck_correct
             ui.out_total.setPlainText(str(total_sticks))
+
     else :
         error_confirm()
 
@@ -147,6 +159,7 @@ def on_plus_click():
         ui.out_correction.setPlainText(str(sitck_correct))
         total_sticks=sticks+sitck_correct
         ui.out_total.setPlainText(str(total_sticks))
+
     else :
         error_confirm()
 
@@ -230,8 +243,6 @@ def on_send_click():
     elif n_package=="":
         error_send(3)
     else:
-        api_manager = PackageDetectAPIRequests(package_data=package_data)
-        local_storage_manager = LocalStorageManager(package_data=package_data)
 
         package_data = {
             "packageNumber": n_package,
@@ -239,6 +250,12 @@ def on_send_click():
             "stickType": "medio poste",
             "averageDiameter": diameter
         }
+
+        print(package_data)
+        print(config_data)
+
+        api_manager = PackageDetectAPIRequests(package_data=package_data)
+        local_storage_manager = LocalStorageManager(config_data, package_data=package_data)
 
         local_storage_result = local_storage_manager.store_data()
 
@@ -278,15 +295,16 @@ def on_app_quit():
     sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
 
 if __name__ == "__main__":
-    #linea_img()
-    #creamos la ventana principal
+
+    config_data = setup_config_file(env="dev")
+
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
 
     # Configurar la ventana principal en pantalla completa
-    MainWindow.setWindowState(QtCore.Qt.WindowFullScreen)
+    # MainWindow.setWindowState(QtCore.Qt.WindowFullScreen)
     
     # Click botones
     ui.button_detect.clicked.connect(on_detect_click)
