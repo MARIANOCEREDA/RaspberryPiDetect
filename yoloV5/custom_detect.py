@@ -223,13 +223,13 @@ def main():
         message="No se detecto ningun palo en la imagen"
         print(message)
         return 0, 0, image_path, image_path, message
+    
     else :
         # Get the main package of the image
         main_package = get_main_package(packages)
 
         # Get the number of sticks within the main package
         sticks_within_package = filter_sticks_within_package(sticks, main_package)
-
 
         # Get the diameter of the sticks and filter diameters much smaller than the average
         avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
