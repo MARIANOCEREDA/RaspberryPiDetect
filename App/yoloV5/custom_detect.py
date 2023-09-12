@@ -218,8 +218,8 @@ def main():
     packages_results_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "labels", "image.txt")
     image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpeg")
     # Read the results from the .txt files and save the content in the new path
-    sticks = read_results_from_txt(sticks_results_path, date, "sticks ")
-    packages = read_results_from_txt(packages_results_path,date, "packages ")
+    sticks = read_results_from_txt(sticks_results_path)
+    packages = read_results_from_txt(packages_results_path)
 
     if not sticks.any():
         
@@ -242,12 +242,8 @@ def main():
                                             main_package,
                                             sticks_within_package)
 
-        #Save the image in the new path
-        save_img(os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"],'image.jpeg'),date, "sticks ")
-        save_img(os.path.join(os.path.dirname(__file__), config_data["packages"]["results"],'image.jpeg'),date, "packages ")
-
         # Draw the the main package and the sticks
-        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data, date)
+        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
 
         # Calculate average diameter
         prom_diameters = sum(diameters_sticks)/len(diameters_sticks)

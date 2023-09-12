@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>530</height>
+    <height>565</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -76,7 +76,7 @@ color:rgb(255, 255,255);
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>30</height>
+           <height>35</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -85,14 +85,11 @@ background-color: rgb(0, 0, 0);
 }
 
 QPushButton{
-border:0px;
-background-color:#93C6FF;
+background-color: rgb(0, 0, 0);
+border-radius:17px;
 }
-
 QPushButton:hover{
-border:5px;
-border-color:rgb(170, 4, 7);
-background-color: rgb(170, 4, 7);
+background-color:rgb(255, 255, 255);
 }
 QLabel{
 font: 16pt &quot;Consolas&quot;;
@@ -106,20 +103,17 @@ font: 16pt &quot;Consolas&quot;;
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="spacing">
-           <number>5</number>
-          </property>
           <property name="leftMargin">
            <number>15</number>
           </property>
           <property name="topMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QLabel" name="label">
@@ -152,6 +146,75 @@ font: 16pt &quot;Consolas&quot;;
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_min">
+            <property name="minimumSize">
+             <size>
+              <width>34</width>
+              <height>34</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>images/gui/menos (2).png</normaloff>images/gui/menos (2).png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>28</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_max">
+            <property name="minimumSize">
+             <size>
+              <width>34</width>
+              <height>34</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>images/gui/expandir.png</normaloff>images/gui/expandir.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>28</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_close">
+            <property name="minimumSize">
+             <size>
+              <width>34</width>
+              <height>34</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>images/gui/cerrar.png</normaloff>images/gui/cerrar.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>28</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -288,10 +351,6 @@ border:1px solid #93C6FF;
                   <property name="text">
                    <string>Detectar  </string>
                   </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>imagenes/inteligencia-artificial.png</normaloff>imagenes/inteligencia-artificial.png</iconset>
-                  </property>
                   <property name="iconSize">
                    <size>
                     <width>35</width>
@@ -314,10 +373,6 @@ border:1px solid #93C6FF;
                   <property name="text">
                    <string>Confirmar </string>
                   </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>imagenes/confirmar.png</normaloff>imagenes/confirmar.png</iconset>
-                  </property>
                   <property name="iconSize">
                    <size>
                     <width>35</width>
@@ -339,10 +394,6 @@ border:1px solid #93C6FF;
                   </property>
                   <property name="text">
                    <string>Enviar    </string>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>imagenes/enviar.png</normaloff>imagenes/enviar.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -607,12 +658,12 @@ color: rgb(255, 255,255);
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/mas.png</normaloff>imagenes/mas.png</iconset>
+                     <normaloff>images/gui/mas.png</normaloff>images/gui/mas.png</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>55</width>
-                     <height>55</height>
+                     <width>53</width>
+                     <height>53</height>
                     </size>
                    </property>
                   </widget>
@@ -703,12 +754,12 @@ color: rgb(255, 255,255);
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/menos.png</normaloff>imagenes/menos.png</iconset>
+                     <normaloff>images/gui/menos.png</normaloff>images/gui/menos.png</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>55</width>
-                     <height>55</height>
+                     <width>53</width>
+                     <height>53</height>
                     </size>
                    </property>
                   </widget>
@@ -791,29 +842,38 @@ background-color: rgb(69, 74, 88);
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QTabWidget" name="tabWidget">
-             <property name="geometry">
-              <rect>
-               <x>89</x>
-               <y>12</y>
-               <width>442</width>
-               <height>472</height>
-              </rect>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
              </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+             <property name="leftMargin">
+              <number>0</number>
              </property>
-             <property name="maximumSize">
-              <size>
-               <width>640</width>
-               <height>600</height>
-              </size>
+             <property name="topMargin">
+              <number>0</number>
              </property>
-             <property name="styleSheet">
-              <string notr="true"> QTabBar::tab {
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QTabWidget" name="tabWidget">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>600</width>
+                 <height>412</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"> QTabBar::tab {
 font: 13pt &quot;Consolas&quot;;
 color:rgb(255, 255,255);
 border:2px solid #93C6FF;
@@ -832,113 +892,115 @@ QTabWidget::pane {
  border:3px solid #93C6FF;    
 background-color: rgb(70, 70, 70);    
             }</string>
-             </property>
-             <property name="currentIndex">
-              <number>2</number>
-             </property>
-             <widget class="QWidget" name="tab_3">
-              <attribute name="title">
-               <string>Camara</string>
-              </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_6">
-               <item>
-                <widget class="QLabel" name="out_cam">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>300</width>
-                   <height>300</height>
-                  </size>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>false</bool>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QWidget" name="tab">
-              <attribute name="title">
-               <string>Fotografia</string>
-              </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <widget class="QLabel" name="out_img">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>300</width>
-                   <height>300</height>
-                  </size>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QWidget" name="tab_2">
-              <attribute name="title">
-               <string>Detección</string>
-              </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <widget class="QLabel" name="out_detect">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>269</width>
-                   <height>269</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>640</width>
-                   <height>640</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </widget>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="tab_3">
+                <attribute name="title">
+                 <string>Camara</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <widget class="QLabel" name="out_cam">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>300</width>
+                     <height>300</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>false</bool>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="tab">
+                <attribute name="title">
+                 <string>Fotografia</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <item>
+                  <widget class="QLabel" name="out_img">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>300</width>
+                     <height>300</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="tab_2">
+                <attribute name="title">
+                 <string>Detección</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="out_detect">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>269</width>
+                     <height>269</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>640</width>
+                     <height>640</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>

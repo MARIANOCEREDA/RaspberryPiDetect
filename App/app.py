@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from App.yoloV5.custom_detect import main as run_detect
 from Gui_.detect_sticks_app import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtCore import Qt  # Agrega esta línea
 import yaml
 
 from managers.api_requests import PackageDetectAPIRequests
@@ -296,6 +298,17 @@ def on_app_quit():
     video_thread.join()  # Esperamos a que el hilo termine antes de salir por completo
     sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
 
+def on_close_click():
+        QCoreApplication.instance().quit()
+
+def toggle_maximize():
+        if MainWindow.isMaximized() or MainWindow.isFullScreen():
+            MainWindow.showNormal()  # Restaura la ventana al tamaño normal
+        else:
+            MainWindow.setWindowState(Qt.WindowFullScreen)  # Maximiza la ventana o entra en pantalla completa
+
+def on_min_click():
+    MainWindow.showMinimized()  # Minimiza la ventana
 
 if __name__ == "__main__":
 
@@ -307,7 +320,7 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
 
     # Configurar la ventana principal en pantalla completa
-    # MainWindow.setWindowState(QtCore.Qt.WindowFullScreen)
+    MainWindow.setWindowState(Qt.WindowFullScreen)
     
     # Click botones
     ui.button_detect.clicked.connect(on_detect_click)
@@ -315,6 +328,9 @@ if __name__ == "__main__":
     ui.button_less.clicked.connect(on_less_click)
     ui.button_send.clicked.connect(on_send_click)
     ui.button_conf.clicked.connect(on_conf_click)
+    ui.button_close.clicked.connect(on_close_click)
+    ui.button_max.clicked.connect(toggle_maximize)
+    ui.button_min.clicked.connect(on_min_click)
     MainWindow.show()
 
     # Iniciar el hilo de captura de webcam

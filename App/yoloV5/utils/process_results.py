@@ -2,11 +2,10 @@ import os
 import numpy as np
 import cv2
 
-FILTERED_IMAGE_NAME = "image_main_with_boxes "
+FILTERED_IMAGE_NAME = "image_main_with_boxes.jpeg"
 
-def read_results_from_txt(file_path,date,key):
+def read_results_from_txt(file_path):
     data_list = []
-    new_path = os.path.join(os.path.dirname(file_path), key+date+".txt")
     # Open the file in read mode
     if os.path.exists(file_path):
         with open(file_path, "r") as file:
@@ -14,20 +13,9 @@ def read_results_from_txt(file_path,date,key):
                 # Split the line into a list of strings using spaces as separators
                 line_data = line.strip().split()
                 data_list.append(line_data)
-        with open(file_path, "r") as file_:
-            # read the content of txt
-            txt=file_.read()
-        with open(new_path, "w") as new_file:
-            # save the content in the new directory
-             new_file.write(txt)
-
     # Convert the list of lists to a NumPy array
     return np.array(data_list).astype(float)
 
-def save_img(img_pat, date, key):
-    img=cv2.imread(img_pat)
-    new_path=os.path.join(os.path.dirname(img_pat),"images",key+date+".jpeg")
-    cv2.imwrite(new_path,img)
 
 def get_main_package(packages:np.array) -> np.array:
 
@@ -61,7 +49,7 @@ def filter_sticks_within_package(sticks:np.array, package:np.array) -> np.array:
             filtered_sticks.append(stick)
 
     return (filtered_sticks)
-def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_package:int, config_data:dict, date:str) -> str:
+def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_package:int, config_data:dict) -> str:
 
     # Load image
     image1 = cv2.imread(image_path)
@@ -86,8 +74,7 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     result = cv2.addWeighted(image1, 1 - (alpha / 255.0), white_image, (alpha / 255.0), 0)
     
     # Store image 
-    output_path = os.path.join(os.path.dirname(__file__) + "/../", config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME + date + ".jpeg")
-    print(output_path)
+    output_path = os.path.join(os.path.dirname(__file__) + "/../", config_data["images"]["results"] + "/" + FILTERED_IMAGE_NAME)
     cv2.imwrite(output_path, result)
 
     return output_path

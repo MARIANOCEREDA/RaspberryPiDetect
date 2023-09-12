@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1024, 530)
+        MainWindow.resize(1024, 565)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -40,20 +40,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.frame_superior = QtWidgets.QFrame(self.frame)
-        self.frame_superior.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.frame_superior.setMaximumSize(QtCore.QSize(16777215, 35))
         self.frame_superior.setStyleSheet("QFrame{\n"
 "background-color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
 "QPushButton{\n"
-"border:0px;\n"
-"background-color:#93C6FF;\n"
+"background-color: rgb(0, 0, 0);\n"
+"border-radius:17px;\n"
 "}\n"
-"\n"
 "QPushButton:hover{\n"
-"border:5px;\n"
-"border-color:rgb(170, 4, 7);\n"
-"background-color: rgb(170, 4, 7);\n"
+"background-color:rgb(255, 255, 255);\n"
 "}\n"
 "QLabel{\n"
 "font: 16pt \"Consolas\";\n"
@@ -63,8 +60,7 @@ class Ui_MainWindow(object):
         self.frame_superior.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_superior.setObjectName("frame_superior")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_superior)
-        self.horizontalLayout.setContentsMargins(15, 5, 2, 5)
-        self.horizontalLayout.setSpacing(5)
+        self.horizontalLayout.setContentsMargins(15, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(self.frame_superior)
         font = QtGui.QFont()
@@ -79,6 +75,33 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.label)
         spacerItem = QtWidgets.QSpacerItem(477, 17, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
+        self.button_min = QtWidgets.QPushButton(self.frame_superior)
+        self.button_min.setMinimumSize(QtCore.QSize(34, 34))
+        self.button_min.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/gui/menos (2).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_min.setIcon(icon)
+        self.button_min.setIconSize(QtCore.QSize(28, 28))
+        self.button_min.setObjectName("button_min")
+        self.horizontalLayout.addWidget(self.button_min)
+        self.button_max = QtWidgets.QPushButton(self.frame_superior)
+        self.button_max.setMinimumSize(QtCore.QSize(34, 34))
+        self.button_max.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("images/gui/expandir.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_max.setIcon(icon1)
+        self.button_max.setIconSize(QtCore.QSize(28, 28))
+        self.button_max.setObjectName("button_max")
+        self.horizontalLayout.addWidget(self.button_max)
+        self.button_close = QtWidgets.QPushButton(self.frame_superior)
+        self.button_close.setMinimumSize(QtCore.QSize(34, 34))
+        self.button_close.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("images/gui/cerrar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_close.setIcon(icon2)
+        self.button_close.setIconSize(QtCore.QSize(28, 28))
+        self.button_close.setObjectName("button_close")
+        self.horizontalLayout.addWidget(self.button_close)
         self.verticalLayout_2.addWidget(self.frame_superior)
         self.frame_inferior = QtWidgets.QFrame(self.frame)
         self.frame_inferior.setStyleSheet("")
@@ -132,27 +155,18 @@ class Ui_MainWindow(object):
         self.button_detect = QtWidgets.QPushButton(self.frame_botones)
         self.button_detect.setMinimumSize(QtCore.QSize(0, 20))
         self.button_detect.setLayoutDirection(QtCore.Qt.RightToLeft)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("imagenes/inteligencia-artificial.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_detect.setIcon(icon)
         self.button_detect.setIconSize(QtCore.QSize(35, 35))
         self.button_detect.setObjectName("button_detect")
         self.verticalLayout_5.addWidget(self.button_detect)
         self.button_conf = QtWidgets.QPushButton(self.frame_botones)
         self.button_conf.setMinimumSize(QtCore.QSize(0, 20))
         self.button_conf.setLayoutDirection(QtCore.Qt.RightToLeft)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("imagenes/confirmar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_conf.setIcon(icon1)
         self.button_conf.setIconSize(QtCore.QSize(35, 35))
         self.button_conf.setObjectName("button_conf")
         self.verticalLayout_5.addWidget(self.button_conf)
         self.button_send = QtWidgets.QPushButton(self.frame_botones)
         self.button_send.setMinimumSize(QtCore.QSize(0, 20))
         self.button_send.setLayoutDirection(QtCore.Qt.RightToLeft)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("imagenes/enviar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_send.setIcon(icon2)
         self.button_send.setIconSize(QtCore.QSize(30, 30))
         self.button_send.setObjectName("button_send")
         self.verticalLayout_5.addWidget(self.button_send)
@@ -259,9 +273,9 @@ class Ui_MainWindow(object):
         self.button_plas.setStyleSheet("")
         self.button_plas.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("imagenes/mas.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("images/gui/mas.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_plas.setIcon(icon3)
-        self.button_plas.setIconSize(QtCore.QSize(55, 55))
+        self.button_plas.setIconSize(QtCore.QSize(53, 53))
         self.button_plas.setObjectName("button_plas")
         self.verticalLayout_8.addWidget(self.frame_14)
         self.frame_15 = QtWidgets.QFrame(self.frame_2)
@@ -293,9 +307,9 @@ class Ui_MainWindow(object):
         self.button_less.setStyleSheet("")
         self.button_less.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("imagenes/menos.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("images/gui/menos.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_less.setIcon(icon4)
-        self.button_less.setIconSize(QtCore.QSize(55, 55))
+        self.button_less.setIconSize(QtCore.QSize(53, 53))
         self.button_less.setObjectName("button_less")
         self.verticalLayout_8.addWidget(self.frame_16)
         self.frame_17 = QtWidgets.QFrame(self.frame_2)
@@ -325,14 +339,17 @@ class Ui_MainWindow(object):
         self.frame_imagen.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_imagen.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_imagen.setObjectName("frame_imagen")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.frame_imagen)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.tabWidget = QtWidgets.QTabWidget(self.frame_imagen)
-        self.tabWidget.setGeometry(QtCore.QRect(89, 12, 442, 472))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
         self.tabWidget.setSizePolicy(sizePolicy)
-        self.tabWidget.setMaximumSize(QtCore.QSize(640, 600))
+        self.tabWidget.setMaximumSize(QtCore.QSize(600, 412))
         self.tabWidget.setStyleSheet(" QTabBar::tab {\n"
 "font: 13pt \"Consolas\";\n"
 "color:rgb(255, 255,255);\n"
@@ -405,6 +422,7 @@ class Ui_MainWindow(object):
         self.out_detect.setObjectName("out_detect")
         self.verticalLayout_7.addWidget(self.out_detect)
         self.tabWidget.addTab(self.tab_2, "")
+        self.horizontalLayout_3.addWidget(self.tabWidget)
         self.horizontalLayout_2.addWidget(self.frame_imagen)
         self.verticalLayout_2.addWidget(self.frame_inferior)
         self.verticalLayout_2.setStretch(0, 1)
@@ -412,7 +430,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -430,3 +448,13 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Camara"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Fotografia"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Detección"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
