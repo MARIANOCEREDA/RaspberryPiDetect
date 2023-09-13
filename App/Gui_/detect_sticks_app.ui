@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>565</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -250,7 +250,7 @@ font: 16pt &quot;Consolas&quot;;
            <widget class="QFrame" name="frame_datos">
             <property name="minimumSize">
              <size>
-              <width>400</width>
+              <width>285</width>
               <height>0</height>
              </size>
             </property>
@@ -272,7 +272,7 @@ background-color: rgb(69, 74, 88);
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,6">
+            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,7">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -286,7 +286,7 @@ background-color: rgb(69, 74, 88);
               <number>5</number>
              </property>
              <property name="bottomMargin">
-              <number>5</number>
+              <number>15</number>
              </property>
              <item>
               <widget class="QFrame" name="frame_botones">
@@ -420,7 +420,7 @@ QPushButton:hover{
 background-color: rgb(0, 0, 0);
 }
 QLabel{
-font: 13pt &quot;Consolas&quot;;
+font: 12pt &quot;Consolas&quot;;
 color: rgb(255, 255,255);
 }
 
@@ -448,7 +448,7 @@ color: rgb(255, 255,255);
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>13</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -480,13 +480,13 @@ color: rgb(255, 255,255);
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
-                     <width>168</width>
-                     <height>33</height>
+                     <y>-10</y>
+                     <width>171</width>
+                     <height>71</height>
                     </rect>
                    </property>
                    <property name="text">
-                    <string>N° de Paquete:</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;N° de &lt;br/&gt;Paquete&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -495,8 +495,8 @@ color: rgb(255, 255,255);
                   <widget class="QLineEdit" name="in_npackage">
                    <property name="geometry">
                     <rect>
-                     <x>242</x>
-                     <y>0</y>
+                     <x>130</x>
+                     <y>7</y>
                      <width>131</width>
                      <height>33</height>
                     </rect>
@@ -528,9 +528,9 @@ color: rgb(255, 255,255);
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
+                     <y>-10</y>
                      <width>231</width>
-                     <height>33</height>
+                     <height>71</height>
                     </rect>
                    </property>
                    <property name="minimumSize">
@@ -540,14 +540,14 @@ color: rgb(255, 255,255);
                     </size>
                    </property>
                    <property name="text">
-                    <string>Palos Detectados:</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Palos &lt;br/&gt;Detectados&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                   <widget class="QTextBrowser" name="out_sticks">
                    <property name="geometry">
                     <rect>
-                     <x>242</x>
-                     <y>0</y>
+                     <x>130</x>
+                     <y>7</y>
                      <width>131</width>
                      <height>33</height>
                     </rect>
@@ -594,9 +594,9 @@ color: rgb(255, 255,255);
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
+                     <y>-10</y>
                      <width>221</width>
-                     <height>33</height>
+                     <height>71</height>
                     </rect>
                    </property>
                    <property name="minimumSize">
@@ -606,14 +606,14 @@ color: rgb(255, 255,255);
                     </size>
                    </property>
                    <property name="text">
-                    <string>Diametro Promedio:</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Diametro &lt;br/&gt;Promedio&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                   <widget class="QTextBrowser" name="out_diameter">
                    <property name="geometry">
                     <rect>
-                     <x>242</x>
-                     <y>0</y>
+                     <x>130</x>
+                     <y>7</y>
                      <width>131</width>
                      <height>33</height>
                     </rect>
@@ -644,7 +644,7 @@ color: rgb(255, 255,255);
                   <widget class="QPushButton" name="button_plas">
                    <property name="geometry">
                     <rect>
-                     <x>280</x>
+                     <x>170</x>
                      <y>0</y>
                      <width>43</width>
                      <height>43</height>
@@ -687,20 +687,20 @@ color: rgb(255, 255,255);
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
-                     <width>261</width>
-                     <height>33</height>
+                     <y>-10</y>
+                     <width>191</width>
+                     <height>71</height>
                     </rect>
                    </property>
                    <property name="text">
-                    <string>Correción Detección:</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Correción &lt;br/&gt;Detección&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                   <widget class="QTextBrowser" name="out_correction">
                    <property name="geometry">
                     <rect>
-                     <x>242</x>
-                     <y>0</y>
+                     <x>130</x>
+                     <y>7</y>
                      <width>131</width>
                      <height>33</height>
                     </rect>
@@ -731,7 +731,7 @@ color: rgb(255, 255,255);
                   <widget class="QPushButton" name="button_less">
                    <property name="geometry">
                     <rect>
-                     <x>280</x>
+                     <x>170</x>
                      <y>0</y>
                      <width>43</width>
                      <height>43</height>
@@ -783,20 +783,20 @@ color: rgb(255, 255,255);
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
+                     <y>-10</y>
                      <width>181</width>
-                     <height>33</height>
+                     <height>71</height>
                     </rect>
                    </property>
                    <property name="text">
-                    <string>Palos Totales:</string>
+                    <string>Palos&lt;br&gt; Totales</string>
                    </property>
                   </widget>
                   <widget class="QTextBrowser" name="out_total">
                    <property name="geometry">
                     <rect>
-                     <x>242</x>
-                     <y>0</y>
+                     <x>130</x>
+                     <y>7</y>
                      <width>131</width>
                      <height>33</height>
                     </rect>
@@ -866,10 +866,16 @@ background-color: rgb(69, 74, 88);
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>682</width>
+                 <height>455</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>600</width>
-                 <height>412</height>
+                 <width>710</width>
+                 <height>513</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -894,13 +900,13 @@ background-color: rgb(70, 70, 70);
             }</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="tab_3">
                 <attribute name="title">
                  <string>Camara</string>
                 </attribute>
-                <layout class="QVBoxLayout" name="verticalLayout_6">
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <item>
                   <widget class="QLabel" name="out_cam">
                    <property name="sizePolicy">
@@ -911,8 +917,14 @@ background-color: rgb(70, 70, 70);
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>300</width>
-                     <height>300</height>
+                     <width>682</width>
+                     <height>455</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>682</width>
+                     <height>455</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -946,8 +958,14 @@ background-color: rgb(70, 70, 70);
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>300</width>
-                     <height>300</height>
+                     <width>682</width>
+                     <height>455</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>682</width>
+                     <height>455</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -978,14 +996,14 @@ background-color: rgb(70, 70, 70);
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>269</width>
-                     <height>269</height>
+                     <width>682</width>
+                     <height>455</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>640</width>
-                     <height>640</height>
+                     <width>682</width>
+                     <height>455</height>
                     </size>
                    </property>
                    <property name="text">

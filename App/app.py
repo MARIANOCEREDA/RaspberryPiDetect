@@ -133,12 +133,11 @@ def on_detect_click():
 
             img_stick = QPixmap(image_path)
 
-            img_stick_500 = img_stick.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
-
+            img_stick_500 = img_stick.scaled(ui.out_img.size().width(), ui.out_img.size().height())
             ui.out_img.setPixmap(img_stick_500)    
 
             img_detecction = QPixmap(image_detect_path)
-            img_detecction_500 = img_detecction.scaled(ui.tabWidget.size().width()-28, ui.tabWidget.size().width()-28)
+            img_detecction_500 = img_detecction.scaled(ui.out_img.size().width(), ui.out_img.size().height())
             ui.out_detect.setPixmap(img_detecction_500)
             sitck_correct=0
             ui.out_correction.setPlainText(str(sitck_correct))
@@ -285,9 +284,9 @@ def VideoCam():
             bytes_per_line = ch * w
             img = QImage(frame_rgb.data, w, h, bytes_per_line, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(img)
-
             current_frame = pixmap #image actual
-            ui.out_cam.setPixmap(pixmap)
+            scaled_pixmap=pixmap.scaled(ui.out_cam.size().width(), ui.out_cam.size().height())
+            ui.out_cam.setPixmap(scaled_pixmap)
             QApplication.processEvents()  # Actualiza la interfaz de usuario
 
 def on_app_quit():

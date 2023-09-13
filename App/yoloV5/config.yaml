@@ -4,7 +4,8 @@ line_thickness: 2
 hide_labels: True
 device: "cpu"
 source: ../images
-img_size: 640
+img_size_w: 640
+img_size_h: 640
 #img_size: [3964,2464]
 
 images:

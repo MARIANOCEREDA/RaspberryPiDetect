@@ -190,7 +190,7 @@ def main():
             run_inference(weights=ROOT / Path(config_data[key]["weights"]),  # model path or triton URL
                 source=ROOT / Path(config_data["source"]),  # file/dir/URL/glob/screen/0(webcam)
                 data=ROOT / 'data_sticks.yaml',  # dataset.yaml path
-                imgsz=(config_data["img_size"], config_data["img_size"]),  # inference size (height, width)
+                imgsz=(config_data["img_size_h"], config_data["img_size_w"]),  # inference size (height, width)
                 conf_thres=config_data[key]["conf_thres"],  # confidence threshold
                 iou_thres=config_data[key]["iou_thres"],  # NMS IOU threshold
                 max_det=1000,  # maximum detections per image
@@ -238,7 +238,7 @@ def main():
         # Get the diameter of the sticks and filter diameters much smaller than the average
         avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
         diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
-                                            config_data["img_size"],
+                                            config_data["img_size_w"], config_data["img_size_h"],
                                             main_package,
                                             sticks_within_package)
 

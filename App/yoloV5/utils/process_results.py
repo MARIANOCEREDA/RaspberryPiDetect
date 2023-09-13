@@ -53,21 +53,22 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
 
     # Load image
     image1 = cv2.imread(image_path)
-    img_size,_,_=image1.shape
-
-    white_image = np.zeros((img_size, img_size, 3), dtype=np.uint8)
+    img_size_h,img_size_w,_=image1.shape
+    white_image = np.zeros((img_size_h, img_size_w, 3), dtype=np.uint8)
     alpha = 50
-
     # Dibujar el recuadro del paquete principal en verde
-    _, x, y, w, h = main_package_dims * img_size
+    _, x, _, w, _ = main_package_dims * img_size_w
+    _, _, y, _, h = main_package_dims * img_size_h
+
     r=max(int(w)/2,int(h)/2)
 
     #cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
     cv2.circle(image1, (int(x), int(y)), int(r), (0, 255, 0), 2)
 
-    # Draw rectangles 
+    # Draw circles 
     for stick in sticks_within_package:
-        _, x_s, y_s, w_s, h_s = stick * img_size
+        _, x_s, _, w_s, _ = stick * img_size_w
+        _, _, y_s, _, h_s = stick * img_size_h
         cv2.circle(white_image, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), -1)
         cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), 2)
     
@@ -111,9 +112,11 @@ def cut_image(image_path, config_data):
 
 
 
-def calculate_sticks_diameter(package_diameter:float, img_size:int, main_package_size:np.array, sticks_within_package:int) -> float:
+def calculate_sticks_diameter(package_diameter:float, img_size_w:int, img_size_h:int, main_package_size:np.array, sticks_within_package:int) -> float:
 
-    _, x_d, y_d, w_d, h_d = main_package_size * img_size
+    _, x_d, _, w_d, _ = main_package_size * img_size_w
+    _, _, y_d, _, h_d = main_package_size * img_size_h
+
 
     diam_mainpackage_pixel= (w_d+h_d) / 2 #tomamos el diametro en pixeles como el promedio entra la altura y ancho
 
@@ -122,7 +125,9 @@ def calculate_sticks_diameter(package_diameter:float, img_size:int, main_package
     diam_sticks=[]
 
     for stick in sticks_within_package:
-        _, x_s, y_s, w_s, h_s=stick*img_size
+        
+        _, x_s, _, w_s, _ = stick * img_size_w
+        _, _, y_s, _, h_s = stick * img_size_h
 
         diam_stick_pixel=(w_s+h_s)/2
 
