@@ -238,9 +238,8 @@ def main():
         # Get the diameter of the sticks and filter diameters much smaller than the average
         avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
         diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
-                                            config_data["img_size_w"], config_data["img_size_h"],
-                                            main_package,
-                                            sticks_within_package)
+                                            image_path, main_package,
+                                            sticks_within_package, config_data["camera"])
 
         # Draw the the main package and the sticks
         image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)

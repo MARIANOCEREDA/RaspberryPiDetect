@@ -507,6 +507,12 @@ color: rgb(255, 255,255);
                      <height>33</height>
                     </size>
                    </property>
+                   <property name="inputMask">
+                    <string/>
+                   </property>
+                   <property name="placeholderText">
+                    <string>Ingrese N°</string>
+                   </property>
                   </widget>
                  </widget>
                 </item>
@@ -900,7 +906,7 @@ background-color: rgb(70, 70, 70);
             }</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab_3">
                 <attribute name="title">

@@ -8,6 +8,17 @@ img_size_w: 640
 img_size_h: 640
 #img_size: [3964,2464]
 
+camera:
+  res_x: 3964
+  res_y: 2464
+  w_obj_ref_px: 100 # Dimensiones del objeto de referencia en la imagen (en píxeles)
+  h_obj_ref_px: 155
+  w_obj_ref_cm: 1.8 # Dimensiones del objeto de referencia en la imagen (en centímetros)
+  h_obj_ref_cm: 2.92
+  w_obj_real_cm: 5.6 # Tamaño real del objeto de referencia (en centímetros)
+  h_obj_real_cm: 9.1
+  distance_cm: 139 # Distancia del objeto al fardo
+
 images:
   results: ../images/main_packages
 

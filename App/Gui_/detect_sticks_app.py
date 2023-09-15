@@ -221,6 +221,7 @@ class Ui_MainWindow(object):
         self.in_npackage = QtWidgets.QLineEdit(self.frame_11)
         self.in_npackage.setGeometry(QtCore.QRect(130, 7, 131, 33))
         self.in_npackage.setMinimumSize(QtCore.QSize(0, 33))
+        self.in_npackage.setInputMask("")
         self.in_npackage.setObjectName("in_npackage")
         self.verticalLayout_8.addWidget(self.frame_11)
         self.frame_12 = QtWidgets.QFrame(self.frame_2)
@@ -433,7 +434,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -444,6 +445,7 @@ class Ui_MainWindow(object):
         self.button_conf.setText(_translate("MainWindow", "Confirmar "))
         self.button_send.setText(_translate("MainWindow", "Enviar    "))
         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p>N° de <br/>Paquete</p></body></html>"))
+        self.in_npackage.setPlaceholderText(_translate("MainWindow", "Ingrese N°"))
         self.label_9.setText(_translate("MainWindow", "<html><head/><body><p>Palos <br/>Detectados</p></body></html>"))
         self.label_10.setText(_translate("MainWindow", "<html><head/><body><p>Diametro <br/>Promedio</p></body></html>"))
         self.label_12.setText(_translate("MainWindow", "<html><head/><body><p>Correción <br/>Detección</p></body></html>"))

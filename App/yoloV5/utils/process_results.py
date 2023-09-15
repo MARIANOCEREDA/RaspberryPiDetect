@@ -81,38 +81,18 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     return output_path
 
 
+def calculate_sticks_diameter(package_diameter:float, image_path:str, main_package_size:np.array, sticks_within_package:int, camera) -> float:
 
-def cut_image(image_path, config_data):
-    image_cut = cv2.imread(image_path)
-    output_path = os.path.join(os.path.dirname(__file__),config_data["images"]["results"])
+    # Calcula la relación entre cm reales y cm en la imagen para el objeto de referencia 
+    rel_cm_cm_w = camera["w_obj_real_cm"] / camera["w_obj_ref_cm"] 
+    rel_cm_cm_h = camera["h_obj_real_cm"] / camera["h_obj_ref_cm"]
 
-    # Obtener las dimensiones de la imagen y centro
-    h, w, _ = image_cut.shape 
-    x_c = w//2
-    y_c = h//2
-    pixels_overlap = 50
+    # Calcula la relación entre píxeles y centímetros en la imagen para el objeto de referencia
+    rel_cm_px_w = camera["w_obj_ref_cm"]/ camera["w_obj_ref_px"] 
+    rel_cm_px_h = camera["h_obj_ref_cm"] / camera["h_obj_ref_px"] 
 
-    # Cortar la imagen en cuatro partes
-    top_left = image_cut[0:x_c + pixels_overlap, 0:y_c + pixels_overlap]
-    top_right = image_cut[x_c - pixels_overlap:w, y_c - pixels_overlap:h]
-    bottom_left = image_cut[y_c:h, 0:x_c]
-    bottom_right = image_cut[y_c:h, x_c:w]
-
-    #Agrandamos las imagenes a 640
-    top_left = cv2.resize(top_left, (w, h))
-    top_right = cv2.resize(top_right, (w, h))
-    bottom_left = cv2.resize(bottom_left, (w, h))
-    bottom_right = cv2.resize(bottom_right, (w, h))
-
-    # Guardar las imágenes cortadas
-    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'top_left.jpeg'), top_left)
-    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'top_right.jpeg'), top_right)
-    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'bottom_left.jpeg'), bottom_left)
-    cv2.imwrite(os.path.join(os.path.dirname(__file__),config_data["images"]["results"],'bottom_right.jpeg'), bottom_right)
-
-
-
-def calculate_sticks_diameter(package_diameter:float, img_size_w:int, img_size_h:int, main_package_size:np.array, sticks_within_package:int) -> float:
+    image1 = cv2.imread(image_path)
+    img_size_h,img_size_w,_=image1.shape
 
     _, x_d, _, w_d, _ = main_package_size * img_size_w
     _, _, y_d, _, h_d = main_package_size * img_size_h
@@ -126,18 +106,23 @@ def calculate_sticks_diameter(package_diameter:float, img_size_w:int, img_size_h
 
     for stick in sticks_within_package:
         
-        _, x_s, _, w_s, _ = stick * img_size_w
+        _, x_s, _, w_s, _ = stick * img_size_w #tomamos el ancho y alto de cada palo detectado en pixeles
         _, _, y_s, _, h_s = stick * img_size_h
 
-        diam_stick_pixel=(w_s+h_s)/2
+        # Calcula el tamaño real del objeto de interés en centímetros
+        w_s_cm = w_s * rel_cm_px_w
+        h_s_cm = h_s * rel_cm_px_h
 
-        diam_stick_cm = diam_stick_pixel / rel_pixeles_cm
+        w_cm_real= w_s_cm * rel_cm_cm_w
+        h_cm_real= h_s_cm * rel_cm_cm_h
 
+        diam_stick_cm=(w_cm_real+h_cm_real)/2
         diam_sticks.append(diam_stick_cm)
 
     prom_diameters = sum(diam_sticks)/len(diam_sticks)
     index_delete=[]
-
+    print(prom_diameters)
+    #Para eliminar los palos que estan detras del fardo principal.
     for i in range(len(diam_sticks)):
         if diam_sticks[i]<prom_diameters*0.6:
             index_delete.append(i)
