@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from yoloV5.custom_detect import main as run_detect
 from detect_sticks import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMessageBox
+from picamera2 import Picamera2, Preview
 
 #variables globales
 sticks=0
@@ -17,6 +18,34 @@ n_package=""
 diameter=0
 capture_video = True
 current_frame = None
+
+class RPiCameraManager:
+
+    def __init__(self) -> None:
+        self.picam = Picamera2()
+        config = self.picam.create_preview_configuration()
+        self.picam.configure(config)
+
+    def start_loop(self):
+
+        capture_video = True
+
+        while capture_video:
+                
+            self.picam.start_preview(Preview.QTGL)
+
+            self.picam.start()
+            self.picam.start_preview()
+            
+            QApplication.processEvents()
+    
+    def capture_photo(self, result_path:str):
+
+        self.picam.capture_file(result_path)
+
+    def finish(self):
+
+        self.picam.close()
 
 #Adventencia de enviar y confirmar, crea una ventana emergente con messagebox
 def error_send(n):
@@ -159,22 +188,6 @@ def on_send_click():
     else:
         error_send(4)
 
-def VideoCam():
-    global capture_video, current_frame
-    cap = cv2.VideoCapture(0)
-    while capture_video:
-        ret, frame = cap.read()
-        if ret:
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            h, w, ch = frame_rgb.shape
-            bytes_per_line = ch * w
-            img = QImage(frame_rgb.data, w, h, bytes_per_line, QImage.Format_RGB888)
-            pixmap = QPixmap.fromImage(img)
-
-            current_frame = pixmap #image actual
-            ui.out_cam.setPixmap(pixmap)
-            QApplication.processEvents()  # Actualiza la interfaz de usuario
-
 def on_app_quit():
     global capture_video
     capture_video = False
@@ -197,7 +210,8 @@ if __name__ == "__main__":
     MainWindow.show()
 
     # Iniciar el hilo de captura de webcam
-    video_thread = threading.Thread(target=VideoCam)
+    picamera_manager = RPiCameraManager()
+    video_thread = threading.Thread(target=picamera_manager.start_loop)
     video_thread.start()
 
      # Capturar el evento de cierre de la aplicación

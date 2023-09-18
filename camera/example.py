@@ -6,8 +6,8 @@ def take_photo(result_path:str, n_photos:int) -> None:
 
     photo_config = {
         "resolution":{
-            "x":1280,
-            "y":720
+            "x":3000,
+            "y":2000
         }
     }   
 
@@ -26,7 +26,7 @@ def take_photo(result_path:str, n_photos:int) -> None:
 
             time.sleep(1)
 
-            path = result_path + "_" + str(i) + ".jpg"
+            path = result_path + "_3240x2464_8_10_5_mas_cerca" + str(i) + ".jpg"
 
             picam.capture_file(path)
 
@@ -66,6 +66,6 @@ def start_video():
 
 if __name__ == "__main__":
 
-    # take_photo("photos/output.jpg", n_photos = 3)
+    take_photo("photos/output.jpg", n_photos = 3)
 
-    start_video()
+    # start_video()
