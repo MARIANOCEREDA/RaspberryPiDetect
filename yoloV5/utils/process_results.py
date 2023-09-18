@@ -71,8 +71,8 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     # Draw rectangles 
     for stick in sticks_within_package:
         _, x_s, y_s, w_s, h_s = stick * img_size
-        cv2.circle(white_image, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), -1)
-        cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 255, 255), 2)
+        cv2.circle(white_image, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 0, 255), -1)
+        cv2.circle(image1, (int(x_s), int(y_s)), int((w_s+h_s)/4), (0, 0, 255), 2)
     
     result = cv2.addWeighted(image1, 1 - (alpha / 255.0), white_image, (alpha / 255.0), 0)
     
@@ -135,7 +135,6 @@ def calculate_sticks_diameter(package_diameter:float, img_size:int, main_package
         diam_sticks.append(diam_stick_cm)
 
     prom_diameters = sum(diam_sticks)/len(diam_sticks)
-    print(prom_diameters)
     index_delete=[]
 
     for i in range(len(diam_sticks)):

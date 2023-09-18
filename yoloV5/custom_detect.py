@@ -219,29 +219,32 @@ def main():
     # Read the results from the .txt files
     sticks = read_results_from_txt(sticks_results_path)
     packages = read_results_from_txt(packages_results_path)
+    if not sticks:
+        message="No se detecto ningun palo en la imagen"
+        print(message)
+        return 0, 0, image_path, image_path, message
+    
+    else :
+        # Get the main package of the image
+        main_package = get_main_package(packages)
 
-    # Get the main package of the image
-    main_package = get_main_package(packages)
+        # Get the number of sticks within the main package
+        sticks_within_package = filter_sticks_within_package(sticks, main_package)
 
-    # Get the number of sticks within the main package
-    sticks_within_package = filter_sticks_within_package(sticks, main_package)
+        # Get the diameter of the sticks and filter diameters much smaller than the average
+        avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
+        diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
+                                            config_data["img_size"],
+                                            main_package,
+                                            sticks_within_package)
 
+        # Draw the the main package and the sticks
+        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
 
-    # Get the diameter of the sticks and filter diameters much smaller than the average
-    avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
-    diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
-                                          config_data["img_size"],
-                                          main_package,
-                                          sticks_within_package)
-
-    # Draw the the main package and the sticks
-    image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
-
-    # Calculate average diameter
-    prom_diameters = sum(diameters_sticks)/len(diameters_sticks)
-
-    print(prom_diameters)
-    return prom_diameters, len(sticks_within_package), image_main_with_boxes_path, image_path
+        # Calculate average diameter
+        prom_diameters = sum(diameters_sticks)/len(diameters_sticks)
+        message="Ok"
+        return prom_diameters, len(sticks_within_package), image_main_with_boxes_path, image_path, message
 
 
 if __name__ == '__main__':
