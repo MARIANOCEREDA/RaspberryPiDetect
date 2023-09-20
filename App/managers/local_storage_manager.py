@@ -25,7 +25,7 @@ class LocalStorageManager:
                 json.dump(self.package_data, f)
 
 
-    def store_data(self):
+    def store_data(self) -> None:
 
         # Check if the folder already exists
         if not os.path.exists(self.folder_name):

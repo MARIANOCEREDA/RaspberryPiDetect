@@ -51,6 +51,7 @@ class PackageDetectAPIRequests:
                 logger.info("Solicitud POST exitosa")
 
                 return { "success":True, "response":response.text}
+            
             else:
 
                 logger.error(f"Error en la solicitud POST. Código de estado: {response.status_code}")
