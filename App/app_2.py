@@ -20,8 +20,7 @@ from PyQt5.QtCore import Qt  # Agrega esta línea
 from managers.api_requests import PackageDetectAPIRequests
 from managers.local_storage_manager import LocalStorageManager
 
-from picamera2.picamera2 import Picamera2, Preview
-from picamera2.previews.qt import QGlPicamera2
+from picamera2.picamera2 import Picamera2
 from config.logger_config import get_logger
 
 from managers.errors import WarningMessage
@@ -46,10 +45,12 @@ class DetectSticksApp(QApplication):
         self.conf = 0
         self.n_package = ""
         self.diameter = 0
-        self.capture_video = True
-        self.current_frame = None
         self.picam:Picamera2 = None
         self.confirm = False
+
+        # Windows development variables
+        self.capture_video = False
+        self.current_frame = None
     
     def _setup_button_callbacks(self):
         self.ui.button_detect.clicked.connect(self.on_detect_click)
@@ -72,7 +73,7 @@ class DetectSticksApp(QApplication):
     def run(self):
         self._setup_gui()
         self._setup_button_callbacks()
-        self.start_pi_camera()
+        self.start_camera()
     
     def show_warning_message_box(self, message:WarningMessage):
 
@@ -81,11 +82,17 @@ class DetectSticksApp(QApplication):
 
 
     def show_success_message_box(self, message:str):
-        
         QMessageBox.information(None, 'Éxito', message, QMessageBox.Ok)
 
     
     def on_detect_click(self):
+        '''
+        on_detect_click
+
+        Description:
+            Callback de boton 'detectar'.
+            Ejecuta el algoritmo de detección y setea los resultados.
+        '''
  
         self.sticks = 0
         self.diameter = 0
@@ -96,16 +103,24 @@ class DetectSticksApp(QApplication):
         if not self.confirm:
 
             size = (config_data["camera"]["res_x"], config_data["camera"]["res_y"])
-            # path = config_data["local_storage_folder"] + "/image.jpeg"
-            path = "/home/mariano/workspace/tesis/test_photos/image.jpeg"
 
-            cam_cfg = self.ui.picam.create_still_configuration(main={"size": size},
+            if config_data["environment"] == "prod":
+                #path = config_data["local_storage_folder"] + "/image.jpeg"
+                path = "/home/mariano/workspace/tesis/test_photos/image.jpeg"
+
+                cam_cfg = self.ui.picam.create_still_configuration(main={"size": size},
                                                                lores={"size": (640, 480)},
                                                                display="lores")
             
-            self.ui.picam.switch_mode_and_capture_file(cam_cfg,
-                                                       path, 
-                                                       signal_function=self.ui.qpicamera2.signal_done)
+                self.ui.picam.switch_mode_and_capture_file(cam_cfg, 
+                                                           path, 
+                                                           signal_function=self.ui.qpicamera2.signal_done)
+            
+            else:
+                if self.current_frame is not None:
+                    image_filename = "captura_.png"
+                    cam_path = os.path.join(os.path.dirname(__file__), "capturs", "captura_.png")
+                    self.current_frame.save(cam_path)
 
             logger.info("Starting detection ...")
 
@@ -139,7 +154,7 @@ class DetectSticksApp(QApplication):
                                 - Diametro Promedio: {str(round(self.diameter, 3))} \n
                                 - Número de paquete: {str(self.n_package)}"""
                 
-                # self.show_success_message_box(success_message)
+                logger.info(f"{success_message}")
 
         else :
             self.show_warning_message_box(WarningMessage.NOT_MODIFY_AFTER_CONFIRM)
@@ -147,8 +162,13 @@ class DetectSticksApp(QApplication):
 
     def on_confirm_click(self):
         '''
-        Callback boton 'Confirmar'
-        Se le da el estilo para que cuando este cliqueado quede en negro
+        on_confirm_click
+
+        Description:
+            Callback boton 'Confirmar'
+            Se le da el estilo para que cuando este cliqueado quede en negro.
+            Ademas, setea la variable confirm, que es utilizada por los demás 
+            métodos.
         '''
 
         if not self.confirm :
@@ -165,8 +185,11 @@ class DetectSticksApp(QApplication):
 
     def on_plus_click(self):
         '''
-        Callback de Boton '+'
-        Agrega 1 palo a la correción y a los palos totales
+        on_plus_click
+
+        Description:
+            Callback de Boton '+'
+            Agrega 1 palo a la correción y a los palos totales.
         '''
 
         if not self.confirm:
@@ -179,6 +202,13 @@ class DetectSticksApp(QApplication):
             self.show_warning_message_box(WarningMessage.NOT_MODIFY_AFTER_CONFIRM)
     
     def on_less_click(self):
+        '''
+        on_less_click
+
+        Description:
+            Callback de Boton '+'
+            Resta 1 palo a la correción y a los palos totales.
+        '''
 
         if not self.confirm:
             self.stick_correct = self.stick_correct - 1
@@ -192,8 +222,11 @@ class DetectSticksApp(QApplication):
 
     def on_send_click(self):
         '''
-        Callback de boton 'Enviar'
-        Realiza la request a la API para realizar un post de paquetes.
+        on_send_click
+
+        Description:
+            Callback de boton 'Enviar'
+            Realiza la request a la API para realizar un post de paquetes.
         '''
 
         if not self.confirm:
@@ -263,19 +296,46 @@ class DetectSticksApp(QApplication):
     def on_min_click(self):
         self.main_window.showMinimized()  # Minimiza la ventana
     
-    def start_pi_camera(self):
+    def start_camera(self):
 
-        logger.info("Starting picamera camera ...")
-        self.ui.picam.start()
+        if config_data["enviroment"] == "prod":
+
+            logger.info("Starting picamera camera ...")
+            self.ui.picam.start()
         
-    
+        elif config_data["environment"] == "dev":
+
+            cap = cv2.VideoCapture(0)
+            self.capture_video = True
+
+            while self.capture_video:
+                ret, frame = cap.read()
+                if ret:
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    h, w, ch = frame_rgb.shape
+                    bytes_per_line = ch * w
+                    img = QImage(frame_rgb.data, w, h, bytes_per_line, QImage.Format_RGB888)
+                    pixmap = QPixmap.fromImage(img)
+                    self.current_frame = pixmap #image actual
+                    scaled_pixmap=pixmap.scaled(self.ui.out_cam.size().width(), self.ui.out_cam.size().height())
+                    self.ui.out_cam.setPixmap(scaled_pixmap)
+                    self.processEvents() 
+        
 
 if __name__ == "__main__":
 
-    config_data = setup_config_file(env="prod")
+    # Get the platform information to make initial configuration
+    platform_info = sys.platform
+    logger.info(f"Detected plaform: {platform_info}")
 
+    if platform_info == "linux":
+        config_data = setup_config_file(env="prod")
+
+    elif platform_info == "windows":
+        config_data = setup_config_file(env="dev")
+
+    # Start Qt app
     qt_app = DetectSticksApp(sys.argv)
-
     qt_app.run()
 
     sys.exit(qt_app.exec_())

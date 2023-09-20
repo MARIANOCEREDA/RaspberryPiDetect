@@ -3,17 +3,28 @@ import cv2
 import threading
 import os
 import numpy as np
-from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+import yaml
+import time
+import logging
+
 from App.yoloV5.custom_detect import main as run_detect
 from Gui_.detect_sticks_app import Ui_MainWindow
-from PyQt5.QtWidgets import QApplication, QMessageBox
+
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QPixmap, QImage
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QVBoxLayout, QWidget
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt  # Agrega esta línea
-import yaml
+
 
 from managers.api_requests import PackageDetectAPIRequests
 from managers.local_storage_manager import LocalStorageManager
+
+from picamera2.picamera2 import Picamera2, Preview
+from picamera2.previews.qt import QGlPicamera2
+
+
+my_logger = logging.getLogger()
 
 #variables globales
 sticks=0
@@ -24,6 +35,8 @@ n_package=""
 diameter=0
 capture_video = True
 current_frame = None
+video_thread:threading.Thread = None
+picam:Picamera2 = None
 
 # config data
 global config_data
@@ -90,7 +103,7 @@ def linea_img():
     y = 1232  # Altura (vertical) del centro de la imagen
     start_x = (resolucion_horizontal // 2) - profundidad_en_pixeles
     end_x = start_x - longitud_en_pixeles
-    print
+
     # Color de la línea (por ejemplo, verde en formato BGR)
     color = (0, 255, 0)
 
@@ -109,7 +122,7 @@ def linea_img():
 #cuando se clickea detectar saca la foto, corre el programa detect_custom, detecta los palos y nos muestra el resultado
 def on_detect_click():
  
-    global sitck_correct, total_sticks, sticks,conf, diameter,n_package, current_frame
+    global sitck_correct, total_sticks, sticks,conf, diameter,n_package, current_frame, picam, capture_video, video_thread
     sticks=0
     diameter=0
     ui.out_sticks.setPlainText(str(sticks))
@@ -274,7 +287,7 @@ def on_send_click():
 def VideoCam():
 
     global capture_video, current_frame
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture()
 
     while capture_video:
         ret, frame = cap.read()
@@ -289,16 +302,25 @@ def VideoCam():
             ui.out_cam.setPixmap(scaled_pixmap)
             QApplication.processEvents()  # Actualiza la interfaz de usuario
 
+
+def StartPiCamera():
+
+    print("Starting camera ...")
+    ui.picam.start()
+        
+
 def on_app_quit():
 
     global capture_video
-    capture_video = False
 
-    video_thread.join()  # Esperamos a que el hilo termine antes de salir por completo
+    print("Quitting app ...")
+
+    ui.picam.close()
+    # video_thread.join()  # Esperamos a que el hilo termine antes de salir por completo
     sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
 
 def on_close_click():
-        QCoreApplication.instance().quit()
+    QCoreApplication.instance().quit()
 
 def toggle_maximize():
         if MainWindow.isMaximized() or MainWindow.isFullScreen():
@@ -311,7 +333,7 @@ def on_min_click():
 
 if __name__ == "__main__":
 
-    config_data = setup_config_file(env="dev")
+    config_data = setup_config_file(env="prod")
 
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
@@ -332,11 +354,9 @@ if __name__ == "__main__":
     ui.button_min.clicked.connect(on_min_click)
     MainWindow.show()
 
-    # Iniciar el hilo de captura de webcam
-    video_thread = threading.Thread(target=VideoCam)
-    video_thread.start()
+    StartPiCamera()
 
-     # Capturar el evento de cierre de la aplicación
+    # Capturar el evento de cierre de la aplicación
     app.aboutToQuit.connect(on_app_quit)
 
     sys.exit(app.exec_())

@@ -171,10 +171,14 @@ def run_inference(
 
 
 def main():
+
     global date
-    CONFIG_FILE = os.path.dirname(__file__) + "/config.yaml"
+    CONFIG_FILE = os.path.dirname(__file__) + "/../config/config.prod.yaml"
     with open(CONFIG_FILE) as f:
         config_data = yaml.safe_load(f)
+    
+
+    print(config_data)
 
     FILE = Path(__file__).resolve()
     print(FILE)
@@ -187,16 +191,16 @@ def main():
     for key, value in config_data.items():
         if key == "sticks" or key == "packages":
 
-            run_inference(weights=ROOT / Path(config_data[key]["weights"]),  # model path or triton URL
-                source=ROOT / Path(config_data["source"]),  # file/dir/URL/glob/screen/0(webcam)
+            run_inference(weights=ROOT / Path(config_data["yolov5"][key]["weights"]),  # model path or triton URL
+                source=ROOT / Path(config_data["yolov5"]["source"]),  # file/dir/URL/glob/screen/0(webcam)
                 data=ROOT / 'data_sticks.yaml',  # dataset.yaml path
-                imgsz=(config_data["img_size_h"], config_data["img_size_w"]),  # inference size (height, width)
-                conf_thres=config_data[key]["conf_thres"],  # confidence threshold
-                iou_thres=config_data[key]["iou_thres"],  # NMS IOU threshold
+                imgsz=(config_data["yolov5"]["img_size_h"], config_data["yolov5"]["img_size_w"]),  # inference size (height, width)
+                conf_thres=config_data["yolov5"][key]["conf_thres"],  # confidence threshold
+                iou_thres=config_data["yolov5"][key]["iou_thres"],  # NMS IOU threshold
                 max_det=1000,  # maximum detections per image
-                device=config_data["device"],  # cuda device, i.e. 0 or 0,1,2,3 or cpu
+                device=config_data["yolov5"]["device"],  # cuda device, i.e. 0 or 0,1,2,3 or cpu
                 view_img=False,  # show results
-                save_txt=config_data["save_txt"],  # save results to *.txt
+                save_txt=config_data["yolov5"]["save_txt"],  # save results to *.txt
                 save_conf=False,  # save confidences in --save-txt labels
                 save_crop=False,  # save cropped prediction boxes
                 nosave=False,  # do not save images/videos
@@ -205,25 +209,26 @@ def main():
                 augment=False,  # augmented inference
                 visualize=False,  # visualize features
                 update=False,  # update all models
-                project=ROOT / Path(config_data[key]["results"]),  # save results to project/name
+                project=ROOT / Path(config_data["yolov5"][key]["results"]),  # save results to project/name
                 exist_ok=False,  # existing project/name ok, do not increment
-                line_thickness=config_data["line_thickness"],  # bounding box thickness (pixels)
-                hide_labels=config_data["hide_labels"],  # hide labels
+                line_thickness=config_data["yolov5"]["line_thickness"],  # bounding box thickness (pixels)
+                hide_labels=config_data["yolov5"]["hide_labels"],  # hide labels
                 hide_conf=False,  # hide confidences
                 half=False,  # use FP16 half-precision inferenc2e
                 dnn=False,  # use OpenCV DNN for ONNX inference
                 vid_stride=1,  # video frame-rate stride
             )
-    sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["sticks"]["results"], "labels", "image.txt")
-    packages_results_path = os.path.join(os.path.dirname(__file__), config_data["packages"]["results"], "labels", "image.txt")
-    image_path = os.path.join(os.path.dirname(__file__), config_data["source"], "image.jpeg")
+    
+    sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["yolov5"]["sticks"]["results"], "labels", "image.txt")
+    packages_results_path = os.path.join(os.path.dirname(__file__), config_data["yolov5"]["packages"]["results"], "labels", "image.txt")
+    image_path = os.path.join(os.path.dirname(__file__), config_data["yolov5"]["source"], "image.jpeg")
     # Read the results from the .txt files and save the content in the new path
     sticks = read_results_from_txt(sticks_results_path)
     packages = read_results_from_txt(packages_results_path)
 
     if not sticks.any():
         
-        message="No se detecto ningun palo en la imagen"
+        message = "No se detecto ningun palo en la imagen"
         print(message)
         return 0, 0, image_path, image_path, message
     
@@ -236,13 +241,13 @@ def main():
 
 
         # Get the diameter of the sticks and filter diameters much smaller than the average
-        avg_real_package_diameter = config_data["post-process"]["avg_package_diameter"]
+        avg_real_package_diameter = config_data["yolov5"]["post-process"]["avg_package_diameter"]
         diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
                                             image_path, main_package,
                                             sticks_within_package, config_data["camera"])
 
         # Draw the the main package and the sticks
-        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data)
+        image_main_with_boxes_path = draw_package_and_sticks(image_path, main_package, sticks_within_package, config_data["yolov5"])
 
         # Calculate average diameter
         prom_diameters = sum(diameters_sticks)/len(diameters_sticks)

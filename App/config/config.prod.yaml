@@ -1,4 +1,6 @@
 
+environment: prod
+
 local_storage_folder: /home/mariano/workspace/tesis/RaspberryPiDetect/App/images
 
 camera:

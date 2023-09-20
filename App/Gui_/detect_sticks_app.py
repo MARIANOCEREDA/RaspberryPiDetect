@@ -9,6 +9,20 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from picamera2.previews.qt import QGlPicamera2
+from picamera2.picamera2 import Picamera2
+from picamera2.previews.qt import QGlPicamera2
+import yaml
+import os
+
+qpicamera2 = None
+config_data = None
+
+def setup_config_file(env):
+    CONFIG_FILE = os.path.dirname(__file__) + f"/../config/config.{env}.yaml"
+    with open(CONFIG_FILE) as f:
+        config = yaml.safe_load(f)
+    return config
 
 
 class Ui_MainWindow(object):
@@ -376,7 +390,8 @@ class Ui_MainWindow(object):
         self.tab_3.setObjectName("tab_3")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.tab_3)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.out_cam = QtWidgets.QLabel(self.tab_3)
+
+        '''self.out_cam = QtWidgets.QLabel(self.tab_3)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -390,7 +405,54 @@ class Ui_MainWindow(object):
         self.out_cam.setAlignment(QtCore.Qt.AlignCenter)
         self.out_cam.setObjectName("out_cam")
         self.horizontalLayout_4.addWidget(self.out_cam)
-        self.tabWidget.addTab(self.tab_3, "")
+
+        self.tabWidget.addTab(self.tab_3, "")'''
+
+        if config_data["environment"] == "prod":
+                photo_config = {
+                        "resolution":{
+                                "x":3000,
+                                "y":2000
+                        }
+                }
+        
+                self.picam = Picamera2()
+                size = (photo_config["resolution"]["x"], photo_config["resolution"]["y"])
+                
+                config = self.picam.create_preview_configuration(main={"size": size},
+                                                                 lores={"size": (640, 480)},
+                                                                 display="lores")
+                self.picam.configure(config)
+
+                self.qpicamera2 = QGlPicamera2(picam2=self.picam,
+                                               parent=self.tab_3,
+                                               width=800, height=600,
+                                               bg_colour=(255,255,255), 
+                                               keep_ar=True)
+                
+                self.qpicamera2.done_signal.connect(self.capture_done)
+
+                self.horizontalLayout_4.addWidget(self.qpicamera2)
+                self.tabWidget.addTab(self.tab_3, "")
+        
+        else:
+                self.out_cam = QtWidgets.QLabel(self.tab_3)
+                sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+                sizePolicy.setHorizontalStretch(0)
+                sizePolicy.setVerticalStretch(0)
+                sizePolicy.setHeightForWidth(self.out_cam.sizePolicy().hasHeightForWidth())
+                self.out_cam.setSizePolicy(sizePolicy)
+                self.out_cam.setMinimumSize(QtCore.QSize(682, 455))
+                self.out_cam.setMaximumSize(QtCore.QSize(682, 455))
+                self.out_cam.setFrameShape(QtWidgets.QFrame.NoFrame)
+                self.out_cam.setText("")
+                self.out_cam.setScaledContents(False)
+                self.out_cam.setAlignment(QtCore.Qt.AlignCenter)
+                self.out_cam.setObjectName("out_cam")
+                self.horizontalLayout_4.addWidget(self.out_cam)
+                self.tabWidget.addTab(self.tab_3, "")
+             
+
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.tab)
@@ -437,6 +499,10 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def capture_done(self, job):
+        self.picam.wait(job)
+        print("Photo job image done !")
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -454,6 +520,36 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Fotografia"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Detección"))
 
+    def style_confirm_button(self, conf: bool):
+
+        if not conf:
+                self.button_conf.setStyleSheet("QPushButton{\n"
+                "font: 14pt \"Consolas\";\n"
+                "color:rgb(255, 255,255);\n"
+                "border:1px solid #93C6FF;\n"
+                "background-color: rgb(0, 0, 0);\n"
+                "border-radius:5px;\n"
+                "\n"
+                "}\n"
+                "QPushButton:hover{\n"
+                "background-color: rgb(70, 70, 70);\n"
+                "border:1px solid #93C6FF;\n"
+                "}\n"
+                "")
+        else: 
+                self.button_conf.setStyleSheet("QPushButton{\n"
+                "font: 14pt \"Consolas\";\n"
+                "color:rgb(255, 255,255);\n"
+                "border:1px solid #93C6FF;\n"
+                "background-color: rgb(70, 70, 70);\n"
+                "border-radius:5px;\n"
+                "\n"
+                "}\n"
+                "QPushButton:hover{\n"
+                "background-color: rgb(0, 0, 0);\n"
+                "border:1px solid #93C6FF;\n"
+                "}\n"
+                "")
 
 if __name__ == "__main__":
     import sys
