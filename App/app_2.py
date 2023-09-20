@@ -2,17 +2,13 @@ import sys
 import cv2
 import threading
 import os
-import numpy as np
 import yaml
-import time
-import logging
 
 from App.yoloV5.custom_detect import main as run_detect
 from Gui_.detect_sticks_app import Ui_MainWindow
 
-from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt  # Agrega esta línea
 
@@ -293,6 +289,14 @@ class DetectSticksApp(QApplication):
 
 
     def on_app_quit(self):
+        '''
+        on_app_quit
+
+        Description:
+            Hay 2 casos para prod y dev.
+            - Cierra picam en prod.
+            - Finaliza hilo de camara principal en dev.
+        '''
 
         global video_thread
 
@@ -307,10 +311,22 @@ class DetectSticksApp(QApplication):
 
 
     def on_close_click(self):
+        '''
+        on_close_click
+
+        Description:
+            Cierra Qt App.
+        '''
         QCoreApplication.instance().quit()
 
     
     def on_toggle_maximize(self):
+        '''
+        on_toggle_maximize
+
+        Description:
+            Minimiza y maximiza la pantalla, dependiendo del estado previo.
+        '''
         if self.main_window.isMaximized() or self.main_window.isFullScreen():
             self.main_window.showNormal()  # Restaura la ventana al tamaño normal
         else:
@@ -318,10 +334,22 @@ class DetectSticksApp(QApplication):
 
     
     def on_min_click(self):
+        '''
+        on_min_clisk
+
+        Description:
+            Minimiza pantalla.
+        '''
         self.main_window.showMinimized()  # Minimiza la ventana
 
 
     def start_camera_thread(self):
+        '''
+        start_camera_thread
+
+        Description:
+            Utilizado para comenzar el thread de la camara. Solo necesario en dev.
+        '''
 
         global video_thread
 
@@ -330,6 +358,14 @@ class DetectSticksApp(QApplication):
 
     
     def start_camera(self):
+        '''
+        start_camera
+
+        Description:
+            Inicializa la camara. Hay 2 casos para prod y dev.
+            - Picam en la raspberry.
+            - Camara principal en windows.
+        '''
 
         if config_data["environment"] == "prod":
 
