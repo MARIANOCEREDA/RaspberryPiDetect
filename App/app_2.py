@@ -28,6 +28,7 @@ from managers.errors import WarningMessage
 # Setup global variables
 logger = get_logger("DetectSticksApp")
 config_data = None
+video_thread = None
 
 def setup_config_file(env):
     CONFIG_FILE = os.path.dirname(__file__) + f"/config/config.{env}.yaml"
@@ -273,13 +274,19 @@ class DetectSticksApp(QApplication):
                 success_message = "La información fue enviada correctamente."
                 self.show_success_message_box(success_message)
 
+
     def on_app_quit(self):
+
+        global video_thread
 
         logger.info("Quitting app ...")
 
-        self.ui.picam.close()
-        # video_thread.join()  # Esperamos a que el hilo termine antes de salir por completo
-        sys.exit()  # Salir después de asegurarse de que el hilo haya terminado
+        if config_data["environment"] == "prod":
+            self.ui.picam.close()
+        else:
+            video_thread.join()
+
+        sys.exit()
 
 
     def on_close_click(self):
@@ -295,6 +302,15 @@ class DetectSticksApp(QApplication):
     
     def on_min_click(self):
         self.main_window.showMinimized()  # Minimiza la ventana
+
+
+    def start_camera_thread(self):
+
+        global video_thread
+
+        video_thread = threading.Thread(target=self.start_camera)
+        video_thread.start()
+
     
     def start_camera(self):
 
@@ -319,7 +335,7 @@ class DetectSticksApp(QApplication):
                     self.current_frame = pixmap #image actual
                     scaled_pixmap=pixmap.scaled(self.ui.out_cam.size().width(), self.ui.out_cam.size().height())
                     self.ui.out_cam.setPixmap(scaled_pixmap)
-                    self.processEvents() 
+                    self.processEvents()
         
 
 if __name__ == "__main__":
