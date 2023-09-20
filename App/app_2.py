@@ -77,12 +77,29 @@ class DetectSticksApp(QApplication):
         self.start_camera()
     
     def show_warning_message_box(self, message:WarningMessage):
+        '''
+        show_warning_message_box
 
+        Description:
+            Muestra como pop-up de advertencia el mensaje enviado como parametro.
+        
+        Params:
+            message (WarningMessage | str): Mensaje a enviar
+        '''
         message = message if isinstance(message, str) else message.value
         QMessageBox.warning(None, 'Advertencia', message, QMessageBox.Ok)
 
 
     def show_success_message_box(self, message:str):
+        '''
+        show_warning_message_box
+
+        Description:
+            Muestra como pop-up de informaciòn el mensaje enviado como parametro.
+        
+        Params:
+            message (str): Mensaje a enviar.
+        '''
         QMessageBox.information(None, 'Éxito', message, QMessageBox.Ok)
 
     
