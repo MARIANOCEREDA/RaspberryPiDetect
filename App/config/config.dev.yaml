@@ -2,6 +2,7 @@
 environment: dev
 
 local_storage_folder: C:\Users\merem\workspace\tesis\detections
+local_storage_files_folder: C:\Users\merem\workspace\tesis\detections
 
 camera:
   res_x: 3964

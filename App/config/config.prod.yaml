@@ -2,6 +2,7 @@
 environment: prod
 
 local_storage_folder: /home/mariano/workspace/tesis/RaspberryPiDetect/App/images
+local_storage_files_folder: /home/mariano/workspace/tesis/detections
 
 camera:
   res_x: 3964

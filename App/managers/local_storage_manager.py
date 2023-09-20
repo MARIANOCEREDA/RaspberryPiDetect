@@ -14,7 +14,7 @@ class LocalStorageManager:
         
         self.package_data = package_data
         
-        self.folder_name =  os.path.join(f'{self.config["local_storage_folder"]}', str(datetime.date.today()))
+        self.folder_name =  os.path.join(f'{self.config["local_storage_files_folder"]}', str(datetime.date.today()))
         n_package = self.package_data["packageNumber"]
         self.file_name = f"{n_package}.json"
         self.file_path = os.path.join(self.folder_name, self.file_name)
