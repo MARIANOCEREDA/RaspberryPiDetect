@@ -18,15 +18,18 @@ import os
 qpicamera2 = None
 config_data = None
 
-def setup_config_file(env):
+def setup_config_file(env="prod"):
     CONFIG_FILE = os.path.dirname(__file__) + f"/../config/config.{env}.yaml"
     with open(CONFIG_FILE) as f:
-        config = yaml.safe_load(f)
-    return config
+        config_data = yaml.safe_load(f)
+    return config_data
 
 
 class Ui_MainWindow(object):
+    
     def setupUi(self, MainWindow):
+        config_data = setup_config_file()
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1024, 600)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -418,7 +421,7 @@ class Ui_MainWindow(object):
         
                 self.picam = Picamera2()
                 size = (photo_config["resolution"]["x"], photo_config["resolution"]["y"])
-                
+
                 config = self.picam.create_preview_configuration(main={"size": size},
                                                                  lores={"size": (640, 480)},
                                                                  display="lores")

@@ -298,7 +298,7 @@ class DetectSticksApp(QApplication):
     
     def start_camera(self):
 
-        if config_data["enviroment"] == "prod":
+        if config_data["environment"] == "prod":
 
             logger.info("Starting picamera camera ...")
             self.ui.picam.start()
