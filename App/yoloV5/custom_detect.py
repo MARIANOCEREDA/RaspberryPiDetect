@@ -4,13 +4,12 @@ import sys
 from pathlib import Path
 import torch
 import yaml
-import numpy as np
 import datetime
 
 from models.common import DetectMultiBackend
 from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages
-from utils.general import (LOGGER, Profile, check_file, check_img_size, check_imshow, check_requirements, colorstr, cv2,
-                           increment_path, non_max_suppression, print_args, scale_boxes, strip_optimizer, xyxy2xywh)
+from utils.general import (LOGGER, Profile, check_img_size, colorstr, cv2,
+                           increment_path, non_max_suppression, scale_boxes, strip_optimizer, xyxy2xywh)
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 from utils.process_results import *
@@ -170,7 +169,7 @@ def run_inference(
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
 
 
-def main():
+def main(distance_to_package=139):
 
     global date
     CONFIG_FILE = os.path.dirname(__file__) + "/../config/config.prod.yaml"
@@ -188,7 +187,7 @@ def main():
     
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-    for key, value in config_data.items():
+    for key, value in config_data["yolov5"].items():
         if key == "sticks" or key == "packages":
 
             run_inference(weights=ROOT / Path(config_data["yolov5"][key]["weights"]),  # model path or triton URL
@@ -222,6 +221,7 @@ def main():
     sticks_results_path = os.path.join(os.path.dirname(__file__), config_data["yolov5"]["sticks"]["results"], "labels", "image.txt")
     packages_results_path = os.path.join(os.path.dirname(__file__), config_data["yolov5"]["packages"]["results"], "labels", "image.txt")
     image_path = os.path.join(os.path.dirname(__file__), config_data["yolov5"]["source"], "image.jpeg")
+
     # Read the results from the .txt files and save the content in the new path
     sticks = read_results_from_txt(sticks_results_path)
     packages = read_results_from_txt(packages_results_path)
@@ -242,7 +242,8 @@ def main():
 
         # Get the diameter of the sticks and filter diameters much smaller than the average
         avg_real_package_diameter = config_data["yolov5"]["post-process"]["avg_package_diameter"]
-        diameters_sticks,sticks_within_package = calculate_sticks_diameter(avg_real_package_diameter, 
+        diameters_sticks, sticks_within_package = calculate_sticks_diameter(
+                                            distance_to_package, 
                                             image_path, main_package,
                                             sticks_within_package, config_data["camera"])
 
@@ -251,7 +252,7 @@ def main():
 
         # Calculate average diameter
         prom_diameters = sum(diameters_sticks)/len(diameters_sticks)
-        message="Ok"
+        message = "Ok"
         
         return prom_diameters, len(sticks_within_package), image_main_with_boxes_path, image_path, message
 

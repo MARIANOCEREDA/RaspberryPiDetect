@@ -6,4 +6,4 @@ class WarningMessage(Enum):
     INPUT_PACKAGE_NUMBER = "Tienes que ingresar el número del paquete antes de enviar."
     NOT_MODIFY_AFTER_CONFIRM = "No puede modificar el programa luego de confirmar."
     NOT_STICKS_DETECTED = "No se detectó ningun palo."
-    INFORMATION_NOT_STORED_IN_SERVER = "La informaciòn no pudo ser guardada en el servidor."
+    INFORMATION_NOT_STORED_IN_SERVER = "La información no pudo ser guardada en el servidor."

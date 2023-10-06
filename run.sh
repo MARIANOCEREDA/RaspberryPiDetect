@@ -7,7 +7,7 @@ LOG_FILE="/home/mariano/workspace/tesis/log/run.log"
 
 
 # Initialize log file with a timestamp
-echo "Script started at $(date)" >> "$LOG_FILE"
+echo "Script started at $(date)" | tee -a "$LOG_FILE" 2>&1
 
 # Check if the detect folder exists
 if [ ! -d "$DETECT_FOLDER" ]; then
@@ -41,7 +41,7 @@ fi
 
 echo "Executing app..."
 # Run the app and capture output
-python app_2.py >> "$LOG_FILE" 2>&1
+python app_2.py >> "$LOG_FILE"
 
 # Check if the app ran successfully
 if [ $? -ne 0 ]; then
@@ -52,4 +52,5 @@ else
 fi
 
 # Script completed successfully
-echo "Script completed at $(date)" >> "$LOG_FILE"
+deactivate
+echo "Script completed at $(date)" | tee -a "$LOG_FILE" 2>&1

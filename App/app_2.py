@@ -4,17 +4,20 @@ import threading
 import os
 import yaml
 
-from App.yoloV5.custom_detect import main as run_detect
+# from App.yoloV5.custom_detect import main as run_detect
 from Gui_.detect_sticks_app import Ui_MainWindow
 
-from PyQt5.QtGui import QPixmap, QImage
+from PyQt5.QtGui import QPixmap, QImage, QCursor
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtCore import Qt  # Agrega esta línea
+from PyQt5.QtCore import Qt, QTimer
 
 
 from managers.api_requests import PackageDetectAPIRequests
 from managers.local_storage_manager import LocalStorageManager
+from managers.distance_measure_manager import MeasureDistanceThread
+from managers.detection_thread import DetectionThread
+from managers.keyboard_manager import stop_keyboard, run_keyboard
 
 from picamera2.picamera2 import Picamera2
 from config.logger_config import get_logger
@@ -44,6 +47,11 @@ class DetectSticksApp(QApplication):
         self.diameter = 0
         self.picam:Picamera2 = None
         self.confirm = False
+        self.distance_measure_thread = None
+        self.distance = 0
+        self.image_detect_path = ""
+        self.image_path = ""
+        self.detection_thread = None
 
         # Windows development variables
         self.capture_video = False
@@ -58,6 +66,7 @@ class DetectSticksApp(QApplication):
         self.ui.button_close.clicked.connect(self.on_close_click)
         self.ui.button_max.clicked.connect(self.on_toggle_maximize)
         self.ui.button_min.clicked.connect(self.on_min_click)
+        self.setOverrideCursor(QCursor(Qt.OpenHandCursor))
         self.aboutToQuit.connect(self.on_app_quit)
         
     def _setup_gui(self):
@@ -71,6 +80,8 @@ class DetectSticksApp(QApplication):
         self._setup_gui()
         self._setup_button_callbacks()
         self.start_camera()
+        self.start_distance_measure_thread()
+        self.setup_detection_thread()
     
     def show_warning_message_box(self, message:WarningMessage):
         '''
@@ -91,7 +102,7 @@ class DetectSticksApp(QApplication):
         show_warning_message_box
 
         Description:
-            Muestra como pop-up de informaciòn el mensaje enviado como parametro.
+            Muestra como pop-up de información el mensaje enviado como parametro.
         
         Params:
             message (str): Mensaje a enviar.
@@ -138,10 +149,16 @@ class DetectSticksApp(QApplication):
 
             logger.info("Starting detection ...")
 
-            diameter, sticks, image_detect_path, image_path, message = run_detect()
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+            # diameter, sticks, image_detect_path, image_path, message = run_detect()
+            self.detection_thread.set_distance(self.distance) 
+            self.detection_thread.start()
 
+            '''
             self.diameter = diameter
             self.sticks = sticks
+            self.image_detect_path = image_detect_path
+            self.image_path = image_path
 
             if self.sticks == 0:
                 self.show_warning_message_box(WarningMessage.NOT_STICKS_DETECTED)
@@ -155,8 +172,10 @@ class DetectSticksApp(QApplication):
                 img_stick_500 = img_stick.scaled(self.ui.out_img.size().width(), self.ui.out_img.size().height())
                 self.ui.out_img.setPixmap(img_stick_500)    
 
-                img_detecction = QPixmap(image_detect_path)
-                img_detecction_500 = img_detecction.scaled(self.ui.out_img.size().width(), self.ui.out_img.size().height())
+                img_detecction = QPixmap(self.image_detect_path)
+                img_detecction_500 = img_detecction.scaled(self.ui.out_img.size().width(),
+                                                           self.ui.out_img.size().height())
+                
                 self.ui.out_detect.setPixmap(img_detecction_500)
                 self.stick_correct = 0
                 self.ui.out_correction.setPlainText(str(self.stick_correct))
@@ -169,6 +188,7 @@ class DetectSticksApp(QApplication):
                                 - Número de paquete: {str(self.n_package)}"""
                 
                 logger.info(f"{success_message}")
+                '''
 
         else :
             self.show_warning_message_box(WarningMessage.NOT_MODIFY_AFTER_CONFIRM)
@@ -193,7 +213,7 @@ class DetectSticksApp(QApplication):
 
         else:
             self.ui.in_npackage.setEnabled(True)
-            self.ui.style_confirm_button(self.confirm)
+            self.ui.style_confirm_button(conf=True)
             self.confirm = False
 
 
@@ -284,7 +304,7 @@ class DetectSticksApp(QApplication):
             else:
                 response_from_server = api_result["response"]
                 logger.debug(f"Information succesfully sent to the server: {response_from_server}")
-                success_message = "La información fue enviada correctamente."
+                success_message = 'La información fue enviada correctamente.'
                 self.show_success_message_box(success_message)
 
 
@@ -304,10 +324,12 @@ class DetectSticksApp(QApplication):
 
         if config_data["environment"] == "prod":
             self.ui.picam.close()
+            self.distance_measure_thread.stop()
         else:
             video_thread.join()
 
-        sys.exit()
+        logger.info("Quitting app 2 ...")
+        QCoreApplication.instance().quit()
 
 
     def on_close_click(self):
@@ -389,8 +411,64 @@ class DetectSticksApp(QApplication):
                     scaled_pixmap=pixmap.scaled(self.ui.out_cam.size().width(), self.ui.out_cam.size().height())
                     self.ui.out_cam.setPixmap(scaled_pixmap)
                     self.processEvents()
-        
+    
+    def distance_measure_slot(self, dist):
+        self.distance = dist
+        self.ui.out_distance_measure.setPlainText(str(dist))
 
+    def start_distance_measure_thread(self):
+
+        if config_data["environment"] == "prod":
+            self.distance_measure_thread = MeasureDistanceThread()
+            self.distance_measure_thread.finished.connect(self.distance_measure_slot)
+            self.distance_measure_thread.start()
+
+    
+    def detection_slot(self, diameter, sticks, image_detect_path, image_path, message):
+
+        QApplication.restoreOverrideCursor()
+
+        self.sticks = sticks
+        self.diameter = diameter
+        self.image_detect_path = image_detect_path
+        self.image_path
+
+        if self.sticks == 0:
+                self.show_warning_message_box(WarningMessage.NOT_STICKS_DETECTED)
+
+        else:
+            self.ui.out_sticks.setPlainText(str(self.sticks))
+            self.ui.out_diameter.setPlainText(str(round(self.diameter, 3)) + " cm")
+
+            img_stick = QPixmap(image_path)
+
+            img_stick_500 = img_stick.scaled(self.ui.out_img.size().width(), self.ui.out_img.size().height())
+            self.ui.out_img.setPixmap(img_stick_500)    
+
+            img_detecction = QPixmap(self.image_detect_path)
+            img_detecction_500 = img_detecction.scaled(self.ui.out_img.size().width(),
+                                                        self.ui.out_img.size().height())
+            
+            self.ui.out_detect.setPixmap(img_detecction_500)
+            self.stick_correct = 0
+            self.ui.out_correction.setPlainText(str(self.stick_correct))
+            self.total_sticks = self.sticks + self.stick_correct
+            self.ui.out_total.setPlainText(str(self.total_sticks))
+
+            success_message = f"""Palos detectados: {str(self.sticks)} \n
+                            - Palos totales: {str(self.total_sticks)} \n
+                            - Diametro Promedio: {str(round(self.diameter, 3))} \n
+                            - Número de paquete: {str(self.n_package)}"""
+            
+            logger.info(f"{success_message}")
+
+    
+    def setup_detection_thread(self):
+
+        self.detection_thread = DetectionThread()
+        self.detection_thread.finished.connect(self.detection_slot)
+
+        
 if __name__ == "__main__":
 
     # Get the platform information to make initial configuration

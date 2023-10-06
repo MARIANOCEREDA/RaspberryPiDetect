@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from picamera2.previews.qt import QGlPicamera2
 from picamera2.picamera2 import Picamera2
 from picamera2.previews.qt import QGlPicamera2
@@ -155,39 +156,79 @@ class Ui_MainWindow(object):
 "border:1px solid #93C6FF;\n"
 "background-color: rgb(70, 70, 70);\n"
 "border-radius:5px;\n"
-"\n"
-"}\n"
-"QPushButton:hover{\n"
-"background-color: rgb(0, 0, 0);\n"
-"border:1px solid #93C6FF;\n"
+"margin: 5px;\n"
 "}\n"
 "")
+        # Frame Botones general ---------------------------------
         self.frame_botones.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_botones.setFrameShadow(QtWidgets.QFrame.Raised)
+        # self.frame_botones.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_botones.setObjectName("frame_botones")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.frame_botones)
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setContentsMargins(5, 5, 5, 5)
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
+        # Frame Botones general ---------------------------------
+
+        # Button detectar --------------------------------
         self.button_detect = QtWidgets.QPushButton(self.frame_botones)
-        self.button_detect.setMinimumSize(QtCore.QSize(0, 20))
+        self.button_detect.setMinimumSize(QtCore.QSize(0, 35))
         self.button_detect.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.button_detect.setIconSize(QtCore.QSize(35, 35))
+        # self.button_detect.setIconSize(QtCore.QSize(35, 35))
         self.button_detect.setObjectName("button_detect")
+        self.button_detect.setStyleSheet("QFrame{\n"
+"background-color: rgb(69, 74, 88);\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"font: 14pt \"Consolas\";\n"
+"color:rgb(255, 255,255);\n"
+"border:1px solid #93C6FF;\n"
+"background-color: rgb(70, 70, 70);\n"
+"border-radius:5px;\n"
+"margin: 5px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background-color: rgb(0, 0, 0);\n"
+"border:1px solid #93C6FF;\n"
+"}\n")
         self.verticalLayout_5.addWidget(self.button_detect)
+        # Button detectar --------------------------------
+
+        # Button confirm ---------------------------------
         self.button_conf = QtWidgets.QPushButton(self.frame_botones)
-        self.button_conf.setMinimumSize(QtCore.QSize(0, 20))
+        self.button_conf.setMinimumSize(QtCore.QSize(0, 35))
         self.button_conf.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.button_conf.setIconSize(QtCore.QSize(35, 35))
         self.button_conf.setObjectName("button_conf")
         self.verticalLayout_5.addWidget(self.button_conf)
+        # Button confirm ---------------------------------
+
+        # Button send --------------------------------------------
         self.button_send = QtWidgets.QPushButton(self.frame_botones)
-        self.button_send.setMinimumSize(QtCore.QSize(0, 20))
+        self.button_send.setMinimumSize(QtCore.QSize(0,35))
         self.button_send.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.button_send.setIconSize(QtCore.QSize(30, 30))
+        # self.button_send.setIconSize(QtCore.QSize(30, 30))
         self.button_send.setObjectName("button_send")
         self.verticalLayout_5.addWidget(self.button_send)
         self.verticalLayout_4.addWidget(self.frame_botones)
+        self.button_send.setStyleSheet("QFrame{\n"
+"background-color: rgb(69, 74, 88);\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"font: 14pt \"Consolas\";\n"
+"color:rgb(255, 255,255);\n"
+"border:1px solid #93C6FF;\n"
+"background-color: rgb(70, 70, 70);\n"
+"border-radius:5px;\n"
+"margin: 5px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background-color: rgb(0, 0, 0);\n"
+"border:1px solid #93C6FF;\n"
+"}\n")
+        # Button send --------------------------------------------
+
         self.frame_2 = QtWidgets.QFrame(self.frame_datos)
         self.frame_2.setStyleSheet("QFrame{\n"
 "background-color: rgb(69, 74, 88);\n"
@@ -220,38 +261,43 @@ class Ui_MainWindow(object):
 "color: rgb(255, 255,255);\n"
 "}")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        # self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.frame_2)
         self.verticalLayout_8.setContentsMargins(0, 5, 0, 0)
         self.verticalLayout_8.setSpacing(13)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        self.frame_11 = QtWidgets.QFrame(self.frame_2)
-        self.frame_11.setMinimumSize(QtCore.QSize(0, 35))
-        self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_11.setObjectName("frame_11")
-        self.label_8 = QtWidgets.QLabel(self.frame_11)
-        self.label_8.setGeometry(QtCore.QRect(0, -10, 171, 71))
-        self.label_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.label_8.setObjectName("label_8")
-        self.in_npackage = QtWidgets.QLineEdit(self.frame_11)
-        self.in_npackage.setGeometry(QtCore.QRect(130, 7, 131, 33))
+
+        # Frame input numero paquete ----------------------------------
+        self.frame_package_number = QtWidgets.QFrame(self.frame_2)
+        self.frame_package_number.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_package_number.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_package_number.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_package_number.setObjectName("frame_package_number")
+        self.label_package_number = QtWidgets.QLabel(self.frame_package_number)
+        self.label_package_number.setGeometry(QtCore.QRect(5, -12, 171, 71))
+        self.label_package_number.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_package_number.setObjectName("label_package_number")
+        self.in_npackage = QtWidgets.QLineEdit(self.frame_package_number)
+        self.in_npackage.setGeometry(QtCore.QRect(120, 7, 131, 33))
         self.in_npackage.setMinimumSize(QtCore.QSize(0, 33))
         self.in_npackage.setInputMask("")
         self.in_npackage.setObjectName("in_npackage")
-        self.verticalLayout_8.addWidget(self.frame_11)
-        self.frame_12 = QtWidgets.QFrame(self.frame_2)
-        self.frame_12.setMinimumSize(QtCore.QSize(0, 35))
-        self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_12.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_12.setObjectName("frame_12")
-        self.label_9 = QtWidgets.QLabel(self.frame_12)
-        self.label_9.setGeometry(QtCore.QRect(0, -10, 231, 71))
-        self.label_9.setMinimumSize(QtCore.QSize(0, 33))
-        self.label_9.setObjectName("label_9")
-        self.out_sticks = QtWidgets.QTextBrowser(self.frame_12)
-        self.out_sticks.setGeometry(QtCore.QRect(130, 7, 131, 33))
+        self.verticalLayout_8.addWidget(self.frame_package_number)
+        # Frame input numero paquete ----------------------------------
+
+        # Frame cantidad palos ------------------------------------
+        self.frame_n_sticks = QtWidgets.QFrame(self.frame_2)
+        self.frame_n_sticks.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_n_sticks.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_n_sticks.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_n_sticks.setObjectName("frame_n_sticks")
+        self.label_n_sticks = QtWidgets.QLabel(self.frame_n_sticks)
+        self.label_n_sticks.setGeometry(QtCore.QRect(5, -14, 231, 71))
+        self.label_n_sticks.setMinimumSize(QtCore.QSize(0, 33))
+        self.label_n_sticks.setObjectName("label_n_sticks")
+        self.out_sticks = QtWidgets.QTextBrowser(self.frame_n_sticks)
+        self.out_sticks.setGeometry(QtCore.QRect(120, 5, 131, 33))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -266,25 +312,31 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.out_sticks.setFont(font)
         self.out_sticks.setObjectName("out_sticks")
-        self.verticalLayout_8.addWidget(self.frame_12)
-        self.frame_13 = QtWidgets.QFrame(self.frame_2)
-        self.frame_13.setMinimumSize(QtCore.QSize(0, 35))
-        self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_13.setObjectName("frame_13")
-        self.label_10 = QtWidgets.QLabel(self.frame_13)
-        self.label_10.setGeometry(QtCore.QRect(0, -10, 221, 71))
-        self.label_10.setMinimumSize(QtCore.QSize(0, 33))
-        self.label_10.setObjectName("label_10")
-        self.out_diameter = QtWidgets.QTextBrowser(self.frame_13)
-        self.out_diameter.setGeometry(QtCore.QRect(130, 7, 131, 33))
+        # Frame cantidad palos ------------------------------------
+
+        # Frame diametro promedio --------------------------------
+        self.verticalLayout_8.addWidget(self.frame_n_sticks)
+        self.frame_avg_diameter = QtWidgets.QFrame(self.frame_2)
+        self.frame_avg_diameter.setMinimumSize(QtCore.QSize(0, 35))
+        self.frame_avg_diameter.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_avg_diameter.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_avg_diameter.setObjectName("frame_avg_diameter")
+        self.label_avg_diameter = QtWidgets.QLabel(self.frame_avg_diameter)
+        self.label_avg_diameter.setGeometry(QtCore.QRect(5, -14, 221, 71))
+        self.label_avg_diameter.setMinimumSize(QtCore.QSize(0, 33))
+        self.label_avg_diameter.setObjectName("label_avg_diameter")
+        self.out_diameter = QtWidgets.QTextBrowser(self.frame_avg_diameter)
+        self.out_diameter.setGeometry(QtCore.QRect(120, 5, 131, 33))
         self.out_diameter.setMinimumSize(QtCore.QSize(0, 33))
         self.out_diameter.setObjectName("out_diameter")
-        self.verticalLayout_8.addWidget(self.frame_13)
+        self.verticalLayout_8.addWidget(self.frame_avg_diameter)
+        # Frame diametro promedio --------------------------------
+
+        # Frame botones de mas ---------------------------------------
         self.frame_14 = QtWidgets.QFrame(self.frame_2)
         self.frame_14.setMinimumSize(QtCore.QSize(0, 44))
-        self.frame_14.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_14.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_14.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_14.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_14.setObjectName("frame_14")
         self.button_plas = QtWidgets.QPushButton(self.frame_14)
         self.button_plas.setGeometry(QtCore.QRect(170, 0, 43, 43))
@@ -296,23 +348,29 @@ class Ui_MainWindow(object):
         self.button_plas.setIconSize(QtCore.QSize(53, 53))
         self.button_plas.setObjectName("button_plas")
         self.verticalLayout_8.addWidget(self.frame_14)
+        # Frame botones de mas ---------------------------------------
+
+        # Frame Corrección -------------------------------------
         self.frame_15 = QtWidgets.QFrame(self.frame_2)
         self.frame_15.setMinimumSize(QtCore.QSize(0, 35))
-        self.frame_15.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_15.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_15.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_15.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_15.setObjectName("frame_15")
         self.label_12 = QtWidgets.QLabel(self.frame_15)
-        self.label_12.setGeometry(QtCore.QRect(0, -10, 191, 71))
+        self.label_12.setGeometry(QtCore.QRect(5, -12, 191, 71))
         self.label_12.setObjectName("label_12")
         self.out_correction = QtWidgets.QTextBrowser(self.frame_15)
-        self.out_correction.setGeometry(QtCore.QRect(130, 7, 131, 33))
+        self.out_correction.setGeometry(QtCore.QRect(120, 5, 131, 33))
         self.out_correction.setMinimumSize(QtCore.QSize(0, 33))
         self.out_correction.setObjectName("out_correction")
         self.verticalLayout_8.addWidget(self.frame_15)
+        # Frame Corrección -------------------------------------
+
+        # Frame botones de menos ---------------------------------------
         self.frame_16 = QtWidgets.QFrame(self.frame_2)
         self.frame_16.setMinimumSize(QtCore.QSize(0, 44))
-        self.frame_16.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_16.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_16.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_16.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_16.setObjectName("frame_16")
         self.button_less = QtWidgets.QPushButton(self.frame_16)
         self.button_less.setGeometry(QtCore.QRect(170, 0, 43, 43))
@@ -330,19 +388,40 @@ class Ui_MainWindow(object):
         self.button_less.setIconSize(QtCore.QSize(53, 53))
         self.button_less.setObjectName("button_less")
         self.verticalLayout_8.addWidget(self.frame_16)
+        # Frame botones de + y - ---------------------------------------
+
+        # Palos totales frame ----------------------------------
         self.frame_17 = QtWidgets.QFrame(self.frame_2)
         self.frame_17.setMinimumSize(QtCore.QSize(0, 35))
-        self.frame_17.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_17.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_17.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_17.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_17.setObjectName("frame_17")
         self.label_11 = QtWidgets.QLabel(self.frame_17)
-        self.label_11.setGeometry(QtCore.QRect(0, -10, 181, 71))
+        self.label_11.setGeometry(QtCore.QRect(5, -12, 181, 71))
         self.label_11.setObjectName("label_11")
         self.out_total = QtWidgets.QTextBrowser(self.frame_17)
-        self.out_total.setGeometry(QtCore.QRect(130, 7, 131, 33))
+        self.out_total.setGeometry(QtCore.QRect(120, 7, 131, 33))
         self.out_total.setMinimumSize(QtCore.QSize(0, 33))
         self.out_total.setObjectName("out_total")
         self.verticalLayout_8.addWidget(self.frame_17)
+        # Palos totales frame ----------------------------------
+
+        # Distance measure frame -------------------------
+        self.frame_distance_measure = QtWidgets.QFrame(self.frame_2)
+        self.frame_distance_measure.setMinimumSize(QtCore.QSize(0, 25))
+        self.frame_distance_measure.setFrameShape(QtWidgets.QFrame.NoFrame)
+        # self.frame_distance_measure.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.frame_distance_measure.setObjectName("frame_distance_measure")
+        self.label_distance_measure = QtWidgets.QLabel(self.frame_distance_measure)
+        self.label_distance_measure.setGeometry(QtCore.QRect(5, -10, 181, 65))
+        self.label_distance_measure.setObjectName("label_distance_measure")
+        self.out_distance_measure = QtWidgets.QTextBrowser(self.frame_distance_measure)
+        self.out_distance_measure.setGeometry(QtCore.QRect(120, 5, 131, 30))
+        self.out_distance_measure.setMinimumSize(QtCore.QSize(0, 25))
+        self.out_distance_measure.setObjectName("out_distance_measure")
+        self.verticalLayout_8.addWidget(self.frame_distance_measure)
+        # Distance measure frame -------------------------------------
+
         self.verticalLayout_4.addWidget(self.frame_2)
         self.verticalLayout_4.setStretch(0, 2)
         self.verticalLayout_4.setStretch(1, 7)
@@ -513,11 +592,12 @@ class Ui_MainWindow(object):
         self.button_detect.setText(_translate("MainWindow", "Detectar  "))
         self.button_conf.setText(_translate("MainWindow", "Confirmar "))
         self.button_send.setText(_translate("MainWindow", "Enviar    "))
-        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p>N° de <br/>Paquete</p></body></html>"))
+        self.label_package_number.setText(_translate("MainWindow", "<html><head/><body><p>N° de <br/>Paquete</p></body></html>"))
         self.in_npackage.setPlaceholderText(_translate("MainWindow", "Ingrese N°"))
-        self.label_9.setText(_translate("MainWindow", "<html><head/><body><p>Palos <br/>Detectados</p></body></html>"))
-        self.label_10.setText(_translate("MainWindow", "<html><head/><body><p>Diametro <br/>Promedio</p></body></html>"))
+        self.label_n_sticks.setText(_translate("MainWindow", "<html><head/><body><p>Palos <br/>Detectados</p></body></html>"))
+        self.label_avg_diameter.setText(_translate("MainWindow", "<html><head/><body><p>Diametro <br/>Promedio</p></body></html>"))
         self.label_12.setText(_translate("MainWindow", "<html><head/><body><p>Correción <br/>Detección</p></body></html>"))
+        self.label_distance_measure.setText(_translate("MainWindow", "<html><head/><body><p>Distancia </p></body></html>"))
         self.label_11.setText(_translate("MainWindow", "Palos<br> Totales"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Camara"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Fotografia"))
@@ -534,10 +614,6 @@ class Ui_MainWindow(object):
                 "border-radius:5px;\n"
                 "\n"
                 "}\n"
-                "QPushButton:hover{\n"
-                "background-color: rgb(70, 70, 70);\n"
-                "border:1px solid #93C6FF;\n"
-                "}\n"
                 "")
         else: 
                 self.button_conf.setStyleSheet("QPushButton{\n"
@@ -548,11 +624,10 @@ class Ui_MainWindow(object):
                 "border-radius:5px;\n"
                 "\n"
                 "}\n"
-                "QPushButton:hover{\n"
-                "background-color: rgb(0, 0, 0);\n"
-                "border:1px solid #93C6FF;\n"
-                "}\n"
                 "")
+    
+    def style_button_pressed(self):
+        pass
 
 if __name__ == "__main__":
     import sys

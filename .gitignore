@@ -205,4 +205,8 @@ pip-selfcheck.json
 .history
 .ionide
 
+# 
+camera/
+photos/
+
 # End of https://www.toptal.com/developers/gitignore/api/virtualenv,python,visualstudiocode

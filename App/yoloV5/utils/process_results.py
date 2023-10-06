@@ -81,7 +81,9 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     return output_path
 
 
-def calculate_sticks_diameter(package_diameter:float, image_path:str, main_package_size:np.array, sticks_within_package:int, camera) -> float:
+def calculate_sticks_diameter(distance_to_package:float, image_path:str, main_package_size:np.array, sticks_within_package:int, camera) -> float:
+
+    print(distance_to_package)
 
     # Calcula la relación entre cm reales y cm en la imagen para el objeto de referencia 
     rel_cm_cm_w = camera["w_obj_real_cm"] / camera["w_obj_ref_cm"] 
@@ -98,9 +100,9 @@ def calculate_sticks_diameter(package_diameter:float, image_path:str, main_packa
     _, _, y_d, _, h_d = main_package_size * img_size_h
 
 
-    diam_mainpackage_pixel= (w_d+h_d) / 2 #tomamos el diametro en pixeles como el promedio entra la altura y ancho
+    # diam_mainpackage_pixel= (w_d+h_d) / 2 #tomamos el diametro en pixeles como el promedio entra la altura y ancho
 
-    rel_pixeles_cm = diam_mainpackage_pixel / package_diameter
+    # rel_pixeles_cm = diam_mainpackage_pixel / package_diameter
 
     diam_sticks=[]
 
