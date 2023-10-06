@@ -5,8 +5,8 @@ local_storage_folder: /home/mariano/workspace/tesis/RaspberryPiDetect/App/images
 local_storage_files_folder: /home/mariano/workspace/tesis/detections
 
 camera:
-  res_x: 3964
-  res_y: 2464
+  res_x: 3000
+  res_y: 2000
   w_obj_ref_px: 100 # Dimensiones del objeto de referencia en la imagen (en píxeles)
   h_obj_ref_px: 155
   w_obj_ref_cm: 1.8 # Dimensiones del objeto de referencia en la imagen (en centímetros)

@@ -49,7 +49,7 @@ def filter_sticks_within_package(sticks:np.array, package:np.array) -> np.array:
             filtered_sticks.append(stick)
 
     return (filtered_sticks)
-def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_package:int, config_data:dict) -> str:
+def draw_package_and_sticks(image_path:str, sticks_within_package:int, config_data:dict) -> str:
 
     # Load image
     image1 = cv2.imread(image_path)
@@ -57,13 +57,13 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     white_image = np.zeros((img_size_h, img_size_w, 3), dtype=np.uint8)
     alpha = 50
     # Dibujar el recuadro del paquete principal en verde
-    _, x, _, w, _ = main_package_dims * img_size_w
-    _, _, y, _, h = main_package_dims * img_size_h
+    #_, x, _, w, _ = main_package_dims * img_size_w
+    #_, _, y, _, h = main_package_dims * img_size_h
 
-    r=max(int(w)/2,int(h)/2)
+    #r=max(int(w)/2,int(h)/2)
 
     #cv2.rectangle(image1, (int(x - w / 2), int(y + h / 2)), (int(x + w / 2), int(y - h / 2)), (0, 255, 0), 2)
-    cv2.circle(image1, (int(x), int(y)), int(r), (0, 255, 0), 2)
+    #cv2.circle(image1, (int(x), int(y)), int(r), (0, 255, 0), 2)
 
     # Draw circles 
     for stick in sticks_within_package:
@@ -81,7 +81,7 @@ def draw_package_and_sticks(image_path:str, main_package_dims, sticks_within_pac
     return output_path
 
 
-def calculate_sticks_diameter(distance_to_package:float, image_path:str, main_package_size:np.array, sticks_within_package:int, camera) -> float:
+def calculate_sticks_diameter(distance_to_package:float, image_path:str, sticks_within_package:int, camera) -> float:
 
     print(distance_to_package)
 
@@ -96,8 +96,8 @@ def calculate_sticks_diameter(distance_to_package:float, image_path:str, main_pa
     image1 = cv2.imread(image_path)
     img_size_h,img_size_w,_=image1.shape
 
-    _, x_d, _, w_d, _ = main_package_size * img_size_w
-    _, _, y_d, _, h_d = main_package_size * img_size_h
+    # _, x_d, _, w_d, _ = main_package_size * img_size_w
+    # _, _, y_d, _, h_d = main_package_size * img_size_h
 
 
     # diam_mainpackage_pixel= (w_d+h_d) / 2 #tomamos el diametro en pixeles como el promedio entra la altura y ancho

@@ -16,8 +16,14 @@ from picamera2.previews.qt import QGlPicamera2
 import yaml
 import os
 
+from config.logger_config import get_logger
+
+# Setup global variables
+logger = get_logger("DetectSticksUI")
+
 qpicamera2 = None
 config_data = None
+RETRY_PICAM_ERROR = 2
 
 def setup_config_file(env="prod"):
     CONFIG_FILE = os.path.dirname(__file__) + f"/../config/config.{env}.yaml"
@@ -491,20 +497,24 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_3, "")'''
 
         if config_data["environment"] == "prod":
-                photo_config = {
-                        "resolution":{
-                                "x":3000,
-                                "y":2000
-                        }
-                }
-        
-                self.picam = Picamera2()
-                size = (photo_config["resolution"]["x"], photo_config["resolution"]["y"])
 
-                config = self.picam.create_preview_configuration(main={"size": size},
-                                                                 lores={"size": (640, 480)},
-                                                                 display="lores")
-                self.picam.configure(config)
+                self.picam = Picamera2()
+                size = (config_data["camera"]["res_x"], config_data["camera"]["res_y"])
+
+                picam_error_counter = 0
+
+                while picam_error_counter < RETRY_PICAM_ERROR:
+                        try:
+                                config = self.picam.create_preview_configuration(main={"size": size},
+                                                                        lores={"size": (640, 480)},
+                                                                        display="lores")
+                                self.picam.configure(config)
+                                break
+                        
+                        except Exception as e:
+                                picam_error_counter += 1
+                                logger.error(f"Error: {e}")
+                        
 
                 self.qpicamera2 = QGlPicamera2(picam2=self.picam,
                                                parent=self.tab_3,

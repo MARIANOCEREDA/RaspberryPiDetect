@@ -148,47 +148,10 @@ class DetectSticksApp(QApplication):
                     self.current_frame.save(cam_path)
 
             logger.info("Starting detection ...")
-
             QApplication.setOverrideCursor(Qt.WaitCursor)
-            # diameter, sticks, image_detect_path, image_path, message = run_detect()
             self.detection_thread.set_distance(self.distance) 
+            self.distance_measure_thread.stop()
             self.detection_thread.start()
-
-            '''
-            self.diameter = diameter
-            self.sticks = sticks
-            self.image_detect_path = image_detect_path
-            self.image_path = image_path
-
-            if self.sticks == 0:
-                self.show_warning_message_box(WarningMessage.NOT_STICKS_DETECTED)
-
-            else:
-                self.ui.out_sticks.setPlainText(str(self.sticks))
-                self.ui.out_diameter.setPlainText(str(round(self.diameter, 3)) + " cm")
-
-                img_stick = QPixmap(image_path)
-
-                img_stick_500 = img_stick.scaled(self.ui.out_img.size().width(), self.ui.out_img.size().height())
-                self.ui.out_img.setPixmap(img_stick_500)    
-
-                img_detecction = QPixmap(self.image_detect_path)
-                img_detecction_500 = img_detecction.scaled(self.ui.out_img.size().width(),
-                                                           self.ui.out_img.size().height())
-                
-                self.ui.out_detect.setPixmap(img_detecction_500)
-                self.stick_correct = 0
-                self.ui.out_correction.setPlainText(str(self.stick_correct))
-                self.total_sticks = self.sticks + self.stick_correct
-                self.ui.out_total.setPlainText(str(self.total_sticks))
-
-                success_message = f"""Palos detectados: {str(self.sticks)} \n
-                                - Palos totales: {str(self.total_sticks)} \n
-                                - Diametro Promedio: {str(round(self.diameter, 3))} \n
-                                - Número de paquete: {str(self.n_package)}"""
-                
-                logger.info(f"{success_message}")
-                '''
 
         else :
             self.show_warning_message_box(WarningMessage.NOT_MODIFY_AFTER_CONFIRM)
@@ -274,6 +237,8 @@ class DetectSticksApp(QApplication):
 
         else:
 
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+
             package_data = {
                 "packageNumber": self.n_package,
                 "sticksAmount": self.total_sticks,
@@ -282,12 +247,9 @@ class DetectSticksApp(QApplication):
             }
 
             logger.debug(package_data)
-
             api_manager = PackageDetectAPIRequests(package_data=package_data)
             local_storage_manager = LocalStorageManager(config_data, package_data=package_data)
-
             local_storage_result = local_storage_manager.store_data()
-
             api_result = api_manager.post_package()
 
             if local_storage_result:
@@ -299,13 +261,16 @@ class DetectSticksApp(QApplication):
             if not api_result["success"]:
                 response_code = api_result["code"]
                 logger.debug(f"Not able to store data in the server: {response_code}")
+                QApplication.restoreOverrideCursor()
                 self.show_warning_message_box(WarningMessage.INFORMATION_NOT_STORED_IN_SERVER)
 
             else:
                 response_from_server = api_result["response"]
                 logger.debug(f"Information succesfully sent to the server: {response_from_server}")
                 success_message = 'La información fue enviada correctamente.'
+                QApplication.restoreOverrideCursor()
                 self.show_success_message_box(success_message)
+            
 
 
     def on_app_quit(self):
@@ -324,7 +289,7 @@ class DetectSticksApp(QApplication):
 
         if config_data["environment"] == "prod":
             self.ui.picam.close()
-            self.distance_measure_thread.stop()
+            self.distance_measure_thread.stop(finish_app=True)
         else:
             video_thread.join()
 
@@ -351,6 +316,7 @@ class DetectSticksApp(QApplication):
         '''
         if self.main_window.isMaximized() or self.main_window.isFullScreen():
             self.main_window.showNormal()  # Restaura la ventana al tamaño normal
+            
         else:
             self.main_window.setWindowState(Qt.WindowFullScreen)
 
@@ -461,6 +427,9 @@ class DetectSticksApp(QApplication):
                             - Número de paquete: {str(self.n_package)}"""
             
             logger.info(f"{success_message}")
+
+            if not self.distance_measure_thread.isRunning():
+                self.distance_measure_thread.start()
 
     
     def setup_detection_thread(self):

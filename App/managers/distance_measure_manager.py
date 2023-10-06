@@ -12,7 +12,6 @@ logger = get_logger("DistanceMeasure")
 GPIO_TRIGGER = 18
 GPIO_ECHO = 24
 
-
 class MeasureDistanceThread(QThread):
 
     finished = pyqtSignal(float)
@@ -23,16 +22,26 @@ class MeasureDistanceThread(QThread):
         GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
         GPIO.setup(GPIO_ECHO, GPIO.IN)
         self._stop_flag = False
+        self.finish_complete_app = False
 
     def run(self):
+        '''
+        run
 
-        while not self._stop_flag:
+        Description:
+            Inicializa y corre el hilo. Por cada loop while, realiza una medición de distancia.
+        '''
+
+        logger.info("Starting distance measure worker thread ...")
+
+        while True:
+
             # set Trigger to HIGH
-            logger.debug("Triggerint SET...")
+            logger.debug("Triggering SET...")
             GPIO.output(GPIO_TRIGGER, True)
 
             # set Trigger after 0.01ms to LOW
-            logger.debug("Triggerint RESET...")
+            logger.debug("Triggering RESET...")
             time.sleep(0.00001)
             GPIO.output(GPIO_TRIGGER, False)
 
@@ -53,13 +62,38 @@ class MeasureDistanceThread(QThread):
 
             logger.info("Measured distance: " + str(distance))
 
+            if self._stop_flag and self.finish_complete_app:
+                GPIO.cleanup()
+                self.finished.emit(float(distance))
+                break
+
+            elif self._stop_flag:
+                self._stop_flag = False
+                self.finished.emit(float(distance))
+                break
+
             self.finished.emit(float(distance))
             time.sleep(1)
 
-    def stop(self):
-        # Set the stop flag to indicate the thread should stop
-        logger.debug("Stopping measure distance worker thread ...")
-        GPIO.cleanup()
+        logger.debug("Measure distance worker thread stopped ...")
+
+    def stop(self, finish_app=False):
+        '''
+        stop
+
+        Description:
+            Setea un flag para finalizar el hilo. Se puede finizar totalmente, de forma que no se puede reinicializar, 
+            o parcialmente, con posiilidad de ser reejecutado.
+
+        Parameters:
+
+            - finish_app (boolean): Si es falso, permite que el hilo se vuelva a inicializar desde 
+            la app principal. Si es verdadero, significa que la main app esta siendo finalizada tambien.
+        '''
+        logger.info("Stopping measure distance worker thread...")
+
+        if finish_app:
+            self.finish_complete_app = True
         self._stop_flag = True
         
         
