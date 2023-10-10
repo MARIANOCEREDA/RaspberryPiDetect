@@ -35,7 +35,7 @@ yolov5:
   sticks:
     weights: /home/mariano/workspace/tesis/RaspberryPiDetect/App/yoloV5/weights/sticks/best.pt
     results: /home/mariano/workspace/tesis/RaspberryPiDetect/App/images/sticks
-    conf_thres: 0.60
+    conf_thres: 0.62
     iou_thres: 0.45
 
   packages:

@@ -89,9 +89,16 @@ def calculate_sticks_diameter(distance_to_package:float, image_path:str, sticks_
     rel_cm_cm_w = camera["w_obj_real_cm"] / camera["w_obj_ref_cm"] 
     rel_cm_cm_h = camera["h_obj_real_cm"] / camera["h_obj_ref_cm"]
 
+    rel_cm_cm_w = distance_to_package * rel_cm_cm_w / int(camera["distance_cm"])
+    rel_cm_cm_h = distance_to_package * rel_cm_cm_h / int(camera["distance_cm"])
+
     # Calcula la relación entre píxeles y centímetros en la imagen para el objeto de referencia
     rel_cm_px_w = camera["w_obj_ref_cm"]/ camera["w_obj_ref_px"] 
     rel_cm_px_h = camera["h_obj_ref_cm"] / camera["h_obj_ref_px"] 
+
+    # Escalado para la distancia real.
+    rel_cm_px_w = distance_to_package * rel_cm_px_w / int(camera["distance_cm"])
+    rel_cm_px_h = distance_to_package * rel_cm_px_h / int(camera["distance_cm"])
 
     image1 = cv2.imread(image_path)
     img_size_h,img_size_w,_=image1.shape
