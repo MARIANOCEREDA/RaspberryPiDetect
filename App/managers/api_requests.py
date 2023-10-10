@@ -1,19 +1,26 @@
 import requests
 import json
 from App.config.logger_config import get_logger
+from PyQt5.QtCore import QThread, pyqtSignal
 
 logger = get_logger("PackageDetectAPIRequests")
 
-class PackageDetectAPIRequests:
+class PackageDetectAPIRequests(QThread):
 
-    def __init__(self, package_data) -> None:
-        self.url = "http://20.125.138.87:3000/api/v1/package"
-        self.package_data = package_data
+    finished = pyqtSignal(dict, dict)
+
+    def __init__(self, config_server_data, parent=None) -> None:
+        super().__init__(parent)
+        ip = config_server_data["ip"]
+        port = config_server_data["port"]
+        self.url = f"http://{ip}:{port}/api/v1/package"
+        self.package_data = {}
 
     def request_package(self):
 
         try:
             response = requests.get(self.url)
+
             # Verificamos si la solicitud fue exitosa (código de estado 200)
             if response.status_code == 200:
 
@@ -30,8 +37,11 @@ class PackageDetectAPIRequests:
 
         except requests.exceptions.RequestException as e:
             print(f"Error en la solicitud GET: {str(e)}")
+    
+    def set_package_data(self, data) -> None:
+        self.package_data = data
 
-    def post_package(self):
+    def run(self):
 
         # Convierte los datos a formato JSON
         json_data = json.dumps(self.package_data)
@@ -50,16 +60,24 @@ class PackageDetectAPIRequests:
 
                 logger.info("Solicitud POST exitosa")
 
-                return { "success":True, "response":response.text}
+                result = { "success":True, "response":response.text}
+            
+                self.finished.emit(result, self.package_data)
             
             else:
 
                 logger.error(f"Error en la solicitud POST. Código de estado: {response.status_code}")
 
-                return { "success":False, "code":response.status_code }
+                result = { "success":False, "code":response.status_code }
+                
+                logger.info(response)
+
+                self.finished.emit(result, self.package_data)
 
         except requests.exceptions.RequestException as e:
 
             logger.error(f"Error en la solicitud POST: {str(e)}")
 
-            return { "success":False, "code":"Bad Request"}
+            result = { "success":False, "code":"Bad Request"}
+
+            self.finished.emit(result, self.package_data)

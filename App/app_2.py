@@ -52,6 +52,7 @@ class DetectSticksApp(QApplication):
         self.image_detect_path = ""
         self.image_path = ""
         self.detection_thread = None
+        self.api_request_thread = None
 
         # Windows development variables
         self.capture_video = False
@@ -82,6 +83,7 @@ class DetectSticksApp(QApplication):
         self.start_camera()
         self.start_distance_measure_thread()
         self.setup_detection_thread()
+        self.setup_api_request_thread()
     
     def show_warning_message_box(self, message:WarningMessage):
         '''
@@ -247,31 +249,10 @@ class DetectSticksApp(QApplication):
             }
 
             logger.debug(package_data)
-            api_manager = PackageDetectAPIRequests(package_data=package_data)
-            local_storage_manager = LocalStorageManager(config_data, package_data=package_data)
-            local_storage_result = local_storage_manager.store_data()
-            api_result = api_manager.post_package()
 
-            if local_storage_result:
-                logger.info(f"Information succesfully stored in local fs.")
-            
-            else:
-                logger.error(f"Information could not be stored in local fs.")
-
-            if not api_result["success"]:
-                response_code = api_result["code"]
-                logger.debug(f"Not able to store data in the server: {response_code}")
-                QApplication.restoreOverrideCursor()
-                self.show_warning_message_box(WarningMessage.INFORMATION_NOT_STORED_IN_SERVER)
-
-            else:
-                response_from_server = api_result["response"]
-                logger.debug(f"Information succesfully sent to the server: {response_from_server}")
-                success_message = 'La información fue enviada correctamente.'
-                QApplication.restoreOverrideCursor()
-                self.show_success_message_box(success_message)
-            
-
+            logger.info("Sending information to server ...")
+            self.api_request_thread.set_package_data(package_data)
+            self.api_request_thread.start()
 
     def on_app_quit(self):
         '''
@@ -430,12 +411,49 @@ class DetectSticksApp(QApplication):
 
             if not self.distance_measure_thread.isRunning():
                 self.distance_measure_thread.start()
-
     
-    def setup_detection_thread(self):
+    def setup_detection_thread(self) -> None:
 
         self.detection_thread = DetectionThread()
         self.detection_thread.finished.connect(self.detection_slot)
+    
+    def package_send_slot(self, api_response, package_data) -> None:
+
+        local_storage_manager = LocalStorageManager(config_data, package_data=package_data)
+        local_storage_result = local_storage_manager.store_data()
+
+        if local_storage_result:
+            logger.info(f"Information succesfully stored in local fs.")
+        
+        else:
+            logger.error(f"Information could not be stored in local fs.")
+
+        if not api_response["success"]:
+            response_code = api_response["code"]
+            logger.debug(f"Not able to store data in the server: {response_code}")
+            QApplication.restoreOverrideCursor()
+
+            message = ""
+
+            if response_code == 409:
+                message = f"{WarningMessage.INFORMATION_NOT_STORED_IN_SERVER.value} : El paquete con número {self.n_package} ya existe."
+            else:
+                message = WarningMessage.INFORMATION_NOT_STORED_IN_SERVER
+
+            self.show_warning_message_box(message)
+
+        else:
+            response_from_server = api_response["response"]
+            logger.debug(f"Information succesfully sent to the server: {response_from_server}")
+            success_message = 'La información fue enviada correctamente.'
+            QApplication.restoreOverrideCursor()
+            self.show_success_message_box(success_message)
+
+
+    def setup_api_request_thread(self) -> None:
+
+        self.api_request_thread = PackageDetectAPIRequests(config_server_data=config_data["server"])
+        self.api_request_thread.finished.connect(self.package_send_slot)
 
         
 if __name__ == "__main__":

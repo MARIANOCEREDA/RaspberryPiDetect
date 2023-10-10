@@ -4,6 +4,10 @@ environment: prod
 local_storage_folder: /home/mariano/workspace/tesis/RaspberryPiDetect/App/images
 local_storage_files_folder: /home/mariano/workspace/tesis/detections
 
+server:
+  ip: 20.125.138.87
+  port: 3000
+
 camera:
   res_x: 3000
   res_y: 2000

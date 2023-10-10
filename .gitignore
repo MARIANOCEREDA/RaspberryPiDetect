@@ -208,5 +208,6 @@ pip-selfcheck.json
 # 
 camera/
 photos/
+test_code/
 
 # End of https://www.toptal.com/developers/gitignore/api/virtualenv,python,visualstudiocode
