@@ -13,11 +13,10 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt, QTimer
 
 
-from managers.api_requests import PackageDetectAPIRequests
+from managers.api_requests_thread import PackageDetectAPIRequests
 from managers.local_storage_manager import LocalStorageManager
-from managers.distance_measure_manager import MeasureDistanceThread
+from managers.distance_measure_thread import MeasureDistanceThread
 from managers.detection_thread import DetectionThread
-from managers.keyboard_manager import stop_keyboard, run_keyboard
 
 from picamera2.picamera2 import Picamera2
 from config.logger_config import get_logger

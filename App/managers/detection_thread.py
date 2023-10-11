@@ -2,6 +2,7 @@ from config.logger_config import get_logger
 from PyQt5.QtCore import QThread, pyqtSignal
 
 from App.yoloV5.custom_detect import main as run_detect
+
 # Setup global variables
 logger = get_logger("DetectionThread")
 
