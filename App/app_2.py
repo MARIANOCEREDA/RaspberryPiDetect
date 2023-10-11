@@ -285,6 +285,7 @@ class DetectSticksApp(QApplication):
 
             logger.info("Sending information to server ...")
             self.api_request_thread.set_package_data(package_data)
+            self.distance_measure_thread.stop()
             self.api_request_thread.start()
 
     def on_app_quit(self):
@@ -481,6 +482,9 @@ class DetectSticksApp(QApplication):
             success_message = 'La información fue enviada correctamente.'
             QApplication.restoreOverrideCursor()
             self.show_success_message_box(success_message)
+        
+        if not self.distance_measure_thread.isRunning():
+                self.distance_measure_thread.start()
 
 
     def setup_api_request_thread(self) -> None:
