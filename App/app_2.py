@@ -36,6 +36,40 @@ def setup_config_file(env):
     return config
 
 class DetectSticksApp(QApplication):
+    """
+    DetectSticksApp
+
+    Description:
+        - Qt aplication principal
+
+    Methods:
+        _setup_button_callbacks: Configura los callbacks de los botones en la interfaz gráfica.
+        _setup_gui: Inicializa y configura la interfaz gráfica de la aplicación.
+        run: Inicia la aplicación configurando la interfaz gráfica y los hilos necesarios.
+        show_warning_message_box: Muestra un cuadro de diálogo de advertencia con un mensaje.
+        show_success_message_box: Muestra un cuadro de diálogo de éxito con un mensaje.
+        start_camera_thread: Inicia un hilo para la cámara en entornos de desarrollo.
+        start_camera: Inicializa la cámara, ya sea la cámara Raspberry Pi (producción) o la cámara principal (desarrollo).
+        start_distance_measure_thread: Inicia un hilo para la medición de distancia.
+        setup_detection_thread: Configura el hilo para la detección de palos.
+        setup_api_request_thread: Configura el hilo para realizar solicitudes a la API.
+    
+    Callbaks:
+        on_detect_click: Maneja el clic en el botón "Detectar".
+        on_confirm_click: Maneja el clic en el botón "Confirmar".
+        on_plus_click: Maneja el clic en el botón "+".
+        on_less_click: Maneja el clic en el botón "-".
+        on_send_click: Maneja el clic en el botón "Enviar".
+        on_app_quit: Maneja el evento de salida de la aplicación.
+        on_close_click: Maneja el clic en el botón de cierre.
+        on_toggle_maximize: Maneja el clic en el botón de maximizar/restaurar ventana.
+        on_min_click: Maneja el clic en el botón de minimizar ventana.
+
+    Slots:
+        distance_measure_slot: Maneja los resultados de la medición de distancia.
+        detection_slot: Maneja los resultados de la detección de palos.
+        package_send_slot: Maneja la respuesta de la API después de enviar los datos.
+    """
 
     def __init__(self, arg) -> None:
         super().__init__(arg)

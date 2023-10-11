@@ -58,7 +58,7 @@ class MeasureDistanceThread(QThread):
 
             # time difference between start and arrival
             time_elapsed = stop_time - start_time
-            distance = round(time_elapsed * 17150, 2)
+            distance = round(time_elapsed * 17150, 0)
 
             logger.info("Measured distance: " + str(distance))
 

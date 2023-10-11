@@ -247,7 +247,7 @@ class Ui_MainWindow(object):
 "background-color: rgb(0, 0, 0);\n"
 "}\n"
 "QLabel{\n"
-"font: 12pt \"Consolas\";\n"
+"font: 10pt \"Consolas\";\n"
 "color: rgb(255, 255,255);\n"
 "}\n"
 "\n"
@@ -605,9 +605,9 @@ class Ui_MainWindow(object):
         self.label_package_number.setText(_translate("MainWindow", "<html><head/><body><p>N° de <br/>Paquete</p></body></html>"))
         self.in_npackage.setPlaceholderText(_translate("MainWindow", "Ingrese N°"))
         self.label_n_sticks.setText(_translate("MainWindow", "<html><head/><body><p>Palos <br/>Detectados</p></body></html>"))
-        self.label_avg_diameter.setText(_translate("MainWindow", "<html><head/><body><p>Diametro <br/>Promedio</p></body></html>"))
+        self.label_avg_diameter.setText(_translate("MainWindow", "<html><head/><body><p>Diametro <br/>Promedio (cm)</p></body></html>"))
         self.label_12.setText(_translate("MainWindow", "<html><head/><body><p>Correción <br/>Detección</p></body></html>"))
-        self.label_distance_measure.setText(_translate("MainWindow", "<html><head/><body><p>Distancia </p></body></html>"))
+        self.label_distance_measure.setText(_translate("MainWindow", "<html><head/><body><p>Distancia (cm)</p></body></html>"))
         self.label_11.setText(_translate("MainWindow", "Palos<br> Totales"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Camara"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Fotografia"))
