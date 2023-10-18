@@ -165,8 +165,8 @@ class DetectSticksApp(QApplication):
             size = (config_data["camera"]["res_x"], config_data["camera"]["res_y"])
 
             if config_data["environment"] == "prod":
-                #path = config_data["local_storage_folder"] + "/image.jpeg"
-                path = "/home/mariano/workspace/tesis/test_photos/image.jpeg"
+                path = config_data["local_storage_folder"] + "/image.jpeg"
+                #path = "/home/mariano/workspace/tesis/test_photos/image.jpeg"
 
                 cam_cfg = self.ui.picam.create_still_configuration(main={"size": size},
                                                                lores={"size": (640, 480)},
